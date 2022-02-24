@@ -202,38 +202,10 @@
           </div>    
           <div class="instant-brand-listing"> 
                <a href="/collections/desert-essence" class="instant-brand-item">DESERT ESSENCE</a> 
-          </div>   
-       
-       
-       {% assign bold_member = false %}
- 			{% if customer %}
-               
-        		{% for tag in customer.tags %}
-           		 {% if tag == 'mvg-membership' or tag == 'Restricted Users'%}
-               		 {% assign bold_member = true %}
-               		 {% break %}
-            	 {% endif %}
-        	{% endfor %}
-            {% if bold_member %}
-          			<div class="instant-brand-listing"> 
-               			<a href="/collections/designs-for-health" class="instant-brand-item brand_access">DESIGNS FOR HEALTH</a> 
-          			</div> 
-         		 
-          
-            {% else %}
-					
-            {% endif %}
-               
-    	   {% else %}
-				 
-          {% endif %}
-       
-       
-       
-       
-         
-       
-       
+          </div>    
+          <div class="instant-brand-listing"> 
+               <a href="/collections/designs-for-health" class="instant-brand-item brand_access">DESIGNS FOR HEALTH</a> 
+          </div>  
         <div class="instant-brand-listing"> 
                <a href="/collections/diva-cup" class="instant-brand-item">DIVA CUP</a> 
           </div> 

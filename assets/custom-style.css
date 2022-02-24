@@ -25,12 +25,10 @@ h1 { font-size: 35px; line-height: 40px; font-family: Montserrat; font-weight: 6
 h2 { font-size: 30px; line-height: 35px; font-family: Montserrat; font-weight: 600; margin-bottom: 12px;}
 
 /********************* Header *********************/
-.loading-blue,.loading {
-    position: relative;
-}{
+.loading{
   position:relative;
 }
-.loading-blue:after {
+.loading:after {
     content: '';
     width: 100%;
     height: 100%;
@@ -43,7 +41,7 @@ h2 { font-size: 30px; line-height: 35px; font-family: Montserrat; font-weight: 6
 
 
 
-.loading-blue:before
+.loading:before
 {
     content: '';
     display: block;
@@ -53,7 +51,7 @@ h2 { font-size: 30px; line-height: 35px; font-family: Montserrat; font-weight: 6
     width: 40px;
     height: 40px;
     border-style: solid;
-    border-color: #00577f;
+    border-color: #fff;
     border-top-color: transparent;
     border-width: 4px;
     border-radius: 50%;
@@ -1310,15 +1308,10 @@ a.member_btn:hover, a.member_btn:focus { text-decoration: none; background: #979
 .heakth_left_img img { width: 100%; }
 .health_money h3 { font-size: 50px; line-height: 55px; color: #434343; font-weight: 400; font-family: Montserrat; color: #434343; margin: 0; text-transform: lowercase;}
 .health_money h3 span { font-weight: 700; font-family: Montserrat; }
-
-.buy_bow { display:block; vertical-align: top; text-align: center; margin-top: 20px; }
+.health_money p { font-size: 14px; color: #6f6e6e; }
+.buy_bow { display: inline-block; vertical-align: top; }
 .health_money { display: inline-block; margin-right: 30px;}
-.buy_bow a.buy_btn {display: inline-block;
-    background: #00577f;
-    color: #fff;
-    font-size: 20px;
-    padding: 12px 94px;
-    border-radius: 7px; }
+.buy_bow a.buy_btn { display: inline-block; background: #00577f; color: #fff; font-size: 20px; height: 70px; line-height: 70px; padding: 0px 50px; }
 .buy_bow a.buy_btn:hover { text-decoration: none; background: #646315; }
 .payment_img { text-align: center; }
 
@@ -1354,7 +1347,7 @@ h1#mvg-membership_name { display: none; }
 .next_step_btn, .pay_btn { background: #00577f; border-color: #00577f; text-transform: capitalize; font-size: 17px; font-weight: 400; outline: none; width: 50%; display: inline-block;}
 .next_step_btn:hover, .pay_btn:hover { background: #979500; border-color: #979500; outline: none;}
 
-/* #lang_select_interval_mvg-membership, #mvg-membership_membership_billing_option { display: none !important; } */
+#lang_select_interval_mvg-membership, #mvg-membership_membership_billing_option { display: none !important; }
 .step2, .step3 { display: none; }
 .step2_title { display: none; }
 .popup_content .bold-form-group label.my-error-class { display: block; width: 100%; text-align: left; }
@@ -1556,8 +1549,7 @@ a.complete_qtns:hover { background: #979500; text-decoration: none; }
 .question b { font-weight: 400; font-size: 16px; line-height: 30px; letter-spacing: -.55px;}
 .question.colorbox-load b { font-weight: 300; font-size: 15px; line-height: 25px; font-style: italic;}
 .question { float: left; width: 50%; margin-bottom: 10px; text-align: left;}
-.form-type-radios { float: right; width: 33%; text-align: right; }
-.questionrow > span{float: left; width: 67%;}
+.form-type-radios { float: right; width: 50%; text-align: right; }
 .form-radios .form-type-radio { display: inline-block;margin-right: 25px; }
 .form-type-radios input[type=radio] { width: 20px; height: 20px; display: inline-block; border-radius: 50px; -webkit-appearance: auto;}
 .form-type-radios label, .form-item label { font-weight: 400; font-size: 16px; margin: 0; vertical-align: super;  margin-left: 10px; letter-spacing: -.55px;} 
@@ -1980,17 +1972,7 @@ margin-bottom: 25px;
 #rectable #recfilter { position: relative; width: 30%; float: right; padding-top: 0px; text-align: right; cursor: pointer; color: #00577F; font-weight: 500; font-size: 13px; display: block;
  transition-duration: 0.5s; letter-spacing: -.55px;}
 #recseeall { display: none; }
-.recrow .reclink {     color: #00577f;
-    display: inline-flex!important;
-    font-weight: 800;
-    border-radius: 50%;
-    width: 20px;
-    font-style: normal;
-    border: 1px solid #85b6cc;
-    height: 20px;
-    justify-content: center;
-    font-size: 12px;}
-.nextsteplink[data-toggle=popover] {display:none;}
+.recrow .reclink { font-style: italic; color: #00577F; }
 #selectedcat { padding-right: 16px; position: relative;}
 #selectedcat:after { content: ""; position: absolute; right: 0; background: url(https://cdn.shopify.com/s/files/1/0317/4635/9433/files/down.png?v=1619502378) no-repeat 0px 0px; width: 11px; height: 7px; display: inline-block; top: 5px;}
 #recfiltermenu { display: none; visibility: hidden; opacity: 0; position: absolute; transition: all 0.5s ease; left: 0; top: 20px; }
@@ -2287,10 +2269,7 @@ div#membership_popup #create_customer .action-btn {
 div#membership_popup #create_customer .action-btn p {
     grid-area: but;
 }
-div#rectable {
-    display: flex;
-    flex-direction: column;
-}
+
 #faq_inner .guidance_cont { text-align: left;}
 #faq_inner.score_sec p { font-size: 15px; margin-bottom: 20px; }
 .sidebar_cont #faq_inner ul li { margin-bottom: 10px; list-style: disc;}
@@ -2322,7 +2301,7 @@ div#rectable {
 .personalized_cont_inner ul { margin: 0; padding: 0; list-style: none; }
 .personalized_cont_inner ul li { display: inline-block; margin-bottom: 12px;}
 .personalized_cont_inner ul li .pack_img { display: inline-block; vertical-align: middle; margin-right: 10px;}
-.personalized_cont_inner ul li h4 { display: inline-block;  font-size: 16px; line-height: 21px; font-weight: 500; color: #434343; text-transform: capitalize; margin: 0; }
+.personalized_cont_inner ul li h4 { display: inline-block;  font-size: 16px; line-height: 21px; font-weight: 500; color: #00577F; text-transform: capitalize; margin: 0; }
 .personalized_cont_inner ul li.seprt_plus { margin: 0 24px; }
 .dashboard_left_top { margin-bottom: 15px; }
 #shopify-section-page-membership-dashboard .membership_right .top_subtitle { letter-spacing: -1px; }
@@ -2921,24 +2900,8 @@ form#intake-wizard-smartquestions-form--2 .form-item.form-type-radios.form-item-
     cursor: pointer;
 }
 #recommended_labs { margin-bottom: 30px; }
-/* #submitstate #edit-save { display: inline-block; padding: 7px 15px; background: #00577f; color: #fff; border-radius: 8px; }
-#submitstate #edit-save:hover { text-decoration: none;background: #92ad05; } */
-div#submitstate {
-    display: flex;
-    justify-content: flex-end;
-}
-
-input#edit-save {
-    order: 3;
-}
-
-input#edit-submit {
-    order: 1;
-}
-
-input#edit-previous {
-    order: 2;
-}
+#submitstate #edit-save { display: inline-block; padding: 7px 15px; background: #00577f; color: #fff; border-radius: 8px; }
+#submitstate #edit-save:hover { text-decoration: none;background: #92ad05; }
 #recommended_labs .labpanelrow:hover { background-color: #00577f;}
 #recommended_labs .labpanelrow:hover .title, #recommended_labs .labpanelrow:hover .shortsummary, #recommended_labs .labpanelrow:hover .moredown { color: #fff; }
 .expanded.more, .labrow.expanded, .labpanelrow.expanded, .inputrow.expanded, .labrow.active, .labpanelrow.active, .inputrow.active {
@@ -3511,8 +3474,7 @@ img#head-image {
 }
 
 @media (max-width: 767px) {
-    .form-type-radios { float: none; width: auto; text-align: left; }
-.questionrow > span{float: none; width: auto;}
+    
     .top-cart .icon .fa-shopping-cart { font-size: 0; }
     .menu-block div { color: #00577f !important; }
     .header-mobile { display: none; }
@@ -3862,14 +3824,14 @@ img#head-image {
 }
 
  .modal-body .questn_list.loading:after {
-/*    content: '';
+   content: '';
     width: 104%;
     height: 21%;
     position: absolute;
     bottom: -38px;
     left: -18px;
     background: rgb(0 0 0 / 20%);
-    opacity: .9; */
+    opacity: .9;
 }
 
  .modal-body .questn_list.loading:before
@@ -3882,7 +3844,7 @@ img#head-image {
     width: 40px;
   	height: 40px;
     border-style: solid;
-    border-color: #00577f;
+    border-color: #fff;
     border-top-color: transparent;
     border-width: 4px;
     border-radius: 50%;
@@ -3944,192 +3906,3 @@ p.pdf-link a {
 #mvg-membership_membership_button_free{
   display:none;
 }
-.qstn_confirm_modal_inner {
-    text-align:center;
-}
-#qstn_confirm_modal .closeit{
-background:none;
-border:none;
-font-size:60px;
-
-}
-#qstn_confirm_modal .modal-header{
-    text-align:right;
-}
-.qstn_confirm_modal_inner p.description {
-    font-size:20px
-}
-
-.qstn_confirm_modal_inner button{
-   padding:10px 15px;
-   margin:3px;
-   box-shadow:none;
-   border:1px solid #00577f!important;
-
-}
-.qstn_confirm_modal_inner button#goback-finish {
-     background:#00577f;
-     color:#fff;
-}
-.qstn_confirm_modal_inner button#goback-finish:hover{
-    background:#fff;
-     color:#00577f;
-}
-.qstn_confirm_modal_inner button#proceed-anyway {
-     background:#fff;
-     color:#00577f;
-     
-     
-
-}
-.qstn_confirm_modal_inner button#proceed-anyway:hover {
-    background:#00577f;
-     color:#fff;
-     
-     
-
-}
-
-/**/
-#qstn_family_modal .closeit{
-background:none;
-border:none;
-font-size:60px;
-
-}
-#qstn_family_modal .modal-header{
-    text-align:right;
-}
-.qstn_family_modal_inner p.description {
-    font-size:20px
-}
-
-.qstn_family_modal_inner button{
-   padding:10px 15px;
-   margin:3px;
-   box-shadow:none;
-   border:1px solid #00577f!important;
-
-}
-.qstn_family_modal_inner button#ok {
-     background:#00577f;
-     color:#fff;
-  	padding: 10px 30px;
-    border-radius: 5px;
-    text-transform: uppercase!important;
-}
-.qstn_family_modal_inner button#ok:hover{
-    background:#fff;
-     color:#00577f;
-}
-div#qstn_family_modal {
-    text-align: center;
-}
-
-
-
-#qstn_smart_modal .closeit{
-background:none;
-border:none;
-font-size:60px;
-
-}
-#qstn_smart_modal .modal-header{
-    text-align:right;
-}
-.qstn_smart_modal_inner p.description {
-    font-size:20px
-}
-
-.qstn_smart_modal_inner button{
-   padding:10px 15px;
-   margin:3px;
-   box-shadow:none;
-   border:1px solid #00577f!important;
-
-}
-.qstn_smart_modal_inner button#ok {
-     background:#00577f;
-     color:#fff;
-  	padding: 10px 30px;
-    border-radius: 5px;
-    text-transform: uppercase!important;
-}
-.qstn_smart_modal_inner button#ok:hover{
-    background:#fff;
-     color:#00577f;
-}
-div#qstn_smart_modal {
-    text-align: center;
-}
-
-
-
-
-
-#note-to-display{
-    display: block!important;
-}
-.health_money_container {
-    display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
-    justify-items: center;
-    align-items: center;
-    text-align: center;
-}
-.health_money_container > *{
-    width: 100%;
-}
-
-.health_money_container .health_money {
-    background: #eee;
-    display: grid;
-    justify-content: center;
-    text-align: center;
-    padding: 12px 15px;
-    margin-right: 0;
-}
-.health_money .base .sub {font-size: 16px;font-weight: 600;color: #434343;}
-
-.base {
-    font-weight: 300;
-}
-
-.base span {
-    font-weight: 700;
-    font-size: 30px;
-    color: #434343;
-}
-
-.health_money > p {font-style: italic;margin-top: 10px;}
-.buy_bow p {
-    margin-top: 15px!important;
-}
-@media(max-width:500px){
-    .health_money_container {
-        display: grid;
-        grid-template-columns: 1fr;
-        justify-items: center;
-        align-items: center;
-        text-align: center;
-        grid-gap: 10px;
-    }
-    .health_money_container > h3{
-        margin-bottom: 0;
-    }
-    .base span {
-        font-weight: 600;
-        font-size: 27px;
-        color: #434343;
-    }
-}
-.my_medication #note-to-display{
- display:none!important; 
-}
-.my_health #edit-previous{
-  display:none!important;  
-}
-.mvg_verification, body#labs-amp-dna .add-to-cart-btn, body#lab-tests .add-to-cart-btn,.hide-menu{
-display:none;
-}
-.test{}
