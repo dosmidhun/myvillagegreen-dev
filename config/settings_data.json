@@ -1633,10 +1633,25 @@
               "button": "",
               "link": "shopify:\/\/pages\/shop-by-brands"
             }
+          },
+          "a9fdb022-68a4-44c0-adc5-3aee267d879a": {
+            "type": "image",
+            "settings": {
+              "alignment": "center",
+              "title": "",
+              "heading_color": "#000",
+              "heading_size": "40",
+              "subheading": "",
+              "subheading_color": "#000",
+              "subheading_size": "12",
+              "button": "",
+              "link": ""
+            }
           }
         },
         "block_order": [
-          "1501570258326-0"
+          "1501570258326-0",
+          "a9fdb022-68a4-44c0-adc5-3aee267d879a"
         ],
         "settings": {
           "slideshow_speed": "5000",
