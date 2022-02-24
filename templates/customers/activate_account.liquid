@@ -31,6 +31,7 @@
 
       {{ form.errors | default_errors }}
 
+
       <label for="customer_password" {% if settings.enable_multilang %}data-translate="customer.activate_account.password"{%endif%}>{{ 'customer.activate_account.password' | t }}</label>
       <input type="password" value="" name="customer[password]" id="customer_password">
 
@@ -43,6 +44,11 @@
         </p>
         <input type="submit" class="btn--secondary" id="decline" name="decline" {% if settings.enable_multilang %}data-translate="customer.activate_account.cancel"{%endif%} value="{{ 'customer.activate_account.cancel' | t }}">
       </div>
+     
+      <input type="hidden" name="first-name" value="{{ customer.first_name }}" data-uw-styling-context="true">
+  
+
+      
     {% endform %}
   </div>
 </div>

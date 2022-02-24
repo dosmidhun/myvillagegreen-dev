@@ -402,28 +402,7 @@
                                         <h1>{{ section.settings.dashboard_title }}</h1>
                                         <p>{{ section.settings.dashboard_cont }}</p>
                                     </div> 
-                                    <h2 class="top_subtitle">{{ customer.first_name }}, Your Custom Recommendations</h2>
-                                    <div class="top_reommend_sec">
-                                        <div class="personalizd_sec">
-                                            {% if section.settings.unlock_personalized != blank %}
-                                                <a href="javascript:void(0)" class="unlock_click" data-toggle="modal" data-target="#unlock_personalized"> 
-                                                {{ section.settings.unlock_personalized }}</a>
-                                                <!-- Modal -->
-                                                <div class="modal fade score_sec" id="unlock_personalized" role="dialog">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                {{ section.settings.unlock_personalized_popup }}  
-                                                            </div> 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                           {% endif %}
-                                        </div>
-                                    </div>
+                                    
                                     <div class="box_layout clearfix">
                                         <ul>
                                             
@@ -487,6 +466,28 @@
                                                 </div>
                                             </li>
                                         </ul>
+                                    </div>
+                                  <h2 class="top_subtitle" style="margin-top:25px;">{{ customer.first_name }}, Your Custom Recommendations</h2>
+                                    <div class="top_reommend_sec">
+                                        <div class="personalizd_sec">
+                                            {% if section.settings.unlock_personalized != blank %}
+                                                <a href="javascript:void(0)" class="unlock_click" data-toggle="modal" data-target="#unlock_personalized"> 
+                                                {{ section.settings.unlock_personalized }}</a>
+                                                <!-- Modal -->
+                                                <div class="modal fade score_sec" id="unlock_personalized" role="dialog">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{ section.settings.unlock_personalized_popup }}  
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                           {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -603,7 +604,9 @@
                                                                 <div class="ask_form" id="contactFormWrapper">
                                                                     <h3>Ask A Nutritionist</h3>
                                                                     {{ section.settings.ask_popup_content }}
-                                                                    <div class="powr-form-builder" id="31bae8bd_1633419193"></div><script src="https://www.powr.io/powr.js?platform=shopify"></script>
+
+                                                                    <div class="powr-form-builder" id="0ca1470d_1638448936"></div><script src="https://www.powr.io/powr.js?platform=shopify"></script>
+                                                                    
                                                                     <!-- {% form 'contact' %} 
                                                                     {% if form.posted_successfully? %}
                                                                     <p class="note form-success" {% if settings.enable_multilang %}data-translate="contact.form.post_success"{% endif %}>
@@ -727,19 +730,19 @@
                 </div>
                 <div class="health_top clearfix">
                     <div class="health_box active" id="box1" data-step="step1">
-                        <span class="my_health_step">100%</span>
+                        <span class="my_health_step">%</span>
                         <h4>My Health</h4>
                     </div>
                     <div class="health_box" id="box2" data-step="step2">
-                        <span class="family_history_step">100%</span>
+                        <span class="family_history_step">%</span>
                         <h4>Family History</h4>
                     </div>
                     <div class="health_box" id="box3" data-step="step3">
-                        <span class="food_diet_step">100%</span>
+                        <span class="food_diet_step">%</span>
                         <h4>Food & Diet</h4>
                     </div>
                     <div class="health_box" id="box4" data-step="step4">
-                        <span class="lifestyle_step">100%</span>
+                        <span class="lifestyle_step">%</span>
                         <h4>Lifestyle</h4>
                     </div>
                     <div class="health_box" id="box5" data-step="step5">
@@ -752,26 +755,77 @@
                     </div>
                 </div>
                 <h2>Answer the following questions to the best of your ability.</h2>
-                <div class="questn_list loading"> 
-                    <div class="my_health step1">
+                <div class="questn_list"> 
+                    <div class="my_health step1 loading-blue">
                         
                     </div>
-                    <div class="family_history step2">
+                    <div class="family_history step2 loading-blue">
                         
                     </div>
-                    <div class="food_diet step3">
+                    <div class="food_diet step3 loading-blue">
                         
                     </div>
-                    <div class="lifestyle step4">
+                    <div class="lifestyle step4 loading-blue">
                         
                     </div>
-                    <div class="my_medication step5">
+                    <div class="my_medication step5 loading-blue">
                         
                     </div>
-                    <div class="smart_questions step6">
+                    <div class="smart_questions step6 loading-blue">
                         
                     </div>
                 </div>
+            </div> 
+        </div>
+    </div>
+</div>
+ <div class="modal fade score_sec" id="qstn_confirm_modal" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="closeit" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="qstn_confirm_modal_inner">
+                    <p class="description">You have not answered all the questions in this section</p>
+                      <button id="goback-finish">Go Back and Finish this section</button>
+                      <button id="proceed-anyway">Thats ok, I want to proceed anyway</button>
+
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div>
+<div class="modal fade score_sec" id="qstn_family_modal" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="closeit" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="qstn_family_modal_inner">
+                    <p class="description">First-degree relatives are your biological parents, siblings, and children.</p>
+                      <button id="ok">Ok</button>
+                      
+
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div>
+<div class="modal fade score_sec" id="qstn_smart_modal" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="closeit" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="qstn_smart_modal_inner">
+                    <p class="description">Please note, some of the answers to these Smart Questions have been auto populated based on your answers to previous questions in this questionnaire. Please go through each question to confirm that these answers are correct.</p>
+                      <button id="ok">Ok</button>
+                      
+
+                </div> 
             </div> 
         </div>
     </div>
@@ -1054,6 +1108,7 @@
 {% endschema %}
 <script src="https://cdn.shopify.com/shopifycloud/shopify/assets/themes_support/shopify_common-8ea6ac3faf357236a97f5de749df4da6e8436ca107bc3a4ee805cbf08bc47392.js"></script>
 <script>
+  
   
     var Shopify = Shopify || {};
   // Initialize observers on address selectors

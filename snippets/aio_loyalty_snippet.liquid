@@ -2,6 +2,8 @@
 <input type="hidden" name="is_customer_logged_in" value="1" class="is_customer_logged_in">
 <input type="hidden" name="referral_customer_logged_id" value="{{customer.id}}" class="referral_customer_logged_id">
 <input type="hidden" name="referral_customer_email" value="{{ customer.email }}" class="referral_customer_email">
+<input type="hidden" name="referral_customer_first_name" value="{{ customer.first_name }}" class="referral_customer_first_name">
+<input type="hidden" name="referral_customer_last_name" value="{{ customer.last_name }}" class="referral_customer_last_name">
 {% else %}
 <input type="hidden" name="is_customer_logged_in" value="0" class="is_customer_logged_in">
 <input type="hidden" name="referral_customer_logged_id" value="0" class="referral_customer_logged_id">

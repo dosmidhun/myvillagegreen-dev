@@ -12,9 +12,4 @@
 
 {% section 'product-template' %}
 
-<div style="clear: both;"><div id="shopify-ali-review" product-id="{{ product.id }}"> {{ shop.metafields.review_collector.review_code }} </div></div> 
-
-{% capture the_snippet_reviews %}{% render 'socialshopwave-widget-recommends' with 1 %}{% endcapture %}
-{% unless the_snippet_reviews contains 'Liquid error' %}
-{{ the_snippet_reviews }}
-{% endunless %}
+<div style="clear: both;"><div id="shopify-ali-review" product-id="{{ product.id }}"> {{ shop.metafields.review_collector.review_code }} </div></div>

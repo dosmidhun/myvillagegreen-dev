@@ -1,36 +1,36 @@
 <div id="egg_review_container" class="revw_main">
-<div class="full-width headr">
-<h3 class="rvw_heading"></h3>
-<div class="rate-and-add-review">
-<div class="egg-review-left">
-<div class="egg-btn-right">
-<div class="egg_average_rating_star">
-<span class="stars"></span>
-</div>
-<p id="review-report"></p>
-</div>
-<div class="egg-btns">
-<div class="review_btn"></div>
-<div class="question_btn" style="display:none">Ask A Question</div>
-</div>
-</div>
-</div>
-<div class="revw_toggle" style="display:none;">
-<iframe src="https://app.aitrillion.com/review/form_data.php?pid={{product.id}}&shopname={{shop.permanent_domain}}" width="100%" height="600px" style="border:0px;"></iframe>
-</div>
-<div class="egg_question_form_toggle" style="display:none;">
-<iframe src="https://app.aitrillion.com/review/ask_question.php?pid={{product.id}}&shopname={{shop.permanent_domain}}" width="100%" height="380px" style="border:0px;"></iframe>
-</div>
-<div class="egg_store_question_review_tab" style="display:none">
-<ul class="egg_store_nav">
-<li>
-<a href="javascript:void(0)" class="active" data-attr-tab="egg_review">Review (<span id="egg_product_review_count"></span>)</a>
-</li>
-<li>
-<a href="javascript:void(0)" data-attr-tab="egg_question">Question (<span id="egg_product_question_count"></span>)</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div style="display:none;"> {% if product.metafields.EggViewsGroupProduct.ProductGrouping %}<div id="group_product_status">{{ product.metafields.EggViewsGroupProduct.ProductGrouping }}</div> {% endif %} </div>
+    <div class="full-width headr">
+    <h3 class="rvw_heading"></h3>
+    <div class="rate-and-add-review">
+    <div class="egg-review-left">
+    <div class="egg-btn-right">
+    <div class="egg_average_rating_star">
+    <span class="stars"></span>
+    </div>
+    <p id="review-report"></p>
+    </div>
+    <div class="egg-btns">
+    <div class="review_btn"></div>
+    <div class="question_btn" style="display:none">Ask A Question</div>
+    </div>
+    </div>
+    </div>
+    <div class="revw_toggle" style="display:none;">
+    <iframe src="https://app.aitrillion.com/review/form_data.php?pid={{product.id}}&shopname={{shop.permanent_domain}}" width="100%" height="600px" style="border:0px;"></iframe>
+    </div>
+    <div class="egg_question_form_toggle" style="display:none;">
+    <iframe src="https://app.aitrillion.com/review/ask_question.php?pid={{product.id}}&shopname={{shop.permanent_domain}}" width="100%" height="380px" style="border:0px;"></iframe>
+    </div>
+    <div class="egg_store_question_review_tab" style="display:none">
+    <ul class="egg_store_nav">
+    <li>
+    <a href="javascript:void(0)" class="active" data-attr-tab="egg_review">Review (<span id="egg_product_review_count"></span>)</a>
+    </li>
+    <li>
+    <a href="javascript:void(0)" data-attr-tab="egg_question">Question (<span id="egg_product_question_count"></span>)</a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    <div style="display:none;"> {% if product.metafields.EggViewsGroupProduct.ProductGrouping %}<div id="group_product_status">{{ product.metafields.EggViewsGroupProduct.ProductGrouping }}</div> {% endif %} </div>

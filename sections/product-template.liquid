@@ -9,8 +9,7 @@
   {% endif %}
   {% endcomment %}
   <div class="{% if settings.display_sidebar_detail_page %}col-xs-12 {% endif %} prdt_single">
-    <div itemscope itemtype="http://schema.org/Product" class="product">
-  {% capture ssw_rich_snippet %}{% render 'ssw-widget-avg-rate-rich' %}{% endcapture %}{% unless ssw_rich_snippet contains 'Liquid error' %}{{ ssw_rich_snippet }}{% endunless %} 
+    <div itemscope itemtype="http://schema.org/Product" class="product"> 
  <div> {{ product.metafields.alireviews.seo_rating_review_key }} </div>
       <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
       <meta itemprop="image" content="{{ product.featured_image.src | product_img_url: 'grande' }}">
@@ -305,7 +304,6 @@
             <!-- Custom Fields for Invoice Packing Slips -->
             <input type="hidden" id="form" name="properties[Form]" value="{{ product.metafields.ns-form.form }}" />
             <input type="hidden" id="size" name="properties[Size]" value="{{ product.metafields.ns-size.size }}" />
-            {% if product.tags contains 'mw_grouped_product' %}<div class="mw-gp-container"></div>{% endif %}
             <!-- End Custom Fields for Invoice Packing Slips -->
             <div id="product-variants">
               {% assign variantCount = product.variants | size %}
@@ -330,10 +328,8 @@
               {% if product.compare_at_price > product.price %}
               <span class="compare-price">{{ product.compare_at_price_max | money }}</span>
               <span class="price on-sale money" itemprop="price" data-product-id="{{ product.id }}">{{ product.price | money }}</span>
-              <div id="mw-gp-offer-6745608683657"></div>
               {% else %}
               <span class="price money" itemprop="price" data-product-id="{{ product.id }}">{{ product.price | money }}</span>
-              
               {% endif %}
             </div>
             
@@ -450,14 +446,13 @@
             
             {% endcomment %}
             {% endif %}
-            <input {% if product.tags contains 'mw_grouped_product' %}disabled="disabled"{% endif %} type="submit" name="add" class="btn" {% if settings.enable_multilang %}data-translate="products.product.add_to_cart"{%endif%} id="product-add-to-cart" value="{{ 'products.product.add_to_cart' | t }}" >
+            <input type="submit" name="add" {% if content_for_header contains '.mageworx.com\/groupedproducts\/source.js?' and product.tags contains 'mw_grouped_product' %}disabled="disabled"{% endif %} class="btn" {% if settings.enable_multilang %}data-translate="products.product.add_to_cart"{%endif%} id="product-add-to-cart" value="{{ 'products.product.add_to_cart' | t }}">
             {% else %} 
-            <input {% if product.tags contains 'mw_grouped_product' %}disabled="disabled"{% endif %} type="submit" name="add" class="btn" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{%endif%} id="product-add-to-cart" disabled value="{{ 'products.product.unavailable' | t }}">          
+            <input type="submit" name="add" {% if content_for_header contains '.mageworx.com\/groupedproducts\/source.js?' and product.tags contains 'mw_grouped_product' %}disabled="disabled"{% endif %} class="btn" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{%endif%} id="product-add-to-cart" disabled value="{{ 'products.product.unavailable' | t }}">          
             {% endif %}
-            
           </form>            
         </div>
-        {% include 'wishlist-product' %}
+<!--         {% include 'wishlist-product' %} -->
         {% if section.settings.display_product_detail_tag %}         
         <div class="tags">
           <strong class="icon-tags" {% if settings.enable_multilang %}data-translate="blogs.article.tags"{%endif%}>{{ 'blogs.article.tags' | t }}:</strong> 

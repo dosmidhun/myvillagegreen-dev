@@ -8,16 +8,16 @@ update. Contact support@zetya.com if you need assistance with BookThatApp.
 
 {%- if content_for_header contains 'bta-installed.js' -%}
   <script>
-    {%- comment -%} BookThatApp config {%- endcomment -%}
+    // BookThatApp config
     var productConfig = {}, productMetafields;
     {% if product.metafields.bookthatapp.config_json %}
     productMetafields = '{{ product.metafields.bookthatapp.config_json | json }}';
-    if (productMetafields !== '') {
+    if (productMetafields != '') {
       productConfig = JSON.parse(productMetafields);
     }
     {% else %}
-    productMetafields = '{{ product.metafields.bookthatapp.config }}'; {%- comment -%} legacy metafields {%- endcomment -%}
-    if (productMetafields !== '') {
+    productMetafields = '{{ product.metafields.bookthatapp.config }}'; // legacy metafields
+    if (productMetafields != '') {
       productConfig = JSON.parse('{"' + decodeURI(productMetafields).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
     }
     {% endif %}
@@ -28,6 +28,6 @@ update. Contact support@zetya.com if you need assistance with BookThatApp.
       cart: {{ cart | json }},
       version: '1.4'
     }
-</script>
-{{ 'bta-widgets-bootstrap.min.js' | asset_url  | script_tag }}
+  </script>
+  {{ 'bta-widgets-bootstrap.min.js' | asset_url  | script_tag }}
 {%- endif -%}

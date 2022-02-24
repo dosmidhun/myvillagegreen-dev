@@ -11,7 +11,7 @@
       {% for tag in blogs['post'].all_tags %}
         {% if tag contains 'Category' %}
 
-        <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag | remove: "Category_" }}</a></li>
+        <li><a href="/blogs/post/tagged/{{ tag | handle }}">{{ tag | remove: "Category_" }}</a></li>
         {% endif %}
       {% endfor %}
       </ul>

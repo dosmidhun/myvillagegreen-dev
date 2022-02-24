@@ -35,11 +35,72 @@
     <ul class="dropdown">
       {% for child_l in linklists[l.handle].links %}
       <!-- Menu level 3 -->
-      <li>
-        <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
-          {% include 'multilang' with child_l.title %}
-        </a>
-      </li>
+      
+      
+      {% assign bold_member = false %}
+ 			{% if customer %}
+               
+        		{% for tag in customer.tags %}
+           		 {% if tag == 'mvg-membership' or tag == 'Restricted Users'%}
+               		 {% assign bold_member = true %}
+               		 {% break %}
+            	 {% endif %}
+        	{% endfor %}
+            {% if bold_member %}
+          
+         		 {% if child_l.title=='Designs for Health*' %}
+
+      				 <li class="show-menu">
+       					 <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+          					{% include 'multilang' with child_l.title %}
+        				 </a>
+      				 </li>
+      
+         		 {% else %}
+          			 <li>
+       					 <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+          					{% include 'multilang' with child_l.title %}
+        				 </a>
+      				 </li>
+            	 {% endif %}
+                    
+          
+          
+            {% else %}
+					{% if child_l.title=='Designs for Health*' %}
+
+      				 
+      
+         		 {% else %}
+          			 <li>
+       					 <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+          					{% include 'multilang' with child_l.title %}
+        				 </a>
+      				 </li>
+            	 {% endif %}
+            {% endif %}
+               
+    	   {% else %}
+				 {% if child_l.title=='Designs for Health*' %}
+
+      				 
+      
+         		 {% else %}
+          			 <li>
+       					 <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+          					{% include 'multilang' with child_l.title %}
+        				 </a>
+      				 </li>
+            	 {% endif %}
+          {% endif %}
+      
+      
+      
+      
+      
+      
+      
+     
       {% endfor %}
     </ul>
     {% endif %}

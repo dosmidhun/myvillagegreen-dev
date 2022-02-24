@@ -133,10 +133,6 @@ pintrk('page');
   Add the page template as a class for easy page or template specific styling.
 {% endcomment %}
 <body id="{{ page_title | handle }}" class="template-{{ template | split: '.' | first }} {% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
-{% capture the_snippet_content %}{% render 'socialshopwave-helper' %}{% endcapture %}
-            {% unless the_snippet_content contains 'Liquid error' %}
-              {{ the_snippet_content }}
-            {% endunless %}
   <!-- Bold: Memberships -->
 {% if customer %}
 <div class="bold_customer_id" hidden>{{ customer.id }}</div>
@@ -212,6 +208,12 @@ pintrk('page');
 </script>
 
 <script type="text/javascript">
+  
+  if( jQuery('#redirect_home').length )         // use this if you are using id to check
+{
+   
+   window.location.href='/pages/signup-landing'
+}
   HelpCrunch('init', 'myvillagegreen', {
     applicationId: 1,
     applicationSecret: 'qkRiZfe7mr93mcGxSegFv911NpDF4DBxhOvHBJw4tYnRAb+RLfO6dxokMBhsDNG/+FJFB4ePRqFrZ+NCTSj+ZA=='
@@ -307,11 +309,9 @@ pintrk('page');
       }
     })();
   </script>
-    <script type="text/javascript" charset="utf-8">
+  {% include 'mw_GP_objects' %}  <script type="text/javascript" charset="utf-8">
   var shappify_customer_tags = {{ customer.tags | json }}
   </script>
 {% render 'aio_loyalty_snippet' %}
- {% include 'smile-initializer' %}
-
-</body>{% include 'mw_GP_objects' %}
+</body>
 </html>
