@@ -1,0 +1,203 @@
+{% if block_style == 'style_4' %}
+<div class="col-3 text-left zi-banner">
+
+  <a href="{{ link_banner_first_style }}">
+    <div class="zi-banner-image">
+       {% if banner_first_style != blank %}
+      <img src="{{ banner_first_style | img_url: "original"}}" alt="">
+      {% else %}  
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+    </div>
+  </a>
+
+</div>
+{%endif%}
+
+
+<div class="col-1">
+  {% for l in linklists[link_child].links %}  
+  <div class="inner">
+    <!-- Menu level 2 -->
+    <a {%if linklists[link.handle] != empty %}class="menu__moblie" {% endif %} href="{{ l.url }}">{% include 'multilang' with l.title %}
+      {% if block_style == 'style_3' %}
+      {% assign collection = l.object %}        
+      {% if collection.image != blank %}
+      <div class="zi-banner">
+      <div class="zi-banner-image">
+        <img src="{{ collection | img_url: 'medium' }}" alt="{{ link.title | escape }}">
+      </div>
+      </div>
+      {% endif %} 
+      {%endif%}
+    </a>
+    {% if  linklists[l.handle] != empty %}
+    <ul class="dropdown">
+      {% for child_l in linklists[l.handle].links %}
+      <!-- Menu level 3 -->
+      
+      
+      {% assign bold_member = false %}
+ 			{% if customer %}
+               
+        		{% for tag in customer.tags %}
+           		 {% if tag == 'mvg-membership' or tag == 'Restricted Users'%}
+               		 {% assign bold_member = true %}
+               		 {% break %}
+            	 {% endif %}
+        	{% endfor %}
+            {% if bold_member %}
+          
+         		 {% if child_l.title=='Designs for Health*' %}
+
+      				 <li class="show-menu">
+       					 <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+          					{% include 'multilang' with child_l.title %}
+        				 </a>
+      				 </li>
+      
+         		 {% else %}
+          			 <li>
+       					 <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+          					{% include 'multilang' with child_l.title %}
+        				 </a>
+      				 </li>
+            	 {% endif %}
+                    
+          
+          
+            {% else %}
+					{% if child_l.title=='Designs for Health*' %}
+
+      				 
+      
+         		 {% else %}
+          			 <li>
+       					 <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+          					{% include 'multilang' with child_l.title %}
+        				 </a>
+      				 </li>
+            	 {% endif %}
+            {% endif %}
+               
+    	   {% else %}
+				 {% if child_l.title=='Designs for Health*' %}
+
+      				 
+      
+         		 {% else %}
+          			 <li>
+       					 <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+          					{% include 'multilang' with child_l.title %}
+        				 </a>
+      				 </li>
+            	 {% endif %}
+          {% endif %}
+      
+      
+      
+      
+      
+      
+      
+     
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+
+{% if block_style == 'style_1' %}
+<div class="col-2 text-center">
+  {% capture menu_featured_product_collection %}menu_{{ indexOf }}_featured_product_collection{% endcapture %}
+
+  <div class="widget-featured-product">
+    {% if title_featured_product != blank %}
+    <div class="widget-title">
+      <h3>{% include 'multilang' with title_featured_product %}</h3>
+    </div>
+    {% endif %}
+
+    {% if featured_collection == blank %}
+    <div class="grid-view-item no-product" style ="margin: 0 0 30px;">
+      <a href="#" class="center">
+        <div class="grid-view-item__image">
+          {% capture current %}{% cycle 1 %}{% endcapture %}
+          {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+        <div class="product-title"><span>Your product's name</span></div>
+      </a>
+      <div class="center">
+        <span> $200.00 </span>
+      </div>
+    </div>
+    {% else %}
+    <div class="widget-product">
+      <div class="products-grid">
+        {% capture index %}{{ 'now' | date: '%S' | times: collections[featured_collection].products.size | divided_by: 60 }}{% endcapture %}
+        {% for product in collections[featured_collection].products offset:index limit:1 %}
+        <div class="grid-item">              
+          {%- assign image_size = '170x' -%}
+          {% include 'product-grid-item', grid_image_width: image_size %}
+        </div>
+        {% endfor %}
+      </div> 
+    </div>
+    {% endif %}
+  </div>
+</div>
+<div class="col-3 text-center zi-banner">
+  {% if link_banner_first_style != blank %}
+  <a href="{{ link_banner_first_style }}">
+    {% endif %}
+    <div class="zi-banner-image">
+      {% if banner_first_style != blank %}
+      <img src="{{ banner_first_style | img_url: "original"}}" alt="">
+      {% else %}  
+      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </div>
+    {% if link_banner_first_style %}
+  </a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if block_style == 'style_2' %}
+<div class="col-2 brands_menu">
+  <div class="col-left col-sm-6 zi-banner">
+    <a href="{{ link_banner_second_style }}" title="">
+      <div class="zi-banner-image">
+        {% if banner_second_style != blank %}
+        <img src="{{ banner_second_style | img_url : "224x" }}" alt="" />
+        {% else %}  
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+    </a>
+    <a href="{{ link_banner_third_style }}" title="">
+      <div class="zi-banner-image scnd_img">
+         {% if banner_third_style != blank %}
+        <img src="{{ banner_third_style | img_url : "224x" }}" alt="" />
+        {% else %}  
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+    </a>
+  </div>
+  <div class="col-right col-sm-6 zi-banner">
+    <h3>* = Restricted Access Brands</h3>
+    <a href="{{ link_banner_first_style }}">
+      <div class="zi-banner-image">
+          {% if banner_first_style != blank %}
+        <img src="{{ banner_first_style | img_url: "224x"}}" alt="">
+        {% else %}  
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+    </a>
+  </div>
+</div>
+{% endif %}

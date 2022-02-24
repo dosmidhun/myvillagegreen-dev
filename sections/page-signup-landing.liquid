@@ -1,0 +1,639 @@
+{% if section.settings.enable %}
+<div class="shopify-section signup_banner">
+    <div class="container-fluid">
+        <div class="row"> 
+            <div class="col-sm-6"> 
+                <div class="signup_banner_cont">
+                    {{ section.settings.signup_banner_cont }}
+                </div> 
+            </div> 
+            <div class="col-sm-6">
+                <div class="sign_banner_right">
+                    <img src="https://cdn.shopify.com/s/files/1/0317/4635/9433/files/banner_right.png?v=1630050065">
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+<div id="sign_two_blk">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="are_you_sec clearfix">
+                    <div class="are_inner"> 
+                        {{ section.settings.are_you_sec }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="become_sec clearfix">
+                    <div class="become_inner"> 
+                        {{ section.settings.become_sec }}
+                        <div class="modal fade popup_content" id="membership_popup" role="dialog">
+                            <div class="modal-dialog"> 
+                            <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        {{ section.settings.member_popup_title }} 
+                                    </div>
+                                    <div class="modal-body">
+
+                                        {% unless customer %}
+                                        <div class="login-page" style="display: none;">
+                                              {% comment %}
+                                                If a user has successfully requested a new password, the form.posted_successfully? variable
+                                                is set to true within the 'recover_customer_password' form only. Within that form you'll see
+                                                us assign a variable 'reset_success' to true, which is used in JS to show our success message.
+                                              {% endcomment %}
+                                              
+                                              <div class="note form-success" id="resetSuccess" style="display:none;">
+                                                We've sent you an email with a link to update your password.
+                                              </div>
+                                              
+                                              {% comment %}
+                                                This form must use 'customer_login'
+                                              {% endcomment %}
+                                              {% form 'customer_login' %}
+                                              <input type="hidden" name="checkout_url" value="/pages/signup-landing">
+                                              <header class="page-header">
+                                                <h1 {% if settings.enable_multilang %}data-translate="customer.login.title"{%endif%}>{{ 'customer.login.title' | t }}</h1>
+                                              </header>
+                                              <h6>Enter Your login information.</h6>
+                                              <p>If you are not an existing customer, please <a href="javaScript:void(0)" class="create_acc_btn">Create an account</a></p>
+                                              <div class="custom_acct_out"> 
+                                              {{ form.errors | default_errors }}
+                                              <label for="customer_email"><span {% if settings.enable_multilang %}data-translate="customer.login.email"{%endif%}>{{ 'customer.login.email' | t }}</span><em>*</em></label>
+                                              <input type="email" value="" name="customer[email]" id="customer_email" {% if form.errors contains "email" %}class="error"{% endif %} >
+                                              
+                                              {% if form.password_needed %}
+                                              <label for="customer_password"><span {% if settings.enable_multilang %}data-translate="customer.login.password"{%endif%}>{{ 'customer.login.password' | t }}</span><em>*</em></label>
+                                              <input type="password" value="" name="customer[password]" id="customer_password" {% if form.errors contains "password" %}class="error"{% endif %}>
+                                              {% endif %}
+                                              
+                                              <div class="action-btn">
+                                                <p><input type="submit" {% if settings.enable_multilang %}data-translate="customer.login.login"{%endif%} class="btn" value="{{ 'customer.login.login' | t }}"></p>
+                                                <p class="last">
+                                                  <a href="#" onclick="showRecoverPasswordForm();return false;" {% if settings.enable_multilang %}data-translate="customer.login.forgot_password"{%endif%}>{{ 'customer.login.forgot_password' | t }}</a>
+                                                  <!-- <span>{{ 'cart.label.or' | t }}</span> <a href="{{ shop.url }}" {% if settings.enable_multilang %}data-translate="customer.login.cancel"{%endif%}>{{ 'customer.login.cancel' | t }}</a> -->
+                                                </p>
+                                              </div>
+                                              </div>
+                                              {% endform %}
+                                              
+                                              {% comment %}
+                                                This page uses JavaScript to show/hide the recover password form
+                                              {% endcomment %}
+                                              <div id="recover_password" style="display: none;">
+                                                <header class="page-header">
+                                                  <h2 {% if settings.enable_multilang %}data-translate="customer.recover_password.title"{%endif%}>{{ 'customer.recover_password.title' | t }}</h2>
+                                                </header>
+                                                <p {% if settings.enable_multilang %}data-translate="customer.recover_password.subtext"{%endif%}>{{ 'customer.recover_password.subtext' | t }}</p>
+                                                
+                                                {% comment %}
+                                                  This form must use 'recover_customer_password'
+                                                {% endcomment %}
+                                                {% form 'recover_customer_password' %}
+                                                
+                                                {{ form.errors | default_errors }}
+                                                {% if form.posted_successfully? %}
+                                                {% assign reset_success = true %}
+                                              {% endif %}
+
+                                                {% comment %}
+                                                  form.posted_successfully? is true only inside this form, but we want
+                                                  to show a success message outside of it. To do so, set the variable
+                                                  reset_success to true, then use JS to show our success message above.
+                                                {% endcomment %}
+                                                {% if form.posted_successfully? %}
+                                                  {% assign resetPassword = true %}
+                                                {% endif %}
+                                                
+                                                <label for="recover-email" {% if settings.enable_multilang %}data-translate="customer.recover_password.email"{%endif%}>{{ 'customer.recover_password.email' | t }}</label>
+                                                <input type="email" value="" name="email" id="recover-email" {% if settings.enable_multilang %}data-translate="customer.recover_password.email" translate-item="placeholder" {%endif%} placeholder="{{ 'customer.recover_password.email' | t }}" >
+                                                
+                                                <div class="action-btn">
+                                                  <p><input type="submit" class="btn" {% if settings.enable_multilang %}data-translate="customer.recover_password.submit"{%endif%} value="{{ 'customer.recover_password.submit' | t }}"></p>
+                                                  <span {% if settings.enable_multilang %}data-translate="cart.label.or"{%endif%}>{{ 'cart.label.or' | t }}</span><a href="#" onclick="hideRecoverPasswordForm();return false;" {% if settings.enable_multilang %}data-translate="customer.recover_password.cancel"{%endif%}>{{ 'customer.recover_password.cancel' | t }}</a>
+                                                </div>
+                                                {% endform %}
+                                                
+                                                {% comment %}
+                                                  If accounts are set as optional, the following will be shown as an option
+                                                  during checkout, not on the default /login page.
+                                                {% endcomment %}
+                                                
+                                                {% if shop.checkout.guest_login %}
+                                                <hr>
+                                                <h2 {% if settings.enable_multilang %}data-translate="customer.login.guest_title"{%endif%}>{{ 'customer.login.guest_title' | t }}</h2>
+                                                {% form 'guest_login' %}
+                                                <input type="submit" {% if settings.enable_multilang %}data-translate="customer.login.guest_continue"{%endif%} class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+                                                {% endform %}
+                                                {% endif %}
+                                              </div>
+                                            </div>
+
+
+                                            <div class="create-an-account">
+                                              <header class="page-header">
+                                                <h4 {% if settings.enable_multilang %}data-translate="customer.register.title"{%endif%}>{{ 'customer.register.title' | t }}</h4>
+                                              </header>
+                                              <h6>Fill in the fields below to create an account.</h6>
+                                              <p>If you already have an account, please <a href="javascript:void(0)" class="login_btn">Login</a>.</p>
+                                              {% comment %}
+                                              {% if settings.enable_multilang %}
+                                              <p class="title lang1">{{ settings.register_text_desc | split: '|' | first }}</p>
+                                              <p class="title lang2">{{ settings.register_text_desc | split: '|' | last }}</p>
+                                              {% else %}
+                                              <p class="title">{{ settings.register_text_desc | split: '|' | first }}</p>
+                                              {% endif %}
+                                              {% endcomment %}
+                                              {% comment %}
+                                                This form must use 'create_customer'
+                                              {% endcomment %}
+                                              {% form 'create_customer' %}
+                                                <input type="hidden" name="checkout_url" value="/pages/signup-landing">
+                                              {% include 'form-errors-custom' %}
+                                              <div id="first_name">
+                                                <label for="first_name"><span {% if settings.enable_multilang %}data-translate="customer.register.first_name"{%endif%}>{{ 'customer.register.first_name' | t }}</span></label>
+                                                <input type="text" value="" name="customer[first_name]" id="first_name" {% if form.errors contains "first_name" %}class="error"{% endif %} >
+                                              </div>
+                                              
+                                              <div id="last_name">
+                                                <label for="last_name"><span {% if settings.enable_multilang %}data-translate="customer.register.last_name"{%endif%}>{{ 'customer.register.last_name' | t }}</span></label>
+                                                <input type="text" value="" name="customer[last_name]" id="last_name" {% if form.errors contains "last_name" %}class="error"{% endif %} >
+                                              </div>
+                                              
+                                              <div id="email">
+                                                <label for="email"><span {% if settings.enable_multilang %}data-translate="customer.register.email"{%endif%}>{{ 'customer.register.email' | t }}</span><em>*</em></label>
+                                                <input type="email" value="" name="customer[email]" id="email" {% if form.errors contains "email" %}class="error"{% endif %}  >
+                                              </div>
+                                              
+                                              <div id="create_password">
+                                                <label for="password"><span {% if settings.enable_multilang %}data-translate="customer.register.password"{%endif%}>{{ 'customer.register.password' | t }}</span><em>*</em></label>
+                                                <input type="password" value="" name="customer[password]" id="create_password" {% if form.errors contains "password" %}class="error"{% endif %}>
+                                              </div>
+                                              
+                                              <div class="action-btn">
+                                                <p><input type="submit" {% if settings.enable_multilang %}data-translate="customer.register.submit"{%endif%} value="{{ 'customer.register.submit' | t }}" class="btn"></p>
+                                              </div>
+                                              {% endform %}
+                                            </div>
+
+                                            <script>
+                                              /*
+                                                Show/hide the recover password form when requested.
+                                                I'd suggest using some CSS3 transitions to make this change look cool,
+                                                but this gets the job done for now.
+                                              */
+                                              function showRecoverPasswordForm() {
+                                                document.getElementById('recover_password').style.display = 'block';
+                                                document.getElementById('customer_login').style.display='none';
+                                              }
+
+                                              function hideRecoverPasswordForm() {
+                                                document.getElementById('recover_password').style.display = 'none';
+                                                document.getElementById('customer_login').style.display = 'block';
+                                              }
+
+                                              // Allow deep linking to the recover password form
+                                              if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+                                              // reset_success is only true when the reset form is
+                                              {% if reset_success %}
+                                                document.getElementById('resetSuccess').style.display = 'block';
+                                              {% endif %}
+                                            </script>
+
+                                            {% endunless %}
+
+                                        <div class="prev_steps {% unless customer %}hide{% endunless %}"> 
+                                            {{ section.settings.member_popup_form }} 
+                                            </div>
+                                        <div class="thankyou_content step3">
+                                            <div class="thanku_inner">
+                                                {{ section.settings.member_popup_thankyou }} 
+                                            </div>
+                                            <div class="goto_btn step3"> 
+                                                {% if section.settings.goto_member_btn != blank %}
+                                                <a href="{{ section.settings.goto_member_link }}" class="goto">Go to Member Dashboard</a> 
+                                                {% endif %} 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="modal_ftr_right">
+                                            <button type="button" class="btn btn-default cancel_btn" data-dismiss="modal">Cancel</button>
+                                            {% if customer %}
+                                            <button type="button" class="btn btn-default next_step_btn step1">Next Step</button>
+                                            <button type="button" class="btn btn-default pay_btn step2">Pay</button>
+                                            {% endif %}
+                                        </div> 
+                                        <div class="note_text step2">
+                                            {{ section.settings.member_popup_note }} 
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="sign_three_blk">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>{{ section.settings.benefit_title }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="sign_benfits_pack">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#benefit_pack1">
+                    <img src="{{ section.settings.benefit_pack1 | img_url: 'master' }}" /> 
+                    <h3>{{ section.settings.benefit_pack1_title }}</h3>
+                    {{ section.settings.benefit_pack1_cont }}
+                    </a>
+                    <div class="modal fade score_sec" id="benefit_pack1" role="dialog" style="display: none;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                </div>
+                                <div class="modal-body guidance_cont">
+                                    {{ section.settings.deep_discounts }}  
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="sign_benfits_pack">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#benefit_pack2">
+                    <img src="{{ section.settings.benefit_pack2 | img_url: 'master' }}" /> 
+                    <h3>{{ section.settings.benefit_pack2_title }}</h3>
+                    {{ section.settings.benefit_pack2_cont }}
+                    </a>
+                    <div class="modal fade score_sec" id="benefit_pack2" role="dialog" style="display: none;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                </div>
+                                <div class="modal-body guidance_cont">
+                                    {{ section.settings.vip_support }}  
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="sign_benfits_pack">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#benefit_pack3">
+                    <img src="{{ section.settings.benefit_pack3 | img_url: 'master' }}" /> 
+                    <h3>{{ section.settings.benefit_pack3_title }}</h3>
+                    {{ section.settings.benefit_pack3_cont }}
+                    </a>
+                    <div class="modal fade score_sec" id="benefit_pack3" role="dialog" style="display: none;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                </div>
+                                <div class="modal-body guidance_cont">
+                                    {{ section.settings.personalized_popup }}  
+                                </div> 
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="sign_why">
+    <div class="container"> 
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="sign_why_sec clearfix">
+                    <div class="sign_why_inner are_inner"> 
+                        {{ section.settings.sign_why_sec }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="sign_why_right clearfix">
+                    <div class="sign_why_right_inner"> 
+                        <img src="{{ section.settings.sign_why_image | img_url: 'master' }}" />  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+<div id="join_sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="join_inner">
+                    <h2>{{ section.settings.join_title }}</h2>
+                    <div class="join_cont_inner">
+                        {{ section.settings.join_content }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="your_health" id="humani_sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="title_sec your_top">
+                    <img src="{{ section.settings.sign_humani_image | img_url: 'master' }}" />   
+                    {{ section.settings.sign_humani_content }}
+                </div> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="heakth_left_img">
+                    <img src="{{ section.settings.sign_desktop_image | img_url: 'master' }}" />  
+                </div>
+                <div class="health_btm">
+                    {{ section.settings.sign_humani_btm_cont }} 
+                </div> 
+            </div>
+            <div class="col-sm-6">
+                <div class="health_cont">
+                    {{ section.settings.sign_humani_right_cont }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="sign_question_sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="title_sec your_top">
+                    <h2>{{ section.settings.sign_qtn_title }}</h2>  
+                    {{ section.settings.sign_qtn_content }}
+                </div> 
+            </div>
+        </div> 
+    </div>
+</div>
+
+
+
+{% endif %}
+
+{% style %}
+
+  .modal-backdrop.fade.in {
+    display: none!important;
+
+}
+{% endstyle %}
+{% schema %}
+  {
+    "name": " Signup V2 Landing",
+    "class": "index-section-V2signup index-section--flush",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable",
+            "label": "Enable",
+            "default": true
+        }, 
+        {
+            "type": "image_picker",
+            "id": "signup_banner",
+            "label": "Banner" 
+        },
+        {
+            "type": "html",
+            "id": "signup_banner_cont",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+          "type": "header",
+          "content": { 
+            "en": "Are You Section"
+          }
+        },
+        {
+            "type": "html",
+            "id": "are_you_sec",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+            "type": "html",
+            "id": "become_sec",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+          "type": "header",
+          "content": { 
+            "en": "Membership Form Popup"
+          }
+        },
+        {
+            "type": "html",
+            "id": "member_popup_title",
+            "label": "Member Popup Title",
+            "default": "Title"
+        },
+        {
+            "type": "html",
+            "id": "member_popup_form",
+            "label": "Member Popup Form Steps",
+            "default": "Form Steps"
+        },
+        {
+            "type": "html",
+            "id": "member_popup_thankyou",
+            "label": "Member Popup Thankyou",
+            "default": "Thankyou Steps"
+        },
+        {
+            "type": "text",
+            "id": "goto_member_btn",
+            "label": "Button",
+            "default": "Button"
+        },
+        {
+            "type": "url",
+            "id": "goto_member_link",
+            "label": "Button" 
+        },
+        {
+            "type": "html",
+            "id": "member_popup_note",
+            "label": "Member Popup Note",
+            "default": "Member Popup Note"
+        },
+        {
+            "type": "text",
+            "id": "benefit_title",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "image_picker",
+            "id": "benefit_pack1",
+            "label": "Image" 
+        },
+        {
+            "type": "text",
+            "id": "benefit_pack1_title",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "benefit_pack1_cont",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+            "type": "html",
+            "id": "deep_discounts",
+            "label": "Deep Discounts Popup",
+            "default": "Content"
+        },
+        {
+            "type": "image_picker",
+            "id": "benefit_pack2",
+            "label": "Image" 
+        },
+        {
+            "type": "text",
+            "id": "benefit_pack2_title",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "benefit_pack2_cont",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+            "type": "html",
+            "id": "vip_support",
+            "label": "Vip support popup",
+            "default": "Content"
+        },
+        {
+            "type": "image_picker",
+            "id": "benefit_pack3",
+            "label": "Image" 
+        },
+        {
+            "type": "text",
+            "id": "benefit_pack3_title",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "benefit_pack3_cont",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+            "type": "html",
+            "id": "personalized_popup",
+            "label": "Personalized Guidance popup",
+            "default": "Content"
+        },
+        {
+          "type": "header",
+          "content": { 
+            "en": "Why Become Member?"
+          }
+        },
+        {
+            "type": "html",
+            "id": "sign_why_sec",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+            "type": "image_picker",
+            "id": "sign_why_image",
+            "label": "Image" 
+        },
+        {
+            "type": "text",
+            "id": "join_title",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "join_content",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+            "type": "image_picker",
+            "id": "sign_humani_image",
+            "label": "Image" 
+        },
+        {
+            "type": "html",
+            "id": "sign_humani_content",
+            "label": "Content",
+            "default": "Content"
+        },  
+        {
+            "type": "image_picker",
+            "id": "sign_desktop_image",
+            "label": "Image" 
+        },
+        {
+            "type": "html",
+            "id": "sign_humani_btm_cont",
+            "label": "Content",
+            "default": "Content"
+        },  
+        {
+            "type": "html",
+            "id": "sign_humani_right_cont",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+            "type": "text",
+            "id": "sign_qtn_title",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "sign_qtn_content",
+            "label": "Content",
+            "default": "Content"
+        }
+
+    ],
+    "presets": [
+        {
+            "name": "Signup V2Section",
+            "category": "Advanced layout"
+        }
+    ]
+  }
+{% endschema %}

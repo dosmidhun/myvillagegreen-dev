@@ -1,0 +1,111 @@
+<div class="list-category row list_cat shopby_page">
+  <div class="col-xs-12"> 
+    <div class="shopby_left">
+    <header class="page-header">
+      <h4 {% if settings.enable_multilang %}data-translate="collections.general.title"{%endif%}>Shop All Categories</h4>
+  </header>
+  <header class="page-header">
+      <h5 {% if settings.enable_multilang %}data-translate="collections.general.title"{%endif%}>Health Concern Categories</h5>
+  </header>
+     
+  {% for collection in collections %} 
+    {%- if collection.metafields.accentuate.health !='true' -%} 
+        {%- continue -%}
+    {%- endif -%}
+    <div class="grid-item wow fadeIn col-xs-12 {% if settings.list_collection_results_per_row == "2" %}col-sm-6{% elsif settings.list_collection_results_per_row == "3"%}col-sm-3{% elsif settings.list_collection_results_per_row == "3"%}col-sm-3{% else %}col{% endif%}" data-wow-delay="{{delayTime}}ms">
+      <div class="background_section">
+        <div class="product-top">
+            {% comment %}
+          <a href="{{ collection.url }}" title="{{ collection_title }}">
+            {% if collection.image %}
+            {{ collection.image.src | collection_img_url: 'large' | img_tag: collection_title }}
+            {% else %}
+            {{ collection.products.first.featured_image | product_img_url: 'large' | img_tag: collection_title }}
+            {% endif %}
+            <div class="hover"></div>
+          </a>
+          {% endcomment %}
+          {% comment %}
+          <a href="{{ collection.url }}" class="view">&nbsp;</a>
+          {% endcomment %}
+           
+        
+        <div class="collection-title-wrapper">
+          <div class="collection-title">
+            <h5 class="h5">
+              <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}" {% if settings.enable_multilang %}data-translate="collections.general.link_title|title:{{collection_title}}" translate-item="title"{% endif %}>
+                  {% include 'multilang' with collection.title %}
+              </a>
+            </h5>
+            {% comment %}
+            <p class="count-products" {% if settings.enable_multilang %}data-translate="collections.general.items_with_count|count:{{collection.all_products_count}}"{% endif %}>{{ 'collections.general.items_with_count' | t: count: collection.all_products_count }}</p>
+            <p class="desc">{{ collection.description | strip_html | truncatewords: 14 }}</p>
+        <p><a href="{{ collection.url }}" class="btn" {% if settings.enable_multilang %}data-translate="collections.general.shop_the_collection"{% endif %}>{{ 'collections.general.shop_the_collection' | t }}</a></p>
+            {% endcomment %}
+          </div>
+        </div>
+          </div>
+        </div>
+       </div>
+    
+      {% endfor %}
+      {% comment %}
+      <div class="more_btn">
+        <a href="https://myvillagegreen.myshopify.com/collections/">More Health Concerns</a>
+      </div>
+      {% endcomment %}
+       
+  </div>
+ </div>
+  <div class="col-xs-12"> 
+    <div class="shopby_right"> 
+        <header class="page-header">
+            <h5 {% if settings.enable_multilang %}data-translate="collections.general.title"{%endif%}>Product Type Categories</h5>
+        </header>
+  {% for collection in collections %}
+    {%- if collection.metafields.accentuate.product_type !='true' -%} 
+        {%- continue -%}
+    {%- endif -%}
+    <div class="grid-item wow fadeIn col-xs-12 {% if settings.list_collection_results_per_row == "2" %}col-sm-6{% elsif settings.list_collection_results_per_row == "3"%}col-sm-3{% elsif settings.list_collection_results_per_row == "3"%}col-sm-3{% else %}col{% endif%}" data-wow-delay="{{delayTime}}ms">
+      <div class="background_section">
+        <div class="product-top">
+          {% comment %}
+          <a href="{{ collection.url }}" title="{{ collection_title }}">
+            {% if collection.image %}
+            {{ collection.image.src | collection_img_url: 'large' | img_tag: collection_title }}
+            {% else %}
+            {{ collection.products.first.featured_image | product_img_url: 'large' | img_tag: collection_title }}
+            {% endif %}
+            <div class="hover"></div>
+          </a>
+          {% endcomment %}
+          {% comment %}
+          <a href="{{ collection.url }}" class="view">&nbsp;</a>
+          {% endcomment %}
+        
+        <div class="collection-title-wrapper">
+          <div class="collection-title">
+            <h5 class="h5">
+              <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}" {% if settings.enable_multilang %}data-translate="collections.general.link_title|title:{{collection_title}}" translate-item="title"{% endif %}>
+                  {% include 'multilang' with collection.title %}
+              </a>
+            </h5>
+            {% comment %}
+            <p class="count-products" {% if settings.enable_multilang %}data-translate="collections.general.items_with_count|count:{{collection.all_products_count}}"{% endif %}>{{ 'collections.general.items_with_count' | t: count: collection.all_products_count }}</p>
+            <p class="desc">{{ collection.description | strip_html | truncatewords: 14 }}</p>
+        <p><a href="{{ collection.url }}" class="btn" {% if settings.enable_multilang %}data-translate="collections.general.shop_the_collection"{% endif %}>{{ 'collections.general.shop_the_collection' | t }}</a></p>
+            {% endcomment %}
+          </div>
+        </div>
+          </div>
+        </div>
+       </div>
+  {% endfor %}
+  {% comment %}
+      <div class="more_btn">
+        <a href="https://myvillagegreen.myshopify.com/collections/">More Product Types</a>
+      </div>
+      {% endcomment %}
+  </div>
+ </div>
+</div>

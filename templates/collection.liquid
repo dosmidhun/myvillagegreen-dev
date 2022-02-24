@@ -1,0 +1,19 @@
+<!-- Bold: Memberships (collection) -->
+{% include 'bold_mem_helper' with 'collection' %}
+<!-- end Bold code -->
+<div class="row">
+  {% if settings.display_sidebar_cat_page %}
+  {% include 'collection-sidebar' %}
+  {% endif %}
+  <div class="block-row col-main {% if settings.display_sidebar_cat_page %}col-xs-9{% endif %}">
+    {% section 'collection-header' %}
+    
+    {% comment %}
+      The contents of the collection.liquid template can be found in /sections/collection-template.liquid
+    {% endcomment %}
+    
+    {% section 'collection-template' %}
+
+  </div>
+</div>
+ {% render 'aio_product_recommendation' %}

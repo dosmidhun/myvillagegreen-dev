@@ -1,0 +1,968 @@
+
+<script>  
+  window.use_color_swatch = {{ settings.use_color_swatch }};
+</script>
+<div class="row">
+  {% comment %}
+  {% if settings.display_sidebar_detail_page %}
+  {% include 'product-sidebar' %}
+  {% endif %}
+  {% endcomment %}
+  <div class="{% if settings.display_sidebar_detail_page %}col-xs-12 {% endif %} prdt_single">
+    <div itemscope itemtype="http://schema.org/Product" class="product"> 
+ <div> {{ product.metafields.alireviews.seo_rating_review_key }} </div>
+      <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+      <meta itemprop="image" content="{{ product.featured_image.src | product_img_url: 'grande' }}">
+      <!---PRODUCT FEATURE IMAGE--->
+      <div class="col-xs-5 feature-product-detail">
+        <div class="product-img-box{% if section.settings.style_moreview == 'vertical' and product.images.size > 1 %} has-jcarousel{% endif %}">
+          {% if product.images.size == 0 %}
+          <div class="product-photo-container">
+            <img src="{{ '' | product_img_url: 'grande' }}" alt="">
+          </div>
+          {% else %}
+          <div class="product-photo-container text-center">
+            {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+            {% if product.images.size > 1 and settings.style_moreview == 'vertical' %}
+            <a href="javascript:void(0)" class="featured-image-prev">prev</a>
+            {% endif %}
+            <a href="{{ featured_image | img_url: 'original' }}" >
+              <img id="product-featured-image" src="{{ featured_image | img_url: 'grande' }}" alt="{{ featured_image.alt | escape }}" data-zoom-image="{{ featured_image.src | img_url: 'original' }}"/>
+            </a>
+            
+            {% assign on_sale = false %}
+            {% if product.compare_at_price_min > product.price_min %}
+            {% assign on_sale = true %}
+            {% endif %}
+            {% assign sold_out = true %}
+            {% if product.available  %}
+            {% assign sold_out = false %}
+            {% endif %}
+            {% assign new = false %}
+            {% for tag in product.tags %}
+            {% assign tag_handle = tag | handle %}
+            {% if tag_handle contains 'new' %}
+            {% assign new = true %}
+            {% endif %}
+            {% endfor %}
+            {% if on_sale or sold_out or new %}
+            <div class="product-label">
+              {% if new %}
+              {% for tag in product.tags %}
+              {% assign tag = t | strip %}
+              {% if tag contains 'new' %}
+              <strong class="label new">{% include 'multilang' with tag %}</strong>
+              {% endif %}
+              {% endfor %}
+              {% endif %}
+              {% if on_sale %}
+              <strong class="label" {% if settings.enable_multilang %}data-translate="products.product.sale"{% endif %}>{{ 'products.product.sale' | t }}</strong>
+              {% endif %}
+              {% if sold_out %}
+              <strong class="sold-out-label" {% if settings.enable_multilang %}data-translate="products.product.sold_out"{% endif %}>{{ 'products.product.sold_out' | t }}</strong>
+              {% endif %}
+            </div>
+            {% endif %}
+          
+          </div>
+          {% if product.images.size > 1 %}    
+          <div class="more-view-wrapper more-view{% if product.images.size == 1 %} hidden{% endif %}{% if section.settings.style_moreview == 'vertical' %} vertical{% else %} horizontal{% endif %}">
+            <ul id="more-view-carousel" class="product-photo-thumbs{% if section.settings.style_moreview == 'horizontal' %} owl-carousel{% else %} jcarousel-skin-tango{% endif %}">
+              {% for image in product.images %}
+              <li class="grid-item">
+                <a href="javascript:void(0)" data-image="{{ image.src | product_img_url: 'grande' }}" data-zoom-image="{{ image.src | product_img_url: 'original' }}">
+                  <img src="{{ image.src | product_img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      <!---END PRODUCT FEATURE IMAGE--->
+
+      <!---PRODUCT SHOP--->
+      <div class="col-xs-7 product-shop">
+        <header class="product-title {% if collection.previous_product or collection.next_product and section.settings.display_prev_next_product and collection %}has-btn{% endif %}">
+          {% if section.settings.display_vendor %}
+          <h2 class="product-vendor">
+            <span>{{ product.vendor }}</span></h2>
+          {% endif %}
+          <h1 itemprop="name">
+            {% if settings.enable_multilang %}              
+            <span class="lang1">{{ product.title | split: '|' | first }}</span>
+            <span class="lang2">{{ product.title | split: '|' | last }}</span>
+            {% else %}
+            <span>{{ product.title | split: '|' | first }}</span>
+            {% endif %}
+            {% if product.metafields.ns-description2.description2 !='' %}
+            <br><span class="desc">{{ product.metafields.ns-description2.description2 }}</span>
+            {% endif %}
+          </h1>
+          {% if section.settings.display_prev_next_product and collection %}
+          {% if collection.previous_product %}
+          <a class="prev btn" href="{{ collection.previous_product }}" {% if settings.enable_multilang %}data-translate="collections.toolbar.previous"{%endif%}>{{ 'collections.toolbar.previous' | t }}</a>
+          {% endif %}
+          {% if collection.next_product %}
+          <a class="next btn" href="{{ collection.next_product }}" {% if settings.enable_multilang %}data-translate="collections.toolbar.next"{%endif%}>{{ 'collections.toolbar.next' | t }}</a>
+          {% endif %}
+          {% endif %}
+        </header>
+        {% if section.settings.display_product_reviews %}       
+        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+        {% endif %}
+        {% if product.description contains '[countdown]' %}            
+        {% assign count_down_first = product.description | split:'[/countdown]' | first %}
+        {% assign count_down_final = count_down_first | split:'[countdown]' | last %}
+        <div class="countdown">
+          {% if settings.enable_multilang %}
+          <span class="lang1">{{ section.settings.text_countdown | split: '|' | first }}</span>
+          <span class="lang2">{{ section.settings.text_countdown | split: '|' | last }}</span>
+          {% else %}
+          <span>{{ settings.text_countdown | split: '|' | first }}</span>            
+          {% endif %}
+          <div id="clock"></div>
+        </div>
+        <script>
+          $(document ).ready(function() {
+            $("#clock").countdown('{{ count_down_final }}', function(event) {
+                                  $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+          })
+        </script>
+        {% endif %}
+        {% if section.settings.display_availability or section.settings.display_product_type or section.settings.display_vendor or section.settings.display_sku %}
+        <div class="product-info">
+          
+          {% if product.metafields.ns-size.size != 0 %}
+          <span class="custom">
+            {{ product.metafields.ns-size.size }}
+            
+          {% assign handle = product.metafields.ns-form.form %} {% case handle %}
+          {% when 'AM' %} AMPULES
+          {% when 'AS' %} ATHLETIC SOCKS
+          {% when 'AW' %} ATHLETIC WEAR
+          {% when 'BC' %} BRACE
+          {% when 'BD' %} BANDAGE
+          {% when 'BG' %} BAG
+          {% when 'BK' %} BOOK
+          {% when 'BL' %} BALM
+          {% when 'BR' %} BAR
+          {% when 'BT' %} BOTTLE
+          {% when 'CA' %} CALENDAR
+          {% when 'CD' %} CANDLE
+          {% when 'CL' %} CAPLETS
+          {% when 'CN' %} CONDITIONER
+          {% when 'CP' %} CAPSULES
+          {% when 'CR' %} CREAM
+          {% when 'CT' %} COATED TABLETS
+          {% when 'DF' %} DENTAL FLOSS
+          {% when 'EC' %} ENTERIC COATED
+          {% when 'EP' %} EYE PENCIL
+          {% when 'FD' %} FOOD
+          {% when 'GL' %} GEL
+          {% when 'GM' %} GUM
+          {% when 'IB' %} INCENSE BURNER
+          {% when 'IN' %} INCENSE
+          {% when 'IS' %} INCENSE SACHET
+          {% when 'JW' %} JEWELRY
+          {% when 'KT' %} KIT
+          {% when 'LB' %} LIP BALM
+          {% when 'LG' %} LIP GLOSS
+          {% when 'LL' %} LOOSELEAF
+          {% when 'LP' %} LIP PENCIL
+          {% when 'LQ' %} LIQUID
+          {% when 'LS' %} LIPSTICK
+          {% when 'LT' %} LOTION
+          {% when 'LZ' %} LOZENGE
+          {% when 'MB' %} MAKE-UP BRUSH
+          {% when 'MJ' %} MAG JEWELRY
+          {% when 'ND' %} NEEDLES
+          {% when 'NP' %} NAIL POLISH
+          {% when 'OI' %} OINTMENT
+          {% when 'OL' %} OIL
+          {% when 'PD' %} PAD
+          {% when 'PK' %} PACKETS
+          {% when 'PL' %} PELLETS
+          {% when 'PT' %} PATCH
+          {% when 'PW' %} POWDER
+          {% when 'RO' %} ROLL-ON
+          {% when 'SB' %} SOAPBAR
+          {% when 'SC' %} SACHET
+          {% when 'SE' %} SERUM
+          {% when 'SG' %} SOFTGELS
+          {% when 'SH' %} SHAMPOO
+          {% when 'SL' %} SALT
+          {% when 'SP' %} SPRAY
+          {% when 'SR' %} SYRUP
+          {% when 'ST' %} STICK
+          {% when 'SU' %} SUPPOSITORY
+          {% when 'SV' %} SALVE
+          {% when 'SY' %} SYRINGE
+          {% when 'TB' %} TABLET
+          {% when 'TP' %} TOOTH PASTE
+          {% when 'TR' %} TOOTH BRUSH
+          {% when 'TU' %} TUTORIAL
+          {% when 'VC' %} VEG CAPSULES
+          {% when 'VL' %} VIAL
+          {% when 'VG' %} VEG SOFTGELS
+          {% when 'VT' %} VEG TABLETS
+          {% when 'WF' %} WAFER
+		  {% endcase %}
+          </span> <br> <br>
+          {% endif %}
+          
+          {% if section.settings.display_sku %}
+          {% assign current_variant = product.selected_or_first_available_variant %}
+          {% if current_variant.sku == blank    %}
+          {% else %}
+          {% if settings.enable_multilang %}
+          <label class="lang1">{{ section.settings.text_sku | split: '|' | first }}</label>
+          <label class="lang2">{{ section.settings.text_sku | split: '|' | last }}</label>
+          {% else %}
+          <label>{{ section.settings.text_sku | split: '|' | first }}</label>
+          {% endif %}
+          <span class="variant-sku">{{ current_variant.sku }}</span>
+          {% endif %}
+          {% endif %}
+          {% if section.settings.display_availability %}
+          <p class="product-inventory">
+            {% if section.settings.text_availability != blank %}
+            {% if settings.enable_multilang %}
+            <label class="lang1">{{ section.settings.text_availability | split: '|' | first }}</label>
+            <label class="lang2">{{ section.settings.text_availability | split: '|' | last }}</label>
+            {% else %}
+            <label>{{ section.settings.text_availability | split: '|' | first }}</label>
+            {% endif %}
+            {% endif %}
+            <span>
+              {% if product.selected_or_first_available_variant.inventory_management %}
+              {% assign first_inventory = product.selected_or_first_available_variant.inventory_quantity %}
+              {% if first_inventory > 0 %}
+              {{first_inventory}} {{ 'products.product.in_stock' | t }}
+              {% else %}
+              {{ 'products.product.out_of_stock' | t }}
+              {% endif %}
+              {% else %}
+              {{ 'products.product.many_in_stock' | t }}
+              {% endif %}
+            </span>
+          </p>
+          {% endif %}
+          {%if section.settings.display_product_type %}
+          <p class="product-type">
+            {% if section.settings.display_product_type != blank %}
+            {% if settings.enable_multilang %}
+            <label class="lang1">{{ section.settings.text_product_type | split: '|' | first }}</label>
+            <label class="lang2">{{ section.settings.text_product_type | split: '|' | last }}</label>
+            {% else %}
+            <label>{{ section.settings.text_product_type | split: '|' | first }}</label>
+            {% endif %}
+            {% endif %}  
+            <span>{{ product.type }}</span>
+          </p>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% if product.description contains '[countdown]' %}
+        {% assign des = product.description | split:'[/countdown]' | last %}
+        {% if des contains '[custom-tab]'%}
+        {% assign des = des | split:'[/custom-tab]' | last %}
+        {% endif %}
+        {% else %}
+        {% assign des = product.description %}
+        {% if des contains '[custom-tab]'%}
+        {% assign des = des | split:'[/custom-tab]' | last %}
+        {% endif %}
+        {% endif %} 
+        {% if section.settings.show_desc == 'short' %}
+        {% if settings.enable_multilang %}
+        <div class="short-description">
+          <div class="lang1">{{ des | split: '[lang2]' | first | truncatewords: 30 }}</div>
+          <div class="lang2">{{ des | split: '[lang2]' | last | truncatewords: 30 }}</div>
+        </div>
+        {% else %}
+        <div class="short-description">{{ des | split: '[lang2]' | first | truncatewords: 30 }}</div>
+        {% endif %}
+        {% elsif section.settings.show_desc == 'full' %}
+        {% if settings.enable_multilang %}
+        <div class="short-description">
+          <div class="lang1">{{ des | split: '[lang2]' | first }}</div>                
+          <div class="lang2">{{ des | split: '[lang2]' | last }}</div>
+        </div>
+        {% else %}
+        <div class="short-description">{{ des | split: '[lang2]' | first }}</div>                
+        {% endif %}
+        {% endif %}
+
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+          <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form">
+            <!-- Custom Fields for Invoice Packing Slips -->
+            <input type="hidden" id="form" name="properties[Form]" value="{{ product.metafields.ns-form.form }}" />
+            <input type="hidden" id="size" name="properties[Size]" value="{{ product.metafields.ns-size.size }}" />
+            <!-- End Custom Fields for Invoice Packing Slips -->
+            <div id="product-variants">
+              {% assign variantCount = product.variants | size %}
+              {% if product.available %} 
+              {% if variantCount > 1 %} 
+              <select id="product-selectors" name="id" style="display:none">
+                {% for variant in product.variants %}
+                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+                {% endfor %}
+              </select>
+              {% if settings.use_color_swatch %}
+              {% for option in product.options %}
+              {% include 'swatch' with option %}
+              {% endfor %}
+              {% endif %}
+              {% else %}
+              <input type="hidden" name="id" value="{{ product.variants[0].id }}" />
+              {% endif %}
+              {% endif %}
+            </div>
+            <div class="prices">
+              {% if product.compare_at_price > product.price %}
+              <span class="compare-price">{{ product.compare_at_price_max | money }}</span>
+              <span class="price on-sale money" itemprop="price" data-product-id="{{ product.id }}">{{ product.price | money }}</span>
+              {% else %}
+              <span class="price money" itemprop="price" data-product-id="{{ product.id }}">{{ product.price | money }}</span>
+              {% endif %}
+            </div>
+            
+            {% assign lab_test = false %}
+            {% if product.vendor == 'LAB TEST' %}
+               {% assign lab_test = true %}
+            {% endif %}
+
+            {% if lab_test == true %}
+            <h3>Patient & Practitioner Information</h3>
+            <p>Please fill out the information below to add to cart.</p>
+            <div class="repeater">
+              	<div data-repeater-list="properties">
+                  <div data-repeater-item class="repeater_item">
+                      <p class="line-item-property__field">
+                        <label for="patient-fname">Patient First Name <span>*</span></label> <br>
+                        <input class="patient_info" type="text" name="properties[FirstName]" onchange="check_filled()" required>
+                      </p>
+                      <p class="line-item-property__field">
+                        <label for="patient-lname">Patient Last Name <span>*</span></label> <br>
+                        <input class="patient_info" type="text" name="properties[LastName]" onchange="check_filled()" required>
+                      </p>
+                      <p class="line-item-property__field">
+                        <label for="patient-dob">Patient Birth Date(MM/DD/YYYY) <span>*</span></label> <br>
+                        <input class="patient_info datepicker" type="text" name="properties[DateOfBirth]" maxlength="10" onchange="check_filled()" required>
+                      </p>
+                      <p class="line-item-property__field">
+                        <label for="patient-gender">Patient Gender <span>*</span></label> <br>
+                        <label><input onchange="check_filled()" type="radio" name="properties[Gender]" value="Male" required> Male </label><br>
+                        <label><input onchange="check_filled()" type="radio" name="properties[Gender]" value="Female" required> Female </label>
+                      </p>
+                     <p><a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
+                       <i class="fa fa-close"></i> Delete</a></p>
+                    <hr>
+             	 </div>
+              </div>
+              
+              <a href="javascript:;" data-repeater-create class="btn btn-success">
+                                                <i class="fa fa-plus"></i> Add More</a>
+            </div>
+            {{ 'bootstrap-datepicker3.min.css' | asset_url | stylesheet_tag }}
+            {{ 'bootstrap-datepicker.min.js'  | asset_url | script_tag }}
+
+            <script>
+              $(document).ready( function() {
+                $(function() {
+                  $(".datepicker").datepicker( {
+                    dateFormat: 'mm/dd/yyyy',
+                    autoclose:true
+                  } );
+
+                  
+                });
+              });
+
+              function check_filled()
+              {
+                var f = 0;
+                $(".patient_info").each(function(){
+
+                      if($(this).val()=="")
+                      {
+                        f=1;
+                      }
+
+                      console.log($(this).val());
+                  });
+
+                if($('form input[type="radio"]:checked').length <= 0)
+                {
+                  f= 1;
+                }
+
+                if(f==0)
+                {
+                  $("#product-add-to-cart").prop("disabled",false);
+                }
+                else
+                {
+                  $("#product-add-to-cart").prop("disabled",true);
+                }
+
+
+              }
+            </script>
+
+            {% endif %}
+            
+            {% if product.available %} 
+            <label for="quantity" {% if settings.enable_multilang %}data-translate="cart.label.quantity"{%endif%}>{{ 'cart.label.quantity' | t }}: </label>
+            <div class="dec button">-</div>
+            <input type="text" id="quantity" name="quantity" value="1">
+            <div class="inc button">+</div>
+            <script>
+              jQuery(".button").on("click", function() {
+                var oldValue = jQuery("#quantity").val(),
+                    newVal = 1;
+                if (jQuery(this).text() == "+") {
+                  newVal = parseInt(oldValue) + 1;
+                } else if (oldValue > 1) {
+                  newVal = parseInt(oldValue) - 1;
+                }
+                jQuery("#quantity").val(newVal);
+                {% if section.settings.display_subtotal and product.available %} 
+                updatePricing();
+                {% endif %}
+              });
+            </script>
+            {% if section.settings.display_subtotal and product.available %} 
+            {% comment %}
+            <div class="total-price">
+              <label><b {% if settings.enable_multilang %}data-translate="cart.general.subtotal"{%endif%}>{{ 'cart.general.subtotal' | t }}</b>:</label><span>{{ product.price | money }}</span>
+            </div>
+            
+            {% endcomment %}
+            {% endif %}
+            <input type="submit" name="add" {% if content_for_header contains '.mageworx.com\/groupedproducts\/source.js?' and product.tags contains 'mw_grouped_product' %}disabled="disabled"{% endif %} class="btn" {% if settings.enable_multilang %}data-translate="products.product.add_to_cart"{%endif%} id="product-add-to-cart" value="{{ 'products.product.add_to_cart' | t }}">
+            {% else %} 
+            <input type="submit" name="add" {% if content_for_header contains '.mageworx.com\/groupedproducts\/source.js?' and product.tags contains 'mw_grouped_product' %}disabled="disabled"{% endif %} class="btn" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{%endif%} id="product-add-to-cart" disabled value="{{ 'products.product.unavailable' | t }}">          
+            {% endif %}
+          </form>            
+        </div>
+<!--         {% include 'wishlist-product' %} -->
+        {% if section.settings.display_product_detail_tag %}         
+        <div class="tags">
+          <strong class="icon-tags" {% if settings.enable_multilang %}data-translate="blogs.article.tags"{%endif%}>{{ 'blogs.article.tags' | t }}:</strong> 
+          {% for tag in product.tags %}
+          <span class="separator">/</span>
+          <a href="/collections/all/{{ tag | handle }}" rel="tag">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {%if section.settings.display_product_detail_share %}
+        <div class="sharebox">
+          <div class="addthis_inline_share_toolbox"></div>
+        </div>
+        {%endif%}
+
+         	 <div class="fr-view">
+      		{{ product.metafields.accentuate.brand_images }}
+   			</div>
+       
+        
+        
+      </div>
+      <!---END PRODUCT SHOP--->
+    </div>
+ </div>
+</div>
+
+{% for c in product.collections %}
+	{% if c.handle == "lab-tests" %}
+	{% assign is_lab_tests = true %}
+	{% break %}
+    {% endif %}
+{% endfor %}
+
+<div class="row">
+	<div class="{% if is_lab_tests %} col-xs-8 {% else %}col-xs-12{% endif%}">
+    <!--TAB VERTICAL-->
+    {% if section.settings.show_tab == 'vertical' %}            
+    {% include 'product-tab-vertical' %}        
+    {% endif %}
+    <!--TAB HORIZONTAL-->
+    {% if section.settings.show_tab == 'horizontal' %}
+    {% include 'product-tab-horizontal' %}
+    {% endif %}
+    </div>
+    {% if is_lab_tests %}
+    <div class="col-xs-4">
+		<div class="lab_sidebar">
+			<div class="product-view-block-right">
+				<h2>Types of Lab Tests</h2>
+				<ul>
+				<li><a href="/collections/lab-tests/products/adrenal-stress-profile"> Adrenal Stress Profile »</a></li>
+				<li><a href="/collections/lab-tests/products/anemia-panel"> Anemia Panel »</a></li>
+				<li><a href="/products/arthritis-and-bone-health-panel"> Arthritis &amp; Bone Health Panel »</a></li>
+				<li><a href="https://myvillagegreen.myshopify.com/collections/lab-tests/products/athletic-performance-panel"> Athletic Performance Panel »</a></li>
+				<li><a href="/products/brain-chemistry-panel">Brain Chemistry »</a></li>
+				<li><a href="/collections/lab-tests/products/diabetes-panel">Diabetes Panel »</a></li>
+				<li><a href="/collections/lab-tests/products/digestive-health-panel">Digestive Health »</a></li>
+				<li><a href="/products/food-sensitivity-dbs">Food Sensitivity »</a></li>
+				<li><a href="/collections/lab-tests/products/mens-wellness-panel">Men's Wellness Panel »</a></li>
+				<li><a href="/products/minerals-and-toxic-metals">Minerals &amp; Toxic Metals »</a></li>
+				<li><a href="/collections/lab-tests/products/organic-acids-test">Organic Acids Test »</a></li>
+				<li><a href="/products/thyroid-analysis">Thyroid Analysis »</a></li>
+				<li><a href="/collections/lab-tests/products/womens-wellness-panel">Women's Wellness Panel »</a></li>
+				</ul>
+			</div>
+			<div class="product-view-block-right">
+				<h2><a href="/collections/how-it-works">How It Works</a></h2>
+				<p>Order lab tests online and learn valuable information about your health status in a timely and convenient manner. <a href="/collections/how-it-works">»</a></p>
+			</div>
+			<div class="product-view-block-right">
+				<h2><a href="https://www.labcorp.com/wps/portal/findalab" target="_blank">Find a Lab Near You</a></h2>
+				<p>Locate a convenient LabCorp Patient Service Center close to you. <a href="https://www.labcorp.com/wps/portal/findalab">»</a></p>
+			</div>
+			<div class="product-view-block-right">
+				<h2><a href="/collections/frequently-asked-questions">FAQs</a></h2>
+				<p>Answers to frequently asked questions. <a href="/collections/frequently-asked-questions">»</a></p>
+			</div>
+			<div class="product-view-block-right">
+				<h2><a href="mailto:info@myvillagegreen.com?subject=Lab%20test%20question">Contact Us</a></h2>
+				<p>For personalized health service, <a href="mailto:margo@myvillagegreen.com?subject=Lab%20test%20question">email</a> a Village Green nutritionist or call 800-869-9159.</p>
+			</div>
+		</div>  
+    </div>
+     {% endif %}
+  </div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+	{% comment %}
+    <!--RELATED PRODUCT-->
+    {% if settings.display_related_products %} 
+    {% if settings.related_products_type == "tags" %}
+    {% include 'related-products-by-tags' %}
+    {% else %}
+    {% include 'related-products' %}
+    {% endif %}
+    {% endif %}
+    {% endcomment %}
+  </div>
+</div>
+ 
+{%if section.settings.addthis-code !=blank %}
+{{section.settings.addthis-code}}
+{%else%}
+<!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-59776b756709f796"></script>
+{%endif%}
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+
+{% schema %}
+  {
+    "name": "Product pages",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Moreview"
+      },
+	  {
+        "type": "radio",
+        "id": "style_moreview",
+        "label": "Type of Moreview",
+        "options": [
+          {
+            "value": "horizontal",
+            "label": "Horizontal Moreview"
+          },
+          {
+            "value": "vertical",
+            "label": "Vertical Moreview"
+          }
+        ],
+        "default": "vertical"
+      },
+      {
+        "type": "header",
+        "content": "Details"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_prev_next_product",
+        "label": "Display Prev\/Next Product?",
+        "default": true
+      },
+      
+	{
+        "type": "checkbox",
+        "id": "display_vendor",
+        "label": "Display Vendor?",
+        "default": true
+      },
+	{
+        "type": "checkbox",
+        "id": "display_sku",
+        "label": "Display SKU?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "text_sku",
+        "label": "Text SKU",
+        "default": "SKU"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_availability",
+        "label": "Display Availability?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "text_availability",
+        "label": "Text Availability",
+        "default": "Availability"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_product_type",
+        "label": "Display Product Type?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "text_product_type",
+        "label": "Text Product Type",
+        "default": "Product Type"
+      },
+      
+      {
+        "type": "text",
+        "id": "text_countdown",
+        "label": "Text Countdown",
+        "default": "Limited-Time Offers, End in:"
+      },
+      {
+        "type": "radio",
+        "id": "show_desc",
+        "label": "Short description",
+        "options": [
+          {
+            "value": "no-show",
+            "label": "No"
+          },
+          {
+            "value": "short",
+            "label": "Yes"
+          },
+          {
+            "value": "full",
+            "label": "Show Full Description"
+          }
+        ],
+        "default": "short"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_subtotal",
+        "label": "Display Subtotal?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "display_product_detail_tag",
+        "label": "Display Tags?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "display_product_detail_share",
+        "label": "Display Product Share?",
+        "default": true
+      },
+     
+      {
+        "type": "textarea",
+        "id": "addthis-code",
+        "label": "Addthis code"
+      },
+      {
+        "type": "radio",
+        "id": "show_tab",
+        "label": "Horizontal Tab or Vertical Tab",
+        "options": [
+          {
+            "value": "horizontal",
+            "label": "Horizontal Tab"
+          },
+          {
+            "value": "vertical",
+            "label": "Vertical Tab"
+          }
+        ],
+        "default": "horizontal"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_product_detail_description",
+        "label": "Display Product Description?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "product_description_title",
+        "label": "Product Description Title",
+        "default": "Product Description"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_custom_tab",
+        "label": "Display Custom Tab?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "custom_tab_title",
+        "label": "Custom Tab Title",
+        "default": "Shipping & Returns"
+      },
+      {
+        "type": "textarea",
+        "id": "custom_tab_content",
+        "label": "Custom Tab HTML Code"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_size_chart",
+        "label": "Display Size Chart?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "custom_size_chart_title",
+        "label": "Custom Size Chart Title",
+        "default": "Size Chart"
+      },
+      {
+        "type": "image_picker",
+        "id": "custom_size_chart",
+        "label": "Size Chart Image"
+      },
+      {
+        "type": "textarea",
+        "id": "custom_size_chart_content",
+        "label": "Custom Size Chart Content"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_product_reviews",
+        "label": "Display Product Reviews?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "product_review_title",
+        "label": "Product Reviews Title",
+        "default": "Customer Reviews"
+      } 
+    ]
+  }
+{% endschema %}
+
+<script>
+  //Shopify.Image.preload({{ product.images | json }}, 'grande');
+
+  {% if section.settings.display_subtotal and product.available %} 
+  //update price when changing quantity
+  function updatePricing() {
+    //try pattern one before pattern 2
+    var regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;
+    var unitPriceTextMatch = jQuery('.product .price').text().match(regex);
+   
+    if (!unitPriceTextMatch) {
+      regex = /([0-9]+[.|,][0-9]+)/g;
+      unitPriceTextMatch = jQuery('.product .price').text().match(regex);     
+    }
+   
+    if (unitPriceTextMatch) {
+      var unitPriceText = unitPriceTextMatch[0];     
+      var unitPrice = unitPriceText.replace(/[.|,]/g,'');
+      var quantity = parseInt(jQuery('#quantity').val());
+      var totalPrice = unitPrice * quantity;
+
+      var totalPriceText = Shopify.formatMoney(totalPrice, window.money_format);
+      regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;     
+      if (!totalPriceText.match(regex)) {
+        regex = /([0-9]+[.|,][0-9]+)/g;
+      } 
+      totalPriceText = totalPriceText.match(regex)[0];
+
+      var regInput = new RegExp(unitPriceText, "g"); 
+      var totalPriceHtml = jQuery('.product .price').html().replace(regInput ,totalPriceText);
+
+      jQuery('.product .total-price span').html(totalPriceHtml);     
+    }
+  }
+
+  jQuery('#quantity').on('change', updatePricing);
+  {% endif %}
+  
+var selectCallback = function(variant, selector) {
+
+  
+  
+  var addToCart = jQuery('#product-add-to-cart'),
+      productPrice = jQuery('.product .price'),
+      comparePrice = jQuery('.product .compare-price');  
+  
+  if (variant) {
+    if (variant.available) {
+      // We have a valid product variant, so enable the submit button
+      addToCart.removeClass('disabled').removeAttr('disabled').val(window.inventory_text.add_to_cart);
+
+    } else {
+      // Variant is sold out, disable the submit button
+      addToCart.val(window.inventory_text.sold_out).addClass('disabled').attr('disabled', 'disabled');
+    }
+
+    // Regardless of stock, update the product price
+    productPrice.html(Shopify.formatMoney(variant.price, "{{ shop.money_format }}"));
+	if (variant) {
+  	$('.variant-sku').text(variant.sku);
+	}
+    else {
+      $('.variant-sku').empty();
+    }	
+    // Also update and show the product's compare price if necessary
+    if ( variant.compare_at_price > variant.price ) {
+      productPrice.addClass("on-sale")
+      comparePrice
+        .html(Shopify.formatMoney(variant.compare_at_price, "{{ shop.money_format }}"))
+        .show();
+    } else {
+      comparePrice.hide();
+      productPrice.removeClass("on-sale");
+    }
+    {% if settings.use_color_swatch %}
+    // BEGIN SWATCHES
+      var form = jQuery('#' + selector.domIdPrefix).closest('form');
+      for (var i=0,length=variant.options.length; i<length; i++) {
+        var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + variant.options[i] +'"]');
+        if (radioButton.size()) {
+          radioButton.get(0).checked = true;
+        }
+      }
+     // END SWATCHES
+     {% endif %}
+  
+    {% if section.settings.display_subtotal and product.available %}  
+     updatePricing();
+     {% endif %}
+  
+    {% if settings.enable_multiple_currencies %}
+    Currency.convertAll('{{ shop.currency }}', jQuery('#currencies').val(), 'span.money', 'money_format');
+    {% endif %}
+          
+  } else {
+    // The variant doesn't exist. Just a safeguard for errors, but disable the submit button anyway
+    addToCart.val(window.inventory_text.unavailable).addClass('disabled').attr('disabled', 'disabled');
+  }
+
+  //update variant inventory
+  {% if section.settings.display_availability %}
+  if (variant.available) {
+    if (variant.inventory_management!=null) {
+      jQuery(".product-inventory span").text(variant.inventory_quantity + " " + window.inventory_text.in_stock);
+    } else {
+      jQuery(".product-inventory span").text(window.inventory_text.many_in_stock);
+    }
+  } else {
+    jQuery(".product-inventory span").text(window.inventory_text.out_of_stock);
+  }
+  {% endif %}
+                                           
+    /*begin variant image*/
+  if (variant && variant.featured_image) {
+      var originalImage = jQuery("#product-featured-image");
+      var newImage = variant.featured_image;
+      var element = originalImage[0];
+      Shopify.Image.switchImage(newImage, element, function (newImageSizedSrc, newImage, element) {
+        jQuery('#more-view-carousel img').each(function() {
+          var grandSize = jQuery(this).attr('src');
+          grandSize = grandSize.replace('compact','grande');
+          if (grandSize == newImageSizedSrc) {
+            jQuery(this).parent().trigger('click');              
+            return false;
+          }
+        });
+      });
+  }
+  /*end of variant image*/
+};
+
+jQuery(function($) {
+  {% if product.available and product.variants.size > 1 %}
+    new Shopify.OptionSelectors('product-selectors', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback, 
+    enableHistoryState: true
+    });   
+     
+     {% comment %}
+     Use color swatch and linked options (copyright by @carolineschnapp)
+     {% endcomment %}
+     {% if settings.use_color_swatch and product.available and product.options.size > 1 %}
+     Shopify.linkOptionSelectors({{ product | json }});
+     {% endif %} 
+     
+     {% if settings.use_color_swatch != true %}
+      jQuery('.single-option-selector').selectize();
+      jQuery('.selectize-input input').attr("disabled","disabled");
+     {% endif %}
+
+   {% endif %}
+  
+  // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+  {% if product.options.size == 1 and product.options.first != 'Title' %}
+    $('.selector-wrapper:eq(0)').prepend('<label>{{ product.options.first }}</label>');
+  {% endif %}
+
+  // Hide selectors if we only have 1 variant and its title contains 'Default'.
+  {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+    $('.selector-wrapper').hide();
+  {% endif %}
+
+  // Auto-select first available variant on page load. Otherwise the product looks sold out.
+  {% assign found_one_in_stock = false %}
+  {% for variant in product.variants %}
+    {% if variant.available and found_one_in_stock == false %}
+      {% assign found_one_in_stock = true %}
+      {% for option in product.options %}
+      $('.single-option-selector:eq({{ forloop.index0 }})').val({{ variant.options[forloop.index0] | json }}).trigger('change');
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  
+  {% if section.settings.display_product_reviews %}  
+    var reviewsTimeout = setInterval(function() {
+      if (jQuery(".spr-badge-caption").length>0) {
+    jQuery(".spr-badge-caption").on('click', function() {
+          jQuery('html,body').animate({
+            scrollTop: jQuery(".panel:last").offset().top},
+              '400');
+          jQuery("#collapse-tab4").collapse('show');
+        });
+        clearInterval(reviewsTimeout);
+      }
+    },1000);
+    
+  {% endif %}
+ 
+});
+</script>

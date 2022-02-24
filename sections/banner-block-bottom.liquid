@@ -1,0 +1,223 @@
+{% if section.settings.enable %}
+<div class="shopify-section banner-home-bottom excluisve_content">
+  <div class="container">
+    <div class="row"> 
+      <div class="banner_4_block_cont"> 
+         {{ section.settings.excluisve_content }}
+      </div>
+        <ul class="clearfix">
+          <li class="col-xs-6 col-sm-6 zi-banner-1 zi-banner-image-1 wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load }}ms">
+            <div class="zi-banner left_sec">
+              
+                <div class="zi-banner-image">
+                  {% if section.settings.image != blank %}
+                  {%- assign img_url = section.settings.image | img_url: '590x' -%}
+                  <a href="{{ section.settings.link }}">
+                  <img src="{{ img_url }}" alt="{{ section.settings.image.alt }}">
+                  </a>
+                  {% else %} 	
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
+                  <div class="exclsv_inner">
+                     <img src="{{ section.settings.exclusive_inner_img1 | img_url: 'master' }}" alt=" ">
+                   {{ section.settings.excluisve_left_content }}
+                  </div>
+                </div>
+                {% if section.settings.two_block_heading_banner != bank  %}
+                <div class="des-banner">
+                  <div class="wrap-inner">
+                    <div class="inner">
+                      <h3 style="{% if section.settings.two_block_heading_size != blank %}font-size: {{ section.settings.two_block_heading_size }}px;{% endif %}{% if section.settings.two_block_heading_color != blank %}color: {{ section.settings.two_block_heading_color }};{% endif %}">
+                        {% include 'multilang' with section.settings.two_block_heading_banner %}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+             
+            </div>
+          </li>
+          <li class="col-xs-6 col-sm-6 zi-banner-1 zi-banner-image-2 wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load }}ms">
+            <div class="zi-banner right_sec">
+              
+                <div class="zi-banner-image">
+                  {% if section.settings.image_1 != blank %}
+                  {%- assign img_url = section.settings.image_1 | img_url: '590x' -%}
+                  <a href="{{ section.settings.link_1 }}">
+                  <img src="{{ img_url }}" alt="{{ section.settings.image_1.alt }}">
+                  </a>
+                  {% else %} 	
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
+                  <div class="exclsv_inner">
+                     <img src="{{ section.settings.exclusive_inner_img2 | img_url: 'master' }}" alt=" ">
+                    {{ section.settings.excluisve_right_content }}
+                  </div>
+                </div>
+                {% if section.settings.two_block_heading_banner_1 != bank  %}
+                <div class="des-banner">
+                  <div class="wrap-inner">
+                    <div class="inner">
+                      <h3 style="{% if section.settings.two_block_heading_size_1 != blank %}font-size: {{ section.settings.two_block_heading_size_1 }}px;{% endif %}{% if section.settings.two_block_heading_color_1 != blank %}color: {{ section.settings.two_block_heading_color_1 }};{% endif %}">
+                        {% include 'multilang' with section.settings.two_block_heading_banner_1 %}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              
+            </div>
+          </li>
+          
+        </ul>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% schema %}
+  {
+    "name": " Banner Block Bottom",
+    "class": "index-section-block index-section--flush",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable",
+        "label": "Enable",
+        "default": true
+      },
+  
+      {
+      	"type": "image_picker",
+         "id": "image",
+         "label": "Banner #1",
+		 "info": "590px wide by 350px high recommended"
+      },
+      {
+         "type": "text",
+         "id": "two_block_heading_banner",
+         "label": "Heading Banner 1",
+         "default": "Bras"
+      },
+      {
+         "type": "color",
+         "id": "two_block_heading_color",
+         "label": "Heading Banner Color 1",
+         "default": "#fff",
+         "info": "Default Value: #fff"
+       },
+       {
+         "type": "text",
+         "id": "two_block_heading_size",
+         "label": "Heading Banner Size 1",
+         "default": "24",
+         "info": "Default Value: 24"
+       },      
+       {
+         "type": "url",
+         "id": "link",
+         "label": "Link banner 1",
+         "info": "Optional"
+       },
+      {
+      	"type": "image_picker",
+         "id": "image_1",
+         "label": "Banner 2",
+		 "info": "590px wide by 350px high recommended"
+      },
+      {
+         "type": "text",
+         "id": "two_block_heading_banner_1",
+         "label": "Heading Banner 2",
+         "default": "Show Now"
+      },
+      {
+         "type": "color",
+         "id": "two_block_heading_color_1",
+         "label": "Heading Banner Color 2",
+         "default": "#fff",
+         "info": "Default Value: #fff"
+       },
+       {
+         "type": "text",
+         "id": "two_block_heading_size_1",
+         "label": "Heading Banner Size 2",
+         "default": "24",
+         "info": "Default Value: 24"
+       },      
+       {
+         "type": "url",
+         "id": "link_1",
+         "label": "Link banner 2",
+         "info": "Optional"
+       },
+		{
+      	"type": "image_picker",
+         "id": "image_3",
+         "label": "Banner #3",
+		 "info": "1200px wide by 350px high recommended"
+      },
+      {
+         "type": "text",
+         "id": "two_block_heading_banner_3",
+         "label": "Heading Banner 3",
+         "default": "Show Now"
+      },
+      {
+         "type": "color",
+         "id": "two_block_heading_color_3",
+         "label": "Heading Banner Color 3",
+         "default": "#fff",
+         "info": "Default Value: #fff"
+       },
+       {
+         "type": "text",
+         "id": "two_block_heading_size_3",
+         "label": "Heading Banner Size 3",
+         "default": "24",
+         "info": "Default Value: 24"
+       },      
+       {
+         "type": "url",
+         "id": "link_3",
+         "label": "Link banner 3",
+         "info": "Optional"
+       },
+	   {
+          "type": "html",
+          "id": "excluisve_content",
+          "label": "Text",
+          "default": "text"
+       },
+	   {
+        "type": "image_picker",
+        "id": "exclusive_inner_img1",
+        "label": "Upload a new image"
+      	},
+		{
+        "type": "image_picker",
+        "id": "exclusive_inner_img2",
+        "label": "Upload a new image"
+      	},
+		{
+          "type": "html",
+          "id": "excluisve_left_content",
+          "label": "Text",
+          "default": "text"
+       },
+	   {
+          "type": "html",
+          "id": "excluisve_right_content",
+          "label": "Text",
+          "default": "text"
+       }
+	   
+	],
+    "presets": [
+          {
+            "name": "Banner Block Bottom",
+            "category": "Advanced layout"
+          }
+        ]
+  }
+{% endschema %}

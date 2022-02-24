@@ -1,0 +1,172 @@
+{%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+
+{%- assign pageUrl = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'.myshopify.com' | last |
+   replace:'\/','/' | 
+   replace:'%20',' ' | 
+   replace:'\u0026','&'
+-%}
+
+{%- assign pageQuerystring = pageUrl | split:'?' | last -%}
+{% if search.performed %}
+
+{% if section.settings.layout == 'grid' %}
+  {%- assign limit = section.settings.grid | times: section.settings.rows -%}
+{% else %}
+  {% if section.settings.collection_results_per_page != blank %}
+	{%- assign limit = section.settings.collection_results_per_page -%}
+  {% else %}
+  	{%- assign limit = 12 -%}
+  {% endif %}
+{% endif %}
+
+{% paginate search.results by limit %}
+
+{% if search.results_count == 0 %}
+<header class="page-header">
+  <h1>{{ 'general.search.no_results_html' | t: terms: search.terms }}</h1>
+</header>
+{% else %}
+<header class="page-header">
+  <h1>{{ 'general.search.results_for_html' | t: terms: search.terms }}</h1>
+</header>
+
+<div class="block-row">     
+   {% if pageQuerystring contains "type=article" %}
+       {% for item in search.results %}
+  <!-- Bold: Memberships (search) -->
+{% include 'bold_mem_helper' with 'search' %}
+<!-- end Bold code -->
+{%- include 'bold-product' with item, hide_action: 'skip' -%}
+        {% include 'search-blog' %}
+       {% endfor %}
+  {% else %}
+      {% if section.settings.layout == 'list' %}
+      <div class="product-list">
+        {% for item in search.results %}
+        <!-- Bold: Memberships (search) -->
+{% include 'bold_mem_helper' with 'search' %}
+<!-- end Bold code -->
+{%- include 'bold-product' with item, hide_action: 'skip' -%}
+        {% include 'search-result' %}
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="products-grid row">
+        {% for item in search.results %}
+        <!-- Bold: Memberships (search) -->
+{% include 'bold_mem_helper' with 'search' %}
+<!-- end Bold code -->
+{%- include 'bold-product' with item, hide_action: 'skip' -%}
+        {% include 'search-result-grid' %}
+        {% endfor %}
+      </div>
+      {% endif %}        
+  {% endif %}
+</div>
+
+{% if paginate.pages > 1 %}
+<div class="text-center">{% include 'pagination-page' %}</div>
+{% endif %}
+
+{% endif %}
+{% endpaginate %}
+
+{% else %}
+
+<header class="page-header">
+  <h4 {% if settings.enable_multilang %}data-translate="general.search.title"{%endif%}>{{ 'general.search.title' | t }}</h4>
+  {% include 'search-bar' %}
+</header>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Search Page",
+    "settings": [
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "grid",
+        "options": [
+          {
+            "value": "grid",
+            "label": "Grid"
+          },
+          {
+            "value": "list",
+            "label": "List"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "grid",
+        "label": "Products per row (grid only)",
+        "default": "4",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "rows",
+        "label": "Rows per page (grid only)",
+        "default": "6",
+        "options": [
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          },
+          {
+            "value": "7",
+            "label": "7"
+          },
+          {
+            "value": "8",
+            "label": "8"
+          }
+        ]
+      },
+	  {
+        "type": "text",
+        "id": "collection_results_per_page",
+        "label": "Products per page (list only)",
+        "default": "10"
+      },
+      {
+        "type": "checkbox",
+        "id": "collection_infinite_scrolling",
+        "label": "Enable Infinite Scrolling (Show More Button)",
+        "default": false
+      }
+	]
+  }
+{% endschema %}

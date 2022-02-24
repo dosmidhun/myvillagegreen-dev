@@ -1,0 +1,79 @@
+{% layout none %}<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{%- paginate collection.products by 100 -%}
+{% assign CountryCode = 'AU' %}
+{% if shop.currency == 'AUD' %}{% assign CountryCode = 'UA' %}{% endif %}
+{%- assign PriceAdjustmentEffectiveDate =  '20191226T080000-0500/20300102T235900-0800' -%}
+
+<channel>
+<title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html }}</description>
+{%- for product in collection.products -%} 
+  {%- assign GoogleProductCategory = product.metafields.mm-google-shopping.google_product_category -%}
+  {%- assign Gender = product.metafields.mm-google-shopping.gender -%}
+  {%- assign AgeGroup = product.metafields.mm-google-shopping.age_group -%}
+
+
+{% comment %} Calculate Sales vs Base Pricing {% endcomment %} 
+  {%- if product.compare_at_price_min == blank or 0.00 -%} 
+    {%- assign BasePrice = product.price -%}
+  {%- else -%}
+    {%- assign BasePrice = product.compare_at_price_min -%}
+  {%- endif -%}
+  {%- assign SalePrice = product.price | times: PriceAdjustment -%}
+
+   {%- assign OnSale = false -%}
+    {%- assign Price = product.price -%}
+    {%- if product.compare_at_price > product.price -%}
+      {%- assign OnSale = true -%}
+      {%- assign Price = product.compare_at_price -%}
+      {%- assign SalePrice = product.price -%}
+    {%- endif -%}
+{%- assign ender = "female" -%}
+
+<item>
+<mobile_link>{{ shop.url }}{{ product.url }}?variant={{product.selected_or_first_available_variant.id}}</mobile_link>
+<title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }} {{ product.metafields.global.title_tag | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}{{ product.url }}?variant={{product.selected_or_first_available_variant.id}}</link>
+<description>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }} {{ product.metafields.global.title_tag | replace: '&', '&amp;' }} {{ product.description | replace: '</', ' </' | strip_html | strip_newlines | replace: '&', '&amp;' }} {{ product.metafields.global.description_tag | replace: '&', '&amp;' }}</description>
+<g:google_product_category>{% for collection in product.collections %}{{ collection.title | replace: '&', '&amp;' }}, {% endfor %}</g:google_product_category>
+<g:item_group_id>{{ product.id }}</g:item_group_id>
+<g:id>{{ product.id }}</g:id>
+<g:condition>new</g:condition>
+<g:price>{{ Price | money_without_currency }} {{ shop.currency }}</g:price>
+{%- if OnSale == true -%}
+<g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
+<g:sale_price_effective_date>{{ PriceAdjustmentEffectiveDate }}</g:sale_price_effective_date>
+{%- endif -%}
+<g:availability>{% if product.available %}in stock{% else %}out of stock{% endif %}</g:availability>
+<g:image_link>http:{{  product.images[0] | img_url: 'large' }}</g:image_link>
+<g:gtin>{{ product.barcode }}</g:gtin>
+<g:brand>{{ product.vendor }}</g:brand>
+<g:mpn>{{ product.sku }}</g:mpn>
+<g:product_type></g:product_type>
+<g:color>{% for value in product.options_by_name.color.values %}{{ value }}, {% endfor %}</g:color>
+<g:size>{% for value in product.options_by_name.size.values %}{{ value }}, {% endfor %}</g:size><g:size_system>US</g:size_system>
+<g:age_group>{{ AgeGroup }}</g:age_group>
+<g:gender>{{ ender }}</g:gender>
+<g:material>{{ Material }}</g:material>
+<g:shipping_weight>{{ variant.weight | weight_with_unit }}</g:shipping_weight>
+<g:custom_label_0>{% for tag in product.tags %}{{ tag | replace: '&', '&amp;' }}, {% endfor %}</g:custom_label_0>
+<g:custom_label_1>{% for collection in product.collections %}{{ collection.title | replace: '&', '&amp;' }}, {% endfor %}</g:custom_label_1>
+{%- if OnSale == true -%}
+<g:custom_label_2>Sale</g:custom_label_2>
+{%- endif -%}
+<g:custom_label_3>{{ product.metafields.mm-google-shopping.custom_label_3 }}</g:custom_label_3>
+<g:custom_label_4>{{ product.metafields.mm-google-shopping.custom_label_4 }}</g:custom_label_4>
+  <g:shipping>
+  <g:country>AU</g:country>
+  <g:region></g:region>
+  <g:service>Standard Shipping</g:service>
+  <g:price>3.00 AUD</g:price>
+
+</g:shipping>
+</item>
+{% endfor %}
+</channel>
+</rss>
+{% endpaginate %}

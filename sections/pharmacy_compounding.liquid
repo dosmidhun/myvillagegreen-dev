@@ -1,0 +1,91 @@
+<div class="row wrap">
+  	<div class="col-xs-12"> 
+        {% comment %}
+      <header class="page-header">
+        {% if settings.enable_multilang %}
+        <h2 class="lang1">{{ page.title | split: '|' | first }}</h2>
+        <h2 class="lang2">{{ page.title | split: '|' | last }}</h2>
+        {% else %}
+        <h2>{{ page.title | split: '|' | first }}</h2>
+        {% endif %}
+      </header>
+      {% endcomment %}
+      {% comment %}
+        Regular page content goes here.
+      {% endcomment %}
+      <div id="shopify-section-collection-header" class="shopify-section">
+        <header class="page-header pharmacy">
+          <div class="img_cart">
+            <img src="{{ section.settings.main-image-banner | img_url: 'master'}}" alt="Pharmacy banner image">
+          </div>
+          <h3> {{ page.title | split: ' ' | first }}  <span> & {{ page.title | split: ' ' | last }}</span></h3>
+    	</header>
+     </div>
+      <div class="row second-section">       
+        <div class="col-sm-8">
+          {{page.content}}
+          <div class="upload-pdf">
+            <h4>{{ section.settings.text-box-pdf }}</h4>
+            <a class="pdf_link first" href="{{ section.settings.pdf_link_one }}" target="_blank" >{{ section.settings.pdflinktext }}</a>
+            <a class="pdf_link" href="{{ section.settings.pdf_link_two }}" target="_blank" >{{ section.settings.pdflinktextsecond }}</a>
+          </div>
+        </div>
+        <div class="col-sm-4">
+         <img src="{{ section.settings.left-image-banner | img_url: 'large'}}">
+        </div>    
+      </div>    
+    </div>
+</div>
+  
+
+{% schema %}
+  {
+    "name": "Pharmacy Compunding Page",
+    "settings": [
+	{
+        "type": "image_picker",
+        "id": "main-image-banner",
+        "label": "Upload a banner image"
+      },
+      {
+        "type": "image_picker",
+        "id": "left-image-banner",
+        "label": "Upload a new image"
+      },
+	  {
+        "id": "text-box-pdf",
+        "type": "text",
+        "label": "Heading PDF",
+        "default": "Title"
+      },
+	  {
+      "id": "pdf_link_one",
+      "type": "url",
+      "label": "PDF link"
+    },
+    {
+      "id": "pdflinktext",
+      "type": "text",
+      "label": "PDFLink text ",
+      "default": "Click here"
+    },
+    {
+      "id": "pdf_link_two",
+      "type": "url",
+      "label": "PDF second link"
+    },
+    {
+      "id": "pdflinktextsecond",
+      "type": "text",
+      "label": "PDF link text second",
+      "default": "Click here"
+    }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

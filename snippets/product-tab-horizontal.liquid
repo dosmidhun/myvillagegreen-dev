@@ -1,0 +1,136 @@
+<div class="panel-group">
+  <ul class="nav nav-tabs" id="myTab">
+    {% if section.settings.display_product_detail_description %}
+    <li class="active">
+      <a data-toggle="tab" href="#collapse-tab1">
+        {% if settings.enable_multilang %}
+        <span class="lang1">{{ section.settings.product_description_title | split: '|' | first }}</span>
+        <span class="lang2">{{ section.settings.product_description_title | split: '|' | last }}</span>
+        {% else %}
+        <span>{{ section.settings.product_description_title | split: '|' | first }}</span>
+        {% endif %}
+      </a>
+    </li>
+    {% endif %}
+
+    {% if product.metafields.ns-sf.supplement_facts !=blank %}
+    {% if section.settings.display_custom_tab %} 
+    <li>
+      <a data-toggle="tab" href="#collapse-tab2">
+        {% if settings.enable_multilang %}
+        <span class="lang1">{{ section.settings.custom_tab_title | split: '|' | first }}</span>
+        <span class="lang2">{{ section.settings.custom_tab_title | split: '|' | last }}</span>
+        {% else %}
+        <span>{{ section.settings.custom_tab_title | split: '|' | first }}</span>
+        {% endif %}
+      </a>
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if section.settings.display_size_chart %}
+    <li>
+      <a data-toggle="tab" href="#collapse-tab3">
+        {% if settings.enable_multilang %}
+        <span class="lang1">{{ section.settings.custom_size_chart_title | split: '|' | first }}</span>
+        <span class="lang2">{{ ssection.ettings.custom_size_chart_title | split: '|' | last }}</span>
+        {% else %}
+        <span>{{ section.settings.custom_size_chart_title | split: '|' | first }}</span>
+        {% endif %}
+      </a>
+    </li>
+    {% endif %}
+
+    {% if section.settings.display_product_reviews %}       
+    <li>
+      <a data-toggle="tab" href="#collapse-tab4">
+        {% if settings.enable_multilang %}
+        <span class="lang1">{{ section.settings.product_review_title | split: '|' | first }}</span>
+        <span class="lang2">{{ section.settings.product_review_title | split: '|' | last }}</span>
+        {% else %}
+        <span>{{ section.settings.product_review_title | split: '|' | first }}</span>
+        {% endif %}
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+
+  <div id="myTabContent" class="tab-content">
+    {% if section.settings.display_product_detail_description %}        
+    {% if product.description contains '[countdown]' %}            
+    {% assign des = product.description | split:'[/countdown]</p>' | last %}
+    <div id="collapse-tab1" class="tab-pane fade in active">
+      {% if settings.enable_multilang %}
+      <div class="lang1">{{ des | split:'<p>[/custom-tab]</p>' | last | split: '[lang2]' | first }}</div>
+      <div class="lang2">{{ des | split:'<p>[/custom-tab]</p>' | last | split: '[lang2]' | last }}</div>
+      {% else %}
+      <div>{{ des | split:'<p>[/custom-tab]</p>' | last | split: '[lang2]' | first }}</div>
+      {% endif %}
+    </div>
+    {% else %}
+    <div id="collapse-tab1" class="tab-pane fade in active">
+      {% if settings.enable_multilang %}
+      <div class="lang1">{{ product.description | split:'<p>[/custom-tab]</p>' | last | split: '[lang2]' | first }}</div>
+      <div class="lang2">{{ product.description | split:'<p>[/custom-tab]</p>' | last | split: '[lang2]' | last }}</div>
+      {% else %}
+      <div>{{ product.description | split:'<p>[/custom-tab]</p>' | last | split: '[lang2]' | first }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if product.metafields.ns-sf.supplement_facts !=blank %}
+    {% if section.settings.display_custom_tab %} 
+    <div id="collapse-tab2" class="tab-pane fade">
+      {% if product.description contains '[custom-tab]' %}
+          {% assign des = des | split:'<p>[custom-tab]</p>' | last | split:'<p>[/custom-tab]</p>' | first %}
+          {% if settings.enable_multilang %}
+              <div class="lang1">{{ des | split: '[lang2]' | first }}</div>
+              <div class="lang2">{{ des | split: '[lang2]' | last }}</div>
+          {% else %}
+          		<div>{{ des | split: '[lang2]' | first }}</div>
+          {% endif %}
+      {%else%}
+          {% if settings.enable_multilang %}
+              <div class="lang1">{{ section.settings.custom_tab_content | split: '[lang2]' | first }}</div>
+              <div class="lang2">{{ section.settings.custom_tab_content | split: '[lang2]' | last }}</div>
+          {% else %}
+          	  <div>{{ section.settings.custom_tab_content | split: '[lang2]' | first }}</div>
+          {% endif %}
+      	{% if product.metafields.ns-sf.supplement_facts !='' %} 
+      	{{ product.metafields.ns-sf.supplement_facts }}
+      	{% endif %}
+      {%endif%}
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if section.settings.display_size_chart %}
+    <div id="collapse-tab3" class="tab-pane fade">
+      <p>{{section.settings.custom_size_chart_content}}</p>
+      {% if section.settings.custom_size_chart != blank %}
+      <p class="center"><img src="{{ section.settings.custom_size_chart | img_url: "master" }}" alt="{{ section.settings.custom_size_chart_title }}" /></p>
+       {% endif %}
+    </div>
+    {% endif %}
+
+     {% if section.settings.display_product_reviews %}       
+    <div id="collapse-tab4" class="tab-pane fade">
+<!--       <div id="shopify-ali-review" product-id="{{ product.id }}"> {{ shop.metafields.review_collector.review_code }} </div> -->
+      {% comment %}
+      Add product review widget, must install Product Review App:
+      https://apps.shopify.com/product-reviews
+      {% endcomment %}
+<!--       <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div> -->
+      {% include 'aio_reviewform' %}{% include 'aio_reviewlist' %}{% include 'aio_product_recommendation' %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  jQuery('#myTab a').click(function (e) {
+    e.preventDefault();
+    jQuery(this).tab('show');
+  })
+</script> 

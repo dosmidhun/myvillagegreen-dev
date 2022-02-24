@@ -1,0 +1,56 @@
+{% assign counter = 0 %}
+{% for vendor in shop.vendors %}
+{% assign counter = counter | plus: 1 %}
+{% endfor %}
+
+{% assign counter_divided_by_3 = counter | divided_by: 3 | floor %}
+
+
+<div class="row brand_page">
+<header class="page-header">
+  {% if settings.enable_multilang %}
+  <h2 class="lang1">{{ page.title | split: '|' | first }}</h2>
+  <h2 class="lang2">{{ page.title | split: '|' | last }}</h2>
+  {% else %}
+  <h2>{{ page.title | split: '|' | first }}</h2>
+  {% endif %}
+</header>
+
+{% comment %}
+  Regular page content goes here.
+{% endcomment %}
+
+{% if settings.enable_multilang %}
+<div class="rte lang1">{{ page.content | split: '[lang2]' | first }}</div>
+<div class="rte lang2">{{ page.content | split: '[lang2]' | last }}</div>
+{% else %}
+<div class="rte">{{ page.content | split: '[lang2]' | first }}</div>
+{% endif %}
+  
+  <div class="col-xs-12">
+    {% section 'brands-block' %}
+  		<ul class="vendor-list block-grid three-up mobile one-up">
+        {% for product_vendor in shop.vendors %}
+        {% assign its_a_match = false %}
+        {% capture my_collection_handle %} {{ product_vendor | handleize | strip | escape  }} {% endcapture %}
+        {% assign my_collection_handle_stripped = my_collection_handle | strip | escape %}
+
+        {% for collection in collections %}
+        {% if my_collection_handle_stripped == collection.handle %}
+        {% assign its_a_match = true %}
+        {% endif %}
+        {% endfor %}
+
+        {% if its_a_match %}
+        <li class="vendor-list-item"><a href="/collections/{{ product_vendor | handleize }}">{{ product_vendor }}</a></li>
+        {% else %}
+        <li class="vendor-list-item">{{ product_vendor | link_to_vendor }}</li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+  </div>
+     
+  
+</div>
+
+

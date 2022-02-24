@@ -1,0 +1,317 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XW9YMN90D8"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+
+gtag('config', 'G-XW9YMN90D8');
+</script>
+{% include 'easylockdown_head' %}
+{% include 'gtmtrackinghead' %}
+
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_button }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {% if request.page_type == 'blog' %}
+  		{% if request.path contains '/tagged/' %}
+  			<meta name="robots" content="noindex">
+  		{% elsif  request.path contains '/blogs/post' and current_page > 1 %}
+  			<meta name="robots" content="noindex">
+  		{% else %}
+  		{% endif %}
+  {% endif %}
+ <meta name="msvalidate.01" content="4C1AEEA68B6CB643DAFF7F7FD29B01E2" />
+  
+  {% if settings.favicon != blank %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {% endif %}
+
+  {% capture seo_title %}
+    {{ page_title }}
+    {% if current_tags %}
+      {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {% endif %}
+    {% if current_page != 1 %}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {% endif %}
+    {% unless page_title contains shop.name %}
+      &ndash; {{ shop.name }}
+    {% endunless %}
+  {% endcapture %}
+  <title>{{ seo_title }}</title>
+  
+
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <!-- Product meta ================================================== -->
+  {% include 'fb-open-graph-tags' %}
+  {% include 'twitter-card' %}
+
+  
+   <!-- fonts -->
+  {% include 'head_fonts' %}
+  
+  <!-- Styles -->
+  {% include 'head_styles' %}
+  
+  <!-- Scripts -->
+  {% include 'head_scripts' %}
+
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}
+  {%- render 'bold-pr' -%}
+{{ 'ndnapps-contactform-script.js' | asset_url | script_tag }}
+
+  <!--[if lt IE 9]>
+  {{ '//html5shiv.googlecode.com/svn/trunk/html5.js' | script_tag }}
+  <![endif]-->
+
+  {% comment %}
+    If you store has customers disabled, you can remove the following JS file
+  {% endcomment %}
+  {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+    {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+  {% endif %}
+ {{ 'custom-style.css' | asset_url | stylesheet_tag }}
+  
+  {%- if template == 'page.landing-page' -%}
+    {{ 'custom-lp-page.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  
+{% assign nowts = "now" | date: "%s" %}{% assign metats = shop.metafields._ls_meta.check %}{% assign timediff = nowts | minus: metats %}{% if timediff < 604800 %}<script async="async" src="https://livesearch.okasconcepts.com/js/livesearch.init.min.js?v=2&shop=myvillagegreen.myshopify.com"></script>{% endif %}
+
+{% render 'gsf-conversion-pixels' %}
+{% include 'alireviews_core' %} 
+  <!-- Hotjar Tracking Code for https://myvillagegreen.com/ --> 
+<script> 
+(function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; 
+	h._hjSettings={hjid:2254928,hjsv:6}; 
+	a=o.getElementsByTagName('head')[0]; 
+	r=o.createElement('script');
+	r.async=1; 
+	r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r);
+})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv='); 
+</script>
+  <!-- Pinterest Tag -->
+<script>
+!function(e){if(!window.pintrk){window.pintrk = function () {
+window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
+  n=window.pintrk;n.queue=[],n.version="3.0";var
+  t=document.createElement("script");t.async=!0,t.src=e;var
+  r=document.getElementsByTagName("script")[0];
+  r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
+pintrk('load', '2613629783250', {em: '<user_email_address>'});
+pintrk('page');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt=""
+  src="https://ct.pinterest.com/v3/?event=init&tid=2613629783250&pd[em]=<hashed_email_address>&noscript=1" />
+</noscript>
+<!-- end Pinterest Tag -->
+  <meta name="p:domain_verify" content="a694c29af1f552ae31816149b78a4930"/>
+<meta name="facebook-domain-verification" content="405lnt6xbxbxks96d1l83ffp5ri4uu" />  
+ 
+ 
+  {% render 'bookthatapp-widgets' %}
+  {% include 'aio-script' %}
+</head>
+<!-- { % include 'search-autocomplete' %} -->
+{% comment %}
+  Add the page template as a class for easy page or template specific styling.
+{% endcomment %}
+<body id="{{ page_title | handle }}" class="template-{{ template | split: '.' | first }} {% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
+  <!-- Bold: Memberships -->
+{% if customer %}
+<div class="bold_customer_id" hidden>{{ customer.id }}</div>
+{% endif %}
+<!-- end Bold code -->
+  
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+    <div class="gf-menu-device-wrapper">
+      <div class="close-menu">x</div>
+      <div class="gf-menu-device-container"></div>
+    </div>             
+  </nav>
+  <div class="wrapper-container">	
+	{% section 'header' %}
+    {%- if request.page_type != 'index' -%} 
+    	{% section 'navigation' %}	
+    {% else %}
+		{% section 'navigation' %}
+    {%- endif -%}
+    {% unless template contains 'contact' %}
+	{% include 'breadcrumb' %}
+    {% endunless %}
+    <div class="quick-view"></div>
+
+    <main class="main-content {% if template contains 'index' or template contains 'contact' or template contains 'signup' or template contains 'membership-dashboard' %}{% else %}container{% endif %}" role="main">
+      {% comment %}{{ content_for_layout }}{% endcomment %}{% include 'easylockdown_body' %}
+    </main>
+    {% if template contains 'product'%}
+    {%unless template contains 'list-collections' %}
+    {% include 'recently-viewed-products' %}
+    {%endunless%}
+    {%endif%}
+    
+    {% if template contains 'pharmacy'%}
+    	{% section 'pharmacy-new-compounding-sec' %}
+    {%endif%}
+    {% if template contains 'nutrition'%}
+    	{% section 'nutrition-expert-sec' %}
+    {%endif%}
+     {% if template contains 'rx'%}
+    	{% section 'rx-pricing-chart' %}
+    {%endif%}
+    {% section 'footer' %}
+
+    <script src="//cdn.codeblackbelt.com/js/modules/frequently-bought-together/main.min.js?shop=myvillagegreen.myshopify.com" defer></script>
+
+    
+
+    {% if settings.enable_quick_view %}
+      {% include 'quick-view-template' %}
+    {% endif %}
+
+    {% include 'footer_scripts' %}
+    {% include 'newsletter' %}
+    <div id="back-top" style="display: none;"><a class="nav_up" href="#top">Back to top</a></div>
+  </div>
+
+
+<!-- spurit_sri-added -->
+{% render 'spurit_sri-theme-snippet' %}
+<!-- /spurit_sri-added -->
+
+ <!-- Accessibilities -->
+ <script data-account="T76UOLihTx" src="https://cdn.userway.org/widget.js"></script>
+  {% include 'gtmtrackingbody' %}
+
+<script type="text/javascript">
+(function(w,d){
+  w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments)};w.HelpCrunch.q=[];
+  function r(){var s=document.createElement('script');s.async=1;s.type='text/javascript';s.src='https://widget.helpcrunch.com/';(d.body||d.head).appendChild(s);}
+  if(w.attachEvent){w.attachEvent('onload',r)}else{w.addEventListener('load',r,false)}
+})(window, document)
+</script>
+
+<script type="text/javascript">
+  
+  if( jQuery('#redirect_home').length )         // use this if you are using id to check
+{
+   
+   window.location.href='/pages/signup-landing'
+}
+  HelpCrunch('init', 'myvillagegreen', {
+    applicationId: 1,
+    applicationSecret: 'qkRiZfe7mr93mcGxSegFv911NpDF4DBxhOvHBJw4tYnRAb+RLfO6dxokMBhsDNG/+FJFB4ePRqFrZ+NCTSj+ZA=='
+  });
+
+  HelpCrunch('showChatWidget');
+  jQuery("form.blog_search").on("submit",function(){
+  		
+    jQuery("<input />").attr("type", "hidden")
+          .attr("name", "q")
+          .attr("value", $(this).find("input[name=s]").val())
+          .appendTo("form.blog_search");
+      return true;
+  });
+ jQuery("a[href^='https://blog.myvillagegreen.com']").each(function(){
+  	
+    var href_val = $(this).attr("href");
+    
+    jQuery(this).attr("href",href_val.replace("https://blog.myvillagegreen.com", "https://myvillagegreen.com/blogs/post"));
+    
+  
+  });
+	jQuery(function(){
+
+	 jQuery(".site-nav.gf-menu").find("li:first").show();
+
+
+	});
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Village Green Apothecary",
+  "image": "https://lh4.googleusercontent.com/-rYXENsr44FM/AAAAAAAAAAI/AAAAAAAAAAA/YOZ4iWY8Kak/s44-p-k-no-ns-nd/photo.jpg",
+  "@id": "",
+  "url": "https://myvillagegreen.com/",
+  "telephone": "(301) 530-0800",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "5415 W Cedar Ln",
+    "addressLocality": "Bethesda",
+    "addressRegion": "MD",
+    "postalCode": "20814",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Tuesday",
+      "Monday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "opens": "08:30",
+    "closes": "18:00"
+  },{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": "Saturday",
+    "opens": "08:30",
+    "closes": "17:00"
+  }] 
+}
+</script>
+ {% include 'alireviews_core' %}
+  {% if template contains 'customers/account' or template contains 'membership-dashboard' %}  
+  <script src="https://app.accentuate.io/dist/proxy.js"></script>; 
+  <script> Accentuate(jQuery("#metafields_form")); </script> 
+  {% endif %}  
+  <script>
+    (function() {
+      var REDIRECT_PATH_SIGNUP = '/pages/signup-landing';
+      var REDIRECT_PATH = '/';
+      var selector = '#create_customer, form[action$="/account"][method="post"]',
+          $form = document.querySelectorAll(selector)[0];
+
+      if ($form) {
+        $redirect = document.createElement('input');
+        $redirect.setAttribute('name', 'return_to');
+        $redirect.setAttribute('type', 'hidden');
+        if (window.location.pathname=="/pages/signup-landing"){
+           $redirect.value = REDIRECT_PATH_SIGNUP;
+        }
+        else{
+          $redirect.value = REDIRECT_PATH;
+        }
+       
+        
+        
+        $form.appendChild($redirect);
+      }
+    })();
+  </script>
+  {% include 'mw_GP_objects' %}  <script type="text/javascript" charset="utf-8">
+  var shappify_customer_tags = {{ customer.tags | json }}
+  </script>
+{% render 'aio_loyalty_snippet' %}
+</body>
+</html>

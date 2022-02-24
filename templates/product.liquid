@@ -1,0 +1,15 @@
+<!-- Bold: Memberships (product) -->
+{% include 'bold_mem_helper' with 'product' %}
+<!-- end Bold code -->
+<div class="reputon-trustpilot-reviews-widget" id="a33ac710-5a94-11eb-a9c3-415b3be76ef9" style="display: flex; justify-content: center;"></div>
+<!-- spurit_sri-added -->
+<!-- spurit_sri-added -->
+{% render 'spurit_sri-product-snippet' %}
+<!-- /spurit_sri-added -->
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/product-template.liquid
+{% endcomment %}
+
+{% section 'product-template' %}
+
+<div style="clear: both;"><div id="shopify-ali-review" product-id="{{ product.id }}"> {{ shop.metafields.review_collector.review_code }} </div></div>

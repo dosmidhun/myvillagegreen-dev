@@ -1,0 +1,213 @@
+{% if section.settings.enable %}
+
+<div class="membership-consultation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <header class="page-header">
+                    <div class="img_cart">
+                        {% if section.settings.signup_banner != blank %} <img src="{{ section.settings.signup_banner | img_url :"master"}}" alt="{{ page.title | split: '|' | first }}" /> {% else %} {% capture current %}{% cycle 2%}{% endcapture %} {{
+                        'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }} {% endif %}
+                    </div>
+
+                    {% if settings.enable_multilang %}
+                    <h3>{{ page.title }}</h3>
+                    {% else %}
+                    <h3>{{ page.title | split: '|' | first }}</h3>
+                    {% endif %}
+                </header>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="modal fade popup_content" id="membership_consultation_popup" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                {{ section.settings.member_popup_title }}
+            </div>
+            <div class="modal-body">
+                {{ section.settings.member_popup_content }}
+            </div> 
+        </div>
+    </div>
+</div> 
+<div class="modal fade popup_content" id="membership_book_75" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                {{ section.settings.member_popup_title }}
+            </div>
+            <div class="modal-body">
+                {{ section.settings.member_initial_consultation }}
+            </div> 
+        </div>
+    </div>
+</div>
+<div class="modal fade popup_content" id="membership_book_45" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                {{ section.settings.member_popup_title }}
+            </div>
+            <div class="modal-body">
+                {{ section.settings.member_follow_up }}
+            </div> 
+        </div>
+    </div>
+</div>
+<div id="member-ship-table">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 id="member-ship-title">{{ section.settings.member_title }}</h2>
+                <p id="member-ship-desc">{{ section.settings.member_content }}</p>
+            </div>
+        </div>
+        <div class="row" id="member_conslt_cont_sec">
+            <div class="col-sm-6">
+                <div class="memberconsult_left">
+                    <img id="member-ship-img" src="{{ section.settings.table-side-image | img_url :"master"}}" alt="{{ page.title | split: '|' | first }}" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="memberconsult_right">
+                    <h3 id="member-ship-title-sub">{{ section.settings.member_table_title }}</h3>
+                    {{ section.settings.member_table_content }} 
+                    <a href="javascript:void(0)" id="member-ship-link" class="unlock_click" title="Schedule now" data-toggle="modal" data-target="#membership_consultation_popup"> Schedule Now </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <table width="551" height="32" id="member-ship-table">
+    <tbody>
+        <tr>
+            <td style="width: 541px;"></td>
+            <td style="width: 541px;">
+                <h3 id="member-ship-title-sub">{{ section.settings.member_table_title }}</h3>
+                {{ section.settings.member_table_content }} 
+                <a href="javascript:void(0)" id="member-ship-link" class="unlock_click" title="Schedule now" data-toggle="modal" data-target="#membership_consultation_popup"> Schedule Now </a>
+            </td>
+        </tr>
+    </tbody>
+</table> -->
+
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": " Membership Consultation",
+    "class": "index-section-V2signup index-section--flush",
+    "settings": [
+        
+    {
+        "type": "checkbox",
+        "id": "display_image_cat",
+        "label": "Display Image Category?",
+        "default": true
+    },
+    {
+        "type": "image_picker",
+        "id": "img_cat",
+        "label": "Image Category"
+    },
+    {
+        "type": "checkbox",
+        "id": "enable",
+        "label": "Enable",
+        "default": true
+    }, 
+    {
+        "type": "image_picker",
+        "id": "signup_banner",
+        "label": "Banner" 
+    }, 
+
+    {
+        "type": "header",
+        "content": { 
+        "en": "Membership Form Popup"
+        }
+    },
+    {
+        "type": "html",
+        "id": "member_popup_title",
+        "label": "Member Popup Title",
+        "default": "Title"
+    },
+    {
+        "type": "html",
+        "id": "member_popup_content",
+        "label": "Member Popup Content"
+           
+    },
+    {
+        "type": "header",
+        "content": { 
+        "en": "Membership Heading"
+        }
+    },
+    {
+        "type": "html",
+        "id": "member_title",
+        "label": "Membership Title",
+        "default": "Let Us Help You Optimize Your Health."
+    },
+    {
+        "type": "html",
+        "id": "member_content",
+        "label": "Membership Content"
+    },
+    {
+        "type": "image_picker",
+        "id": "table-side-image",
+        "label": "Side Image"
+    },
+    {
+        "type": "header",
+        "content": { 
+        "en": "Membership Table Heading"
+        }
+    },
+    {
+        "type": "html",
+        "id": "member_table_title",
+        "label": "Membership Table Title",
+        "default": "What Should I Expect?"
+    },
+    {
+        "type": "html",
+        "id": "member_table_content",
+        "label": "Membership Table Content"
+    },
+    {
+        "type": "html",
+        "id": "member_initial_consultation",
+        "label": "Membership Initial consultation Code"   
+    },
+    {
+        "type": "html",
+        "id": "member_follow_up",
+        "label": "Membership Follow-up Code"   
+    }
+
+
+    ],
+    "presets": [
+    {
+        "name": "Signup V2Section",
+        "category": "Advanced layout"
+    }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,551 @@
+ {% if customer.metafields.global.iqyou_has_account %}
+   
+    <header class="site-header" role="banner" customer-id>
+{% else %}
+   <header class="site-header" role="banner">
+  {% endif %}
+
+ 
+  <div class="header-bottom">
+    <div class="header-mobile">
+      <div class="container">
+       <div class="row">
+         {% comment %}
+        <div class="search-mobile">
+         <div class="nav-search dropdown">{% include 'search-bar' %}<a class="phone-number" href="#"><i class="fa fa-phone-square" aria-hidden="true"></i>{{ section.settings.header_text_number}}</a><!--nav-search-->          
+         </div>
+        </div>
+         {% endcomment %}
+        <div class="opt-area"></div>
+        <div class="customer-area dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account</a>
+          <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            {% include 'customer_links' %}
+          </div>
+        </div>
+      </div>
+      </div>
+    </div><!-- end header Mobile  -->
+    {% if section.settings.display_header_top_message %}
+    <div class="header-panel-top display_header_top_message">       
+         <div class="container">
+            <div class="row"> 
+               <div class="{% if section.settings.display_header_free_shipping %}col-xs-4 text-center{% else %} col-xs-12 text-left{% endif %} top-message">
+                 {% if settings.enable_multilang %} 
+                 
+                 <p class="top_message lang1">{{ section.settings.header_top_message }}</p>
+                 <p class="top_message lang2">{{ section.settings.header_top_message  }}</p>
+                 {% else %}
+                 <p class="top_message">{{ section.settings.header_top_message}}</p>
+                 {% endif %}
+               </div> 
+            </div>
+        </div>
+    </div>
+    {%endif%}
+ 
+    <div class="header-panel-top">       
+     <div class="container">
+      <div class="row">
+       {% if section.settings.display_header_free_shipping  %}
+       <div class="{% if section.settings.display_header_free_shipping %}col-xs-4 {% else %} col-xs-6{% endif %} free-shipping">
+          {% if settings.enable_multilang %}
+         {% if section.settings.img_free_shipping != blank %}
+           <img src="{{ section.settings.img_free_shipping | img_url: 'thumb' }}" alt="section.settings.header_free_shipping | split: '|' | first">
+            {% endif %}
+          <span class="free_shipping lang1">{{ section.settings.header_free_shipping | split: '|' | first }}</span>
+          <span class="free_shipping lang2">{{ section.settings.header_free_shipping | split: '|' | last }}</span>
+          {% else %}
+          <span class="free_shipping">{{ section.settings.header_free_shipping }}</span>
+          {% endif %}
+        </div>
+       {% endif %}
+        
+      
+       <div class="{% if section.settings.display_header_free_shipping %}col-xs-4 {% else %} col-xs-12{% endif %} right-header-top">
+         <div class="header-search"> 
+            <div class="nav-search dropdown"> 
+              <ul>
+                <li>
+                {% if section.settings.display_header_phone_number  %}
+                <a class="phone-number" href="#">Toll Free:
+                {{ section.settings.header_text_number | split: '|' | first | truncate: 15}}
+                </a><!--nav-search--> 
+                {% endif %}
+                </li>
+                <li>
+                <a class="care_btn" href="#">Customer Care</a> 
+                <ul class="hdr_dropdown">
+                    <li><a href="/pages/contact-us">Contact Us</a></li>
+                    <li><a href="/pages/help-center">Help Center</a></li>
+                  
+                  </ul>
+                </li>
+                <li>
+                <a class="acct_btn" href="/account">My Account</a>
+                  
+                  {% if shop.customer_accounts_enabled %}
+                  <ul class="header-bar__module header-bar__module--list hdr_dropdown">
+                    {% if customer %}
+                      <li>
+                        {{ 'Logout' | customer_logout_link }}
+                      </li>
+                    {% else %}
+                      <li>
+                        {{ 'Log in' | customer_login_link }}
+                      </li>
+                      <li>
+                        {{ 'Create an account' | customer_register_link }}
+                      </li>
+                    {% endif %}
+                  </ul>
+                {% endif %} 
+                </li>
+                <li>
+                <a class="wish_btn" href="https://myvillagegreen.com/pages/wish-list">Wish List</a>
+                </li>
+                {% if customer %}
+                <li class="mem_dashbd_pag">
+                  {% for tag in customer.tags %}
+                    
+                  {% if tag=='mvg-membership' %}
+                        {% assign bold_member = true %}
+                         {% break %}
+                  {% endif %}
+                  {% endfor %}
+                  {% if bold_member %}
+                    <a class="mem_dashbtn" href="/pages/membership-dashboard">Humanized+ Member Dashboard</a>
+                  {% else %}
+<!--                     <a class="mem_dashbtn" href="/pages/signup-landing">Become a Humanized+ Member</a> -->
+                  {% endif %}
+                </li>
+                {% else %}
+<!--                     <li class="mem_dashbd_pag">
+                        <a class="mem_dashbtn" href="/pages/signup-landing">Become a Humanized+ Member</a>
+                    </li> -->
+                {% endif %}
+                <!-- 
+                <li>
+                <a class="blog_btn" href="https://myvillagegreen-dev.myshopify.com/blogs/post">Blog</a>
+                </li>
+                -->
+              </ul>
+              
+               
+              
+          </div>
+        </div><!------end header search---------->
+         {% comment %}
+         <div class="currency">{% include 'new-currency-picker' %}</div><!--currency-->
+         {% endcomment %}
+         {% if settings.enable_multilang %}
+         <div class="lang-block">
+           <select id="lang-switcher">
+             <option value="1">{{ settings.lange_1 }}</option>
+             <option value="2">{{ settings.lange_2 }}</option>
+           </select>
+          </div>
+         <script>
+         translator.updateLangSwitcher();
+         jQuery('#lang-switcher').selectize();          
+         </script>
+         {% endif %}
+       </div>
+       
+      </div>
+      
+      </div>
+    </div>  
+    <div class="container header-panel-bottom">
+    <div class="row">
+      <div class="header-panel">
+       
+          <div class="top-header "> {% include 'header-top-cart' %} </div> <!-- End Top Header --> 
+        {% include 'customer_links' %}
+          
+          <div class="menu-block text-center visible-phone"><!-- start Navigation Mobile  -->
+            <div id="showLeftPush"><i class="fa fa-bars"></i></div>
+          </div><!-- end Navigation Mobile  -->
+        
+          <div class="header-logo-fix">
+            <a href="/">
+              {% if section.settings.logo_fix != blank %}
+              <img src="{{ section.settings.logo_fix | img_url: '170x' }}" alt="{{ section.settings.logo_fix.alt | default: shop.name }}" itemprop="logo">
+              {% endif %}
+            </a>
+          </div>
+          
+          {% comment %}
+          Use the uploaded logo from theme settings if enabled.
+          Site name gets precedence with H1 tag on homepage, div on other pages.
+          {% endcomment %}
+        {% if template == 'index' %}
+            <h1 class="header-logo col-xs-3" itemscope itemtype="http://schema.org/Organization">
+          {% else %}
+            <div class="header-logo col-xs-3" itemscope itemtype="http://schema.org/Organization">
+          {% endif %}
+            {% if section.settings.brand_type == 'image' %}
+              {% if section.settings.logo_image and section.settings.logo_image != blank%}
+                <a href="/" itemprop="url">
+                  <img src="{{ section.settings.logo_image | img_url: 'master' }}" alt="{{ section.settings.logo_image.alt | default: shop.name }}" itemprop="logo">    
+                </a>              
+              {% else %}
+                <a class="site-header__logo-link" href="/" itemprop="url">{{shop.name | truncate: 25 }}</a>
+              {% endif %}
+            {% elsif section.settings.brand_text != "" %}
+                <a class="logo-title" href="/">{{ section.settings.brand_text }}</a>
+            {% else %}
+                <a class="logo-title" href="/">{{shop.name | truncate: 25 }}</a>
+            {% endif %}
+          {% if template == 'index' %}
+            </h1>
+          {% else %}
+            </div>
+        
+          {% endif %}  
+        <!--header-logo-->
+        
+        <div class="header-search"> 
+            <div class="nav-search dropdown">{% include 'search-bar' %}
+              {% comment %}
+              {% if section.settings.display_header_phone_number  %}
+              <a class="phone-number" href="#"><i class="fa fa-phone-square" aria-hidden="true"></i>
+              {{ section.settings.header_text_number | split: '|' | first | truncate: 15}}
+              </a><!--nav-search-->     
+              {% endif %}
+              {% endcomment %}
+          </div>
+        </div><!------end header search---------->
+        
+        
+      </div>
+      <div class="nav-search-mb">{% include 'search-mb' %}</div>
+     </div>
+     {% if customer %}
+        {% assign bold_member = false %}
+        {% for tag in customer.tags %} 
+        {% if tag=='mvg-membership' %}
+        {% assign bold_member = true %}
+        {% break %}
+        {% endif %}
+        {% endfor %}
+        {% if bold_member %}
+            {% if section.settings.member_only_notice_check  %}
+             <div class="notice_hdr" id="member_notice">
+                {{ section.settings.member_only_notice }}
+             </div> 
+            {% endif %}
+        {% endif %} 
+        {% else %}
+        {% if section.settings.notice_check  %}
+           <div class="notice_hdr">
+            {{ section.settings.display_notice }}
+           </div>
+       {% endif %}
+    {% endif %} 
+     {% if section.settings.member_banner_top  %}
+     <div class="member_banner_top">
+        {{ section.settings.membership_banner }}
+     </div> 
+     {% endif %}
+    </div>
+  </div>
+</header>
+
+{% if settings.enable_multilang %}
+<script>
+  translator.doTranslate(".site-header");
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Header and Logo",
+    "settings": [
+      {
+        "type": "radio",
+        "id": "brand_type",
+        "label": "Use image or text for logo?",
+        "options": [
+          {
+            "value": "text",
+            "label": "Text"
+          },
+          {
+            "value": "image",
+            "label": "Image"
+          }
+        ],
+        "default": "image"
+      },
+      {
+        "type": "text",
+        "id": "brand_text",
+        "label": "Logo text"
+      },
+      {
+        "type": "checkbox",
+        "id": "notice_check",
+        "label": "Display Notice",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "display_notice",
+        "label": "Notice"
+      },
+      {
+        "type": "checkbox",
+        "id": "member_only_notice_check",
+        "label": "Member Only Notice",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "member_only_notice",
+        "label": "Notice"
+      },
+       
+      {
+        "type": "image_picker",
+        "id": "logo_image",
+        "label": "Logo image",
+        "info": "170px x 42px recommended"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_fix",
+        "label": "Logo image when enable Fixed Top Menu",
+        "info": "Maximum logo dimensions are 170px wide by 40px high."
+      },
+      {
+        "type": "text",
+        "id": "min_height_logo",
+        "label": "Min Height of Logo",
+        "default": "42"
+      },
+      {
+        "type": "header",
+        "content": "Header color"
+      },
+      {
+        "type": "color",
+        "id": "header_top_bg_color",
+        "label": "Header Top Background Color",
+        "default": "#eeeeef"
+      },
+      {
+        "type": "color",
+        "id": "header_top_color",
+        "label": "Header Top Text Color",
+        "default": "#3c3c3c"
+      },
+      {
+        "type": "color",
+        "id": "header_bottom_bg_color",
+        "label": "Header Bottom Background Color",
+        "default": "#3a3e46"
+      },
+      
+      {
+        "type": "color",
+        "id": "header_bottom_color",
+        "label": "Header Bottom Text Color",
+        "default": "#fff"
+      },
+      
+      {
+        "type": "header",
+        "content": "Header Top"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_header_free_shipping",
+        "label": "Display Header Free Shipping?",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "img_free_shipping",
+        "label": "Image free shipping",
+        "info": "Maximum image dimensions are 30px wide by 20px high."
+      },
+      {
+        "type": "text",
+        "id": "header_free_shipping",
+        "label": "Header Free Shipping",
+        "default": "Free shipping on All Orders. No Minimum Purchase."
+      },
+      {
+        "type": "checkbox",
+        "id": "display_header_top_message",
+        "label": "Display Header Top Message?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "header_top_message",
+        "label": "Header Top Message",
+        "default": "Summer Sale Up to 70% Off. Shop Now"
+      },
+      {
+        "type": "color",
+        "id": "header_top_message_text_color",
+        "label": "Header Top Message Text Color",
+        "default": "#3c3c3c"
+      },
+        {
+        "type": "header",
+        "content": "Header Bottom"
+      },
+      {
+        "type": "color",
+        "id": "bg_button_search_color",
+        "label": "Background button color",
+        "default": "#787f8d"
+      },
+      {
+        "type": "color",
+        "id": "color_text_search_color",
+        "label": "Text button color",
+        "default": "#fff"
+      },
+
+        {
+        "type": "checkbox",
+        "id": "display_header_phone_number",
+        "label": "Header Phone Number?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "header_text_number",
+        "label": "Header Phone Number",
+        "default": "(800) 000 8090"
+      },
+      {
+        "type": "text",
+        "id": "customer_care",
+        "label": "Customer Care",
+        "default": "#"
+      },
+      {
+        "type": "text",
+        "id": "account_btn",
+        "label": "My Account",
+        "default": "#"
+      },
+      {
+        "type": "text",
+        "id": "wishlist_btn",
+        "label": "Wish List",
+        "default": "#"
+      },
+      {
+        "type": "text",
+        "id": "blog_btn",
+        "label": "Blog",
+        "default": "#"
+      },
+      {
+        "type": "color",
+        "id": "header_phone_number_background",
+        "label": "Background color",
+        "default": "#f6740a"
+      },
+      {
+        "type": "header",
+        "content": "Cart Header"
+      },
+      {
+        "type": "color",
+        "id": "border_cart_color",
+        "label": "Border Color Cart",
+        "default": "#61656b"
+      },
+      {
+        "type": "color",
+        "id": "bg_cart_color",
+        "label": "Background Color Items Cart",
+        "default": "#78808D"
+      },
+      {
+        "type": "radio",
+        "id": "dropdowncart_type",
+        "label": "When to show dropdown cart",
+        "options": [
+          {
+            "value": "click",
+            "label": "Click on the cart"
+          },
+          {
+            "value": "hover",
+            "label": "Hover on the cart"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<script>  
+  window.dropdowncart_type = "{{ section.settings.dropdowncart_type }}";
+</script>
+<style>
+ {%if settings.enable_wishlist %}
+  a.login{border-right: solid 1px {{ section.settings.border_cart_color }};}
+  {% endif %}
+  .header-bottom .top-cart {border: solid 1px {{ section.settings.border_cart_color }};}
+  .header-bottom .top-cart #cartCount{background:{{ section.settings.bg_cart_color }};}
+  /*  Header /*-------------------------- */
+  .right-header-top{padding-right:0px; }
+  .header-panel-top,.header-mobile{background: {{ section.settings.header_top_bg_color  }}; }
+  .free-shipping{text-align: left; padding:0; font-size: 12px; font-weight: 400;}
+  .header-bottom { background: {{ section.settings.header_bottom_bg_color }}; }
+  .header-bottom .selectize-control.single .selectize-input:after { border-top-color: {{ section.settings.header_free_shipping_text_color }}; }
+
+  .top-message a,
+  .top-message { color: {{ section.settings.header_top_message_text_color }}; }
+
+/*   .header-bottom .top-cart a span.first:hover,
+  .customer-links a:hover { border-bottom: 1px solid {{ section.settings.header_bottom_color }}; }
+ */
+  .header-bottom .top-cart a span,
+  .customer-links a,
+  .customer-links,
+  .customer-links li.wishlist .fa-heart,
+  .header-bottom .selectize-input, 
+  .header-bottom .selectize-input input,
+  .customer-area a,
+  .menu-block a, .nav-search .icon-search{ color: {{ section.settings.header_bottom_color }}; }
+
+  .header-mobile .customer-area a, 
+  .icon-search .fa-search,
+  .header-bottom .selectize-dropdown, 
+  .header-bottom .selectize-control div.item,
+  .customer-area .dropdown-menu a, .free-shipping{color: {{ section.settings.header_top_color }};}
+
+  .search-bar input.input-group-field::placeholder, .header-bottom .search-bar input.input-group-field{color:#000;}
+  .header-bottom.on .top-cart a span.first,
+  .header-bottom .nav-search-fix .icon-search,
+  .header-bottom.on .top-cart a span.first { border-color: {{ section.settings.border_color_fixed_top }};  }
+  .header-logo a img,
+  .header-logo{
+    max-height: {{ section.settings.min_height_logo }}px;
+  }
+  ul.customer-links li .dropdown-menu, #dropdown-cart{
+    border-color:{{ section.settings.header_top_border_color  }};
+  }
+  
+  .nav-search-mb .btn-search,
+  .header-bottom .dropdown-menu .btn-search{background:{{section.settings.bg_button_search_color}}; color:{{section.settings.color_text_search_color}}; }
+  .phone-number {background: {{ section.settings.header_phone_number_background }}; color:  {{section.settings.header_bottom_color}};}
+  .phone-number .fa-phone-square{color:  {{section.settings.header_bottom_color}};}
+  @media (max-width:1024px){
+    .header-panel-bottom{background: {{ section.settings.header_bottom_bg_color }};}
+  }
+  
+  {% if settings.enable_multilang %}
+  
+  {% endif %}
+  
+</style>

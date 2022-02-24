@@ -1,0 +1,169 @@
+{% if section.settings.show_product_list_home_page%}
+<div class="featured_cat widget-new-product {{section.id}} container">
+  <div class ="row">
+  {% if section.settings.product_list_title != blank %}
+  <div class="widget-title text-center">   
+    <h2>
+      {% if settings.enable_multilang %}
+      <span class="box-title lang1">{{ section.settings.product_list_title | split: '|' | first }}</span>
+      <span class="box-title lang2">{{ section.settings.product_list_title | split: '|' | last }} </span>
+      {% else %}
+      <span class="box-title">Featured Categories</span>
+      {% endif %}
+    </h2>
+  </div>
+  {% if section.settings.des_featured != bank  %}
+  <div class="widget-des text-center">
+	{% include 'multilang' with section.settings.des_featured %}
+  </div>
+  {% endif %}
+    {% endif %}
+    <div class="widget-product">
+      <div class="products-grid"> 
+         <div class="grid-item">
+           <div class="grid-view-item no-product">  
+            <ul>
+            {%- for collection in collections -%}
+              {%- if collection.title == 'Home Page' -%}
+    			{%- continue -%}
+              {%- elsif collection.metafields.accentuate.featured !='true' -%}
+              	{%- continue -%}
+              {%- endif -%}
+              <li>  
+                <a href="{{ collection.url }}"> 
+                  <img src="{{ collection.metafields.accentuate.collection_image }}"/>  
+                  <h3>{{ collection.title }}</h3>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+           </div>
+         </div>
+     </div>
+     
+      {% assign products_to_show = section.settings.product_list_limit | plus:0 %} 
+      {% if section.settings.display_infinite_scrolling_homepage and section.settings.product_list_collection != bank %}
+      
+      <div class="infinite-scrolling-homepage wow fadeIn">
+        <a href="javascript:void(0)" {% if settings.enable_multilang %}data-translate="home_page.show_more"{% endif %}>{{ 'home_page.show_more' | t }}</a>
+      </div>
+      
+      <script>
+        var productsToShow = {{ products_to_show }};
+        var totalProducts = {{collections[section.settings.product_list_collection].all_products_count}};
+        jQuery(" .{{section.id}} .infinite-scrolling-homepage a").click(function() {
+          if (jQuery('.{{section.id}} .products-grid .grid-item:hidden').length > 0) {
+            jQuery('.{{section.id}} .products-grid .grid-item:hidden:lt('+productsToShow+')').each(function() {
+                jQuery(this).show();
+                {% if settings.product_item_no_hover %}
+                jQuery(this).find('img').css('height','auto');              
+                {% endif %}
+                if (window.product_image_resize) {
+                    jQuery(this).find('img').fakecrop({ 
+                        fill: window.images_size.is_crop,
+                        widthSelector: ".{{section.id}} .products-grid .grid-item:first .product-image",
+                        ratioWrapper: window.images_size
+                    });
+                }
+            });        
+
+            jQuery("window" ).scroll();
+            if (jQuery('.{{section.id}} .products-grid .grid-item:hidden').length == 0) {
+              //no more products
+              var noMoreText = "{{ 'home_page.no_more_product' | t}}";              
+              {% if settings.enable_multilang %}
+              if (translator.isLang2()) 
+                noMoreText = window.lang2.home_page.no_more_product;
+              {% endif %}
+              jQuery(".{{section.id}} .infinite-scrolling-homepage a").text(noMoreText).addClass('disabled');              
+            }
+          }
+        });
+      </script>
+      {% endif %}
+    </div>
+  </div>
+  </div>
+
+{% endif %} 
+{% schema %}
+  {
+    "name": "Featured Categories",
+	"class": "index-section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_product_list_home_page",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "collection",
+        "id": "product_list_collection",
+        "label": "Collection to use"
+      },
+      {
+        "type": "text",
+        "id": "product_list_title",
+        "label": "Title",
+        "default": "New Arrivals"
+      },
+	  {
+		"type":"textarea",
+		"id": "des_featured",
+		"label": "Text Block Bottom"
+		
+	  },
+      {
+        "type": "text",
+        "id": "product_list_limit_all",
+        "label": "Number of new products to show",
+        "default": "5"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_infinite_scrolling_homepage",
+        "label": "Display Show More Button?",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "product_list_limit",
+        "label": "Number of products to show at one time",
+        "default": "5"
+      },
+      {
+        "type": "select",
+        "id": "collection_results_per_row1",
+        "label": "Products per row",
+        "options": [
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ],
+        "default": "5"
+      }
+	],
+	"presets": [
+      {
+        "name": "Featured Categories",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}
+
+

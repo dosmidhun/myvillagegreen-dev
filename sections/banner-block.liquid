@@ -1,0 +1,141 @@
+{% if section.settings.enable %}
+<div class="banner-home-top">
+  <div class="container">
+    <div class="row">
+      {% for block in section.blocks %}
+      {% case block.type %}
+      {% when 'banner_2' %}
+       <ul class="banner-2 banner_bottom">
+        <li class="col-xs-6  wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner"> 
+            <div class="zi-banner-image video_sec">
+                {{ block.settings.video }} 
+                <script src="https://player.vimeo.com/api/player.js"></script> 
+            </div> 
+            </a>
+          </div>
+        </li>
+        
+        <li class="col-xs-6 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="right_banner_cont"> 
+            {{ block.settings.banner_4_content }}
+          </div>
+        </li>
+      </ul>
+      {% endcase %}
+      {% endfor %}
+    </div>     
+  </div>
+</div>
+ 
+{% endif %}
+{% schema %}
+  {
+    "name": "Top Banner Block ",
+    "class": "index-section index-section--flush",
+    "settings": [
+       {
+        "type": "checkbox",
+        "id": "enable",
+        "label": "Enable",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "banner_2",
+        "name": "2 Banners",
+        "settings": [
+          {
+          "type": "image_picker",
+          "id": "banner_2_image_1",
+          "label": "BANNER #1",
+          "info": "590px wide by 350px high recommended"
+          },
+          {
+            "type": "html",
+            "id": "banner_4_content",
+            "label": "Text",
+            "default": "<p>text</p>"
+          },
+         {
+            "type": "text",
+            "id": "banner_2_heading_banner_1",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_2_heading_color_1",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_2_heading_size_1",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_2_link_1",
+            "label": "Link",
+            "info": "Optional"
+          },
+          {
+           "type": "html",
+           "id": "video",
+           "label": "Video",
+           "default": "Content"
+         }, 
+          {
+            "type": "image_picker",
+            "id": "banner_2_image_2",
+            "label": "BANNER #2",
+            "info": "590px wide by 350px high recommended"
+          },
+         {
+            "type": "text",
+            "id": "banner_2_heading_banner_2",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_2_heading_color_2",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_2_heading_size_2",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_2_link_2",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+       
+    ],
+    "presets": [
+        {
+        "name": "Top Banner Block",
+        "category": "Advanced layout",
+        "blocks": [
+          {
+            "type": "banner_2"
+          } 
+        ]
+      }
+    ]
+  }
+{% endschema %}

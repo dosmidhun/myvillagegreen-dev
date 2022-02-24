@@ -1,0 +1,521 @@
+{% if section.settings.enable %}
+
+<div class="banner-home-top banner_4_block">
+  <div class="container">
+    <div class="row">
+      {% for block in section.blocks %}
+      {% case block.type %}
+      {% when 'banner_4' %}
+      <div class="banner_4_block_cont"> 
+         {{ block.settings.practitioner_content }}
+      </div>
+      <ul class="banner-4">
+        <li class="col-xs-3 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner">
+            <a href="{{ block.settings.banner_4_link_1 }}">
+              <div class="zi-banner-image">
+                {% if block.settings.banner_4_image_1 != blank %}
+                {%- assign banner_4_img_url_1 = block.settings.banner_4_image_1 | img_url: '590x' -%}
+                <img src="{{ banner_4_img_url_1 }}" alt="{{ block.settings.image.alt }}">
+                {% else %} 	
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              {% if block.settings.banner_4_heading_banner_1 %}
+              <div class="des-banner" style="color: {{ block.settings.banner_4_banner_color_1 }}">
+                <div class="wrap-inner">
+                  <div class="inner">
+                    <h3 style="{% if block.settings.banner_4_heading_size_1 != blank %}font-size: {{ block.settings.banner_4_heading_size_1 }}px;{% endif %}{% if block.settings.banner_4_heading_color_1 != blank %}color: {{ block.settings.banner_4_heading_color_1 }};{% endif %}">
+                      {% include 'multilang' with block.settings.banner_4_heading_banner_1 %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </li>
+        
+        <li class="col-xs-3 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner">
+            
+            <a href="{{ block.settings.banner_4_link_2 }}">
+              <div class="zi-banner-image">
+                {% if block.settings.banner_4_image_2 != blank %}
+                {%- assign banner_4_img_url_2 = block.settings.banner_4_image_2 | img_url: '590x' -%}
+                <img src="{{ banner_4_img_url_2 }}" alt="{{ block.settings.image.alt }}">
+                {% else %} 	
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              {% if block.settings.banner_4_heading_banner_2 %}
+              <div class="des-banner" style="color: {{ block.settings.banner_4_banner_color_2 }}">
+                <div class="wrap-inner">
+                  <div class="inner">
+                    <h3 style="{% if block.settings.banner_4_heading_size_2 != blank %}font-size: {{ block.settings.banner_4_heading_size_2 }}px;{% endif %}{% if block.settings.banner_4_heading_color_2 != blank %}color: {{ block.settings.banner_4_heading_color_2 }};{% endif %}">
+                      {% include 'multilang' with block.settings.banner_4_heading_banner_2 %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </li>
+        
+        <li class="col-xs-3 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner">
+            <a href="{{ block.settings.banner_4_link_3 }}">
+              <div class="zi-banner-image">
+                {% if block.settings.banner_4_image_3 != blank %}
+                {%- assign banner_4_img_url_3 = block.settings.banner_4_image_3 | img_url: '590x' -%}
+                <img src="{{ banner_4_img_url_3 }}" alt="{{ block.settings.image.alt }}">
+                {% else %} 	
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              {% if block.settings.banner_4_heading_banner_3 %}
+              <div class="des-banner" style="color: {{ block.settings.banner_4_banner_color_3 }}">
+                <div class="wrap-inner">
+                  <div class="inner">
+                    <h3 style="{% if block.settings.banner_4_heading_size_3 != blank %}font-size: {{ block.settings.banner_4_heading_size_3 }}px;{% endif %}{% if block.settings.banner_4_heading_color_3 != blank %}color: {{ block.settings.banner_4_heading_color_3 }};{% endif %}">
+                      {% include 'multilang' with block.settings.banner_4_heading_banner_3 %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </li>
+        
+        <li class="col-xs-3 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner">
+            <a href="{{ block.settings.banner_4_link_4 }}">
+              <div class="zi-banner-image">
+                {% if block.settings.banner_4_image_4 != blank %}
+                {%- assign banner_4_img_url_4 = block.settings.banner_4_image_4 | img_url: '590x' -%}
+                <img src="{{ banner_4_img_url_4 }}" alt="{{ block.settings.image.alt }}">
+                {% else %} 	
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              {% if block.settings.banner_4_heading_banner_4 %}
+              <div class="des-banner" style="color: {{ block.settings.banner_4_banner_color_4 }}">
+                <div class="wrap-inner">
+                  <div class="inner">
+                    <h3 style="{% if block.settings.banner_4_heading_size_4 != blank %}font-size: {{ block.settings.banner_4_heading_size_4 }}px;{% endif %}{% if block.settings.banner_4_heading_color_4 != blank %}color: {{ block.settings.banner_4_heading_color_4 }};{% endif %}">
+                      {% include 'multilang' with block.settings.banner_4_heading_banner_4 %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </li>
+        <li class="col-xs-3 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner">
+            <a href="{{ block.settings.banner_5_link_5 }}">
+              <div class="zi-banner-image">
+                {% if block.settings.banner_5_image_5 != blank %}
+                {%- assign banner_5_img_url_5 = block.settings.banner_5_image_5 | img_url: '590x' -%}
+                <img src="{{ banner_5_img_url_5 }}" alt="{{ block.settings.image.alt }}">
+                {% else %} 	
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              {% if block.settings.banner_5_heading_banner_5 %}
+              <div class="des-banner" style="color: {{ block.settings.banner_5_banner_color_5 }}">
+                <div class="wrap-inner">
+                  <div class="inner">
+                    <h3 style="{% if block.settings.banner_5_heading_size_5 != blank %}font-size: {{ block.settings.banner_5_heading_size_5 }}px;{% endif %}{% if block.settings.banner_5_heading_color_5 != blank %}color: {{ block.settings.banner_5_heading_color_5 }};{% endif %}">
+                      {% include 'multilang' with block.settings.banner_5_heading_banner_5 %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </li>
+        <li class="col-xs-3 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner">
+            <a href="{{ block.settings.banner_6_link_6 }}">
+              <div class="zi-banner-image">
+                {% if block.settings.banner_6_image_6 != blank %}
+                {%- assign banner_6_img_url_6 = block.settings.banner_6_image_6 | img_url: '590x' -%}
+                <img src="{{ banner_6_img_url_6 }}" alt="{{ block.settings.image.alt }}">
+                {% else %} 	
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              {% if block.settings.banner_6_heading_banner_6 %}
+              <div class="des-banner" style="color: {{ block.settings.banner_6_banner_color_6 }}">
+                <div class="wrap-inner">
+                  <div class="inner">
+                    <h3 style="{% if block.settings.banner_6_heading_size_6 != blank %}font-size: {{ block.settings.banner_6_heading_size_6 }}px;{% endif %}{% if block.settings.banner_6_heading_color_6 != blank %}color: {{ block.settings.banner_6_heading_color_6 }};{% endif %}">
+                      {% include 'multilang' with block.settings.banner_6_heading_banner_6 %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </li>
+        <li class="col-xs-3 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner">
+            <a href="{{ block.settings.banner_7_link_7 }}">
+              <div class="zi-banner-image">
+                {% if block.settings.banner_7_image_7 != blank %}
+                {%- assign banner_7_img_url_7 = block.settings.banner_7_image_7 | img_url: '590x' -%}
+                <img src="{{ banner_7_img_url_7 }}" alt="{{ block.settings.image.alt }}">
+                {% else %} 	
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              {% if block.settings.banner_7_heading_banner_7 %}
+              <div class="des-banner" style="color: {{ block.settings.banner_7_banner_color_7 }}">
+                <div class="wrap-inner">
+                  <div class="inner">
+                    <h3 style="{% if block.settings.banner_7_heading_size_7 != blank %}font-size: {{ block.settings.banner_7_heading_size_7 }}px;{% endif %}{% if block.settings.banner_7_heading_color_7 != blank %}color: {{ block.settings.banner_7_heading_color_7 }};{% endif %}">
+                      {% include 'multilang' with block.settings.banner_7_heading_banner_7 %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </li>
+        <li class="col-xs-3 wow fadeInUp " data-wow-delay="{{ settings.time_lazy_load }}ms">
+          <div class="zi-banner">
+            <a href="{{ block.settings.banner_8_link_8 }}">
+              <div class="zi-banner-image">
+                {% if block.settings.banner_8_image_8 != blank %}
+                {%- assign banner_8_img_url_8 = block.settings.banner_8_image_8 | img_url: '590x' -%}
+                <img src="{{ banner_8_img_url_8 }}" alt="{{ block.settings.image.alt }}">
+                {% else %} 	
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              {% if block.settings.banner_8_heading_banner_8 %}
+              <div class="des-banner" style="color: {{ block.settings.banner_8_banner_color_8 }}">
+                <div class="wrap-inner">
+                  <div class="inner">
+                    <h3 style="{% if block.settings.banner_8_heading_size_8 != blank %}font-size: {{ block.settings.banner_8_heading_size_8 }}px;{% endif %}{% if block.settings.banner_8_heading_color_8 != blank %}color: {{ block.settings.banner_8_heading_color_8 }};{% endif %}">
+                      {% include 'multilang' with block.settings.banner_8_heading_banner_8 %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </li>
+        
+      </ul>
+      
+      {% endcase %}
+      {% endfor %}
+    </div>     
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Practitioner Block",
+    "class": "index-section index-section--flush",
+    "settings": [
+       {
+        "type": "checkbox",
+        "id": "enable",
+        "label": "Enable",
+        "default": true
+      }
+    ],
+	"blocks": [
+	  {
+        "type": "banner_4",
+        "name": "4 Banners",
+        "settings": [
+          {
+          "type": "image_picker",
+          "id": "banner_4_image_1",
+          "label": "BANNER #1",
+          "info": "285px wide by 190px high recommended"
+          },
+		 {
+            "type": "text",
+            "id": "banner_4_heading_banner_1",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_4_heading_color_1",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_4_heading_size_1",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_4_link_1",
+            "label": "Link",
+            "info": "Optional"
+          },
+		  {
+          "type": "image_picker",
+          "id": "banner_4_image_2",
+          "label": "BANNER #2",
+          "info": "285px wide by 190px high recommended"
+          },
+			
+		 {
+            "type": "text",
+            "id": "banner_4_heading_banner_2",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_4_heading_color_2",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_4_heading_size_2",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_4_link_2",
+            "label": "Link",
+            "info": "Optional"
+          },
+		  {
+          "type": "image_picker",
+          "id": "banner_4_image_3",
+          "label": "BANNER #3",
+          "info": "285px wide by 190px high recommended"
+          },
+		 {
+            "type": "text",
+            "id": "banner_4_heading_banner_3",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_4_heading_color_3",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_4_heading_size_3",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_4_link_3",
+            "label": "Link",
+            "info": "Optional"
+          },
+		 {
+          "type": "image_picker",
+          "id": "banner_4_image_4",
+          "label": "BANNER #4",
+          "info": "285px wide by 190px high recommended"
+          },
+		 {
+            "type": "text",
+            "id": "banner_4_heading_banner_4",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_4_heading_color_4",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_4_heading_size_4",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_4_link_4",
+            "label": "Link",
+            "info": "Optional"
+          },
+		  {
+          "type": "image_picker",
+          "id": "banner_5_image_5",
+          "label": "BANNER #5",
+          "info": "285px wide by 190px high recommended"
+          },
+		 {
+            "type": "text",
+            "id": "banner_5_heading_banner_5",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_5_heading_color_5",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_5_heading_size_5",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_5_link_5",
+            "label": "Link",
+            "info": "Optional"
+          },
+		  {
+          "type": "image_picker",
+          "id": "banner_6_image_6",
+          "label": "BANNER #6",
+          "info": "285px wide by 190px high recommended"
+          },
+		 {
+            "type": "text",
+            "id": "banner_6_heading_banner_6",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_6_heading_color_6",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_6_heading_size_6",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_6_link_6",
+            "label": "Link",
+            "info": "Optional"
+          },
+		  {
+          "type": "image_picker",
+          "id": "banner_7_image_7",
+          "label": "BANNER #7",
+          "info": "285px wide by 190px high recommended"
+          },
+		 {
+            "type": "text",
+            "id": "banner_7_heading_banner_7",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_7_heading_color_7",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_7_heading_size_7",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_7_link_7",
+            "label": "Link",
+            "info": "Optional"
+          },
+		  {
+          "type": "image_picker",
+          "id": "banner_8_image_8",
+          "label": "BANNER #8",
+          "info": "285px wide by 190px high recommended"
+          },
+		 {
+            "type": "text",
+            "id": "banner_8_heading_banner_8",
+            "label": "Heading Banner",
+            "default": "EXCLUSIVE"
+          },
+          {
+            "type": "color",
+            "id": "banner_8_heading_color_8",
+            "label": "Heading Banner Color",
+            "default": "#fff",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "banner_8_heading_size_8",
+            "label": "Heading Banner Size",
+            "default": "24",
+            "info": "Default Value: 24"
+          },      
+          {
+            "type": "url",
+            "id": "banner_8_link_8",
+            "label": "Link",
+            "info": "Optional"
+          },
+		  {
+            "type": "html",
+            "id": "practitioner_content",
+            "label": "Text",
+            "default": "text"
+          }
+        ]
+      }	
+	],
+	"presets": [
+		{
+        "name": "Practitioner Block",
+        "category": "Advanced layout",
+        "blocks": [
+		  {
+            "type": "banner_4"
+          }
+        ]
+      }
+	]
+  }
+{% endschema %}

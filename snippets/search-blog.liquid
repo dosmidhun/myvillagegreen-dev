@@ -1,0 +1,12 @@
+<div class="blog_search_items">
+  <a href="{{ item.url}}">{{ item.title | split: '|' | first }}</a>
+  <p class="blog_author">
+    <span class="article__date">Post on
+      {{ item.published_at | time_tag: format: 'month_day_year' }}
+    </span>
+    <span class="article__author">by {{item.author}}</span>
+  </p> 
+  <div class="desc">
+    <p>{{ item.content | strip_html | slice: 0,450 }} ...</p>
+  </div>
+</div>

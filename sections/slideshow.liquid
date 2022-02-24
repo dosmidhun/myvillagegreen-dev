@@ -1,0 +1,556 @@
+<div id="intro" class="video-wrapper home-slideshow">
+  {{ section.settings.banner_video }}  
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <!-- <div class="overlay-bg"></div>
+    <div class="intro-text">
+        <div class="container">
+            <div class="">
+                <div class="col-xs-12 col-sm-12">
+                    <h1 class="inner-caption">Incidunt iusto blanditiis</h1>
+                    <h1 id="inner-content"></h1>
+                </div>
+            </div>
+        </div>    
+    </div> -->
+    
+    <!-- <script>
+    document.addEventListener('DOMContentLoaded',function(event){
+  // array with texts to type in typewriter
+  var dataText = [ "Lorem ipsum dolor <br> consectetur adipisicing "];
+  
+  // type one text in the typwriter
+  // keeps calling itself until the text is finished
+  function typeWriter(text, i, fnCallback) {
+    // chekc if text isn't finished yet
+    if (i < (text.length)) {
+      // add next character to h1
+     document.querySelector("h1#inner-content").innerHTML = text.substring(0, i+1) +'<span aria-hidden="true">|</span>';
+
+      // wait for a while and call this function again for next character
+      setTimeout(function() {
+        typeWriter(text, i + 1, fnCallback)
+      }, 200);
+    }
+    // text finished, call callback if there is a callback function
+    else if (typeof fnCallback == 'function') {
+      // call callback after timeout
+      setTimeout(fnCallback, 500);
+    }
+  }
+  // start a typewriter animation for a text in the dataText array
+   function StartTextAnimation(i) {
+     if (typeof dataText[i] == 'undefined'){
+        setTimeout(function() {
+          StartTextAnimation(0);
+        }, 20000);
+     }
+     // check if dataText[i] exists
+    if (i < dataText[i].length) {
+      // text exists! start typewriter animation
+     typeWriter(dataText[i], 0, function(){
+       // after callback (and whole text has been animated), start next text
+       StartTextAnimation(i + 1);
+     });
+    }
+  }
+  // start the text animation
+  StartTextAnimation(0);
+});
+</script> -->
+  
+  <!-- <video autoplay muted loop playsinline class="hurabg-video">
+    <source src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/Village_Green_Promo.mp4?v=1585019019" type="video/mp4">
+  </video> -->
+  <div class="banner_top_cont"> 
+    <div class="row">
+       {% if section.settings.display_banner_free_shipping  %}
+       <div class="{% if section.settings.display_banner_free_shipping %}col-xs-12 {% else %} col-xs-6{% endif %} free-shipping">
+          {% if settings.enable_multilang %}
+         {% if section.settings.img_free_shipping != blank %}
+           <img src="{{ section.settings.img_free_shipping | img_url: 'thumb' }}" alt="section.settings.banner_free_shipping | split: '|' | first">
+            {% endif %}
+          <span class="free_shipping">{{ section.settings.banner_free_shipping }}</span> 
+          {% else %}
+          <span class="free_shipping">{{ section.settings.banner_free_shipping }}</span>
+          {% endif %}
+        </div>
+       {% endif %}
+        
+       {% if section.settings.display_banner_top_message %}
+       <div class="{% if section.settings.display_banner_free_shipping %}col-xs-12 text-center{% else %} col-xs-12 text-left{% endif %} top-message">
+         {% if settings.enable_multilang %} 
+         {{ section.settings.banner_top_message }}
+         {% else %}
+         {{ section.settings.banner_top_message}}
+         {% endif %}
+       </div>
+       {%endif%}
+       {% if section.settings.display_banner_sale_image %}
+       <div class="sale_img hidden-xs">
+         <img src="{{ section.settings.sale_image | img_url: 'master' }}" alt="Sale Image">  
+       </div>
+       {%endif%}
+       {% if section.settings.display_mob_banner_sale_image %}
+       <div class="mob_sale_img visible-xs">
+         <img src="{{ section.settings.mob_sale_image | img_url: 'master' }}" alt="Mobile Sale Image">  
+       </div>
+       {%endif%}
+      </div> 
+    </div>
+   <!--  <div class="banner_bottom_cont">
+        <div class="row">
+            <div class="col-xs-12">
+                {{ section.settings.banner_top_content }}
+            </div> 
+        </div>
+    </div> -->
+</div>
+
+
+{% if section.blocks.size > 0 %}
+    <div class="home-slideshow  index-home container-fluid">
+      
+      <!-- <p class="top_message hidden-xs"><span class="last">Last Day!</span> 
+        <span class="site">Sitewide, Up To</span> <span class="off">35% Off</span> 
+        <span class="plus">+</span> <span class="off">Free Shipping</span> 
+        <span class="site">On Orders over $50</span> <span class="apply">*Exclusions Apply</span></p> 
+      <p class="top_message visible-xs">Last Day! Sitewide, Up To 35% Off + Free Shipping On Orders over $50*Exclusions Apply</p> -->
+        <div class="visible-xs mob_banner_img"> 
+          <a href="{{ section.settings.mob_link }}">
+            {%- assign mob_img_url = section.settings.mob_banner_image | img_url: '2100x' -%} 
+            <img src="{{ mob_img_url }}" data-url="{{ section.settings.mob_link }}" class="slide-img " alt="{{ section.settings.mob_banner_image.alt }}" /> 
+          </a>
+         
+        </div>
+      
+      <div id="slick_{{ section.id }}" class="variable-width row"
+           data-slick='{
+                       nextArrow: <button type="button" class="slideshow-slick-next"><i class="fa fa-angle-right" aria-hidden="true"></i></button>,
+                       prevArrow: <button type="button" class="slideshow-slick-prev"><i class="fa fa-angle-left" aria-hidden="true"></i></button>,
+                       slidesToScroll: 1,
+                       autoplay:true,
+                       fade: {{ section.settings.slideshow_transition }},
+                       autoplaySpeed:{{ section.settings.slideshow_speed }}
+                       }'>
+        {% for block in section.blocks %}
+        <div class="slick-list slideshow__slide--{{ block.id }} ">                
+          {% if block.settings.image != blank %}
+          <a href="{{ block.settings.link }}" >
+            {%- assign img_url = block.settings.image | img_url: '2100x' -%}
+            <img src="{{ img_url }}" data-url="{{ block.settings.link }}" class="slide-img " alt="{{ block.settings.image.alt }}" />
+          </a>
+          {% else %}
+          {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+          {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+
+          {% if block.settings.title != blank or block.settings.subheading != blank %}         
+          <div class="slider-content" 
+                   style="
+                          {% if block.settings.alignment == 'left' %}
+                           left:20%;
+                           right: initial!important;
+                           {% endif %}
+                          {% if block.settings.alignment == 'right' %}
+                           right:20%;
+                           left: initial!important;
+                           {% endif %}
+                          ">
+                <h2 class="slide-heading animated"
+                    style="{% if block.settings.heading_size != blank %}
+                           font-size: {{ block.settings.heading_size }}px;
+                           {% endif %}
+                           {% if block.settings.heading_color != blank %}
+                           color:{{ block.settings.heading_color }};
+                           {% endif %}">
+                  {% include 'multilang' with block.settings.title  %}
+                </h2>
+                <p class="slide-text animated"
+                   style="{% if block.settings.subheading_size != blank %}
+                           font-size: {{ block.settings.subheading_size }}px;
+                           {% endif %}
+                           {% if block.settings.subheading_color != blank %}
+                           color:{{ block.settings.subheading_color }};
+                           {% endif %} ">
+                  {% include 'multilang' with block.settings.subheading %}
+                </p>
+                {%if block.settings.button != bank %}
+                <a href="{{ block.settings.link }}" class="slide-button animated btn " style="color:{{ block.settings.heading_color }};">
+                  {% include 'multilang' with block.settings.button %}
+              </a>
+                {% endif %}
+              </div>
+            
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.settings.display_banner_bottom_message %}
+<div id="message_box">
+    <div class="container">
+        <div class="row"> 
+            <div class="col-xs-4"> 
+                <div class="msg_inner" id="msg_box1" style="background:url({{ section.settings.box1_image | img_url: 'large'}}) no-repeat top center">
+                    <a href="{{ section.settings.link1 }}">
+                    {{ section.settings.message_box1 }} 
+                    </a>
+                </div> 
+            </div>
+            <div class="col-xs-4">
+                <div class="msg_inner" id="msg_box2" style="background:url({{ section.settings.box2_image | img_url: 'large'}}) no-repeat top center">
+                    <a href="{{ section.settings.link2 }}">
+                    {{ section.settings.message_box2 }} 
+                    </a>
+                </div> 
+            </div> 
+            <div class="col-xs-4">
+                <div class="msg_inner" id="msg_box3" style="background:url({{ section.settings.box3_image | img_url: 'large'}}) no-repeat top center">
+                    <a href="{{ section.settings.link3 }}">
+                    {{ section.settings.message_box3 }} 
+                    </a>
+                </div> 
+            </div>  
+        </div>
+    </div>
+</div>
+{%endif%}
+
+<script>
+   jQuery( document ).ready(function() {
+   jQuery('#slick_{{ section.id }}').slick({
+      nextArrow: '<button type="button" class="slideshow-slick-next"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
+      prevArrow: '<button type="button" class="slideshow-slick-prev"><i class="fa fa-angle-left" aria-hidden="true"></i></button>',
+      slidesToScroll: 1,
+      autoplay:true,
+      fade: {{ section.settings.slideshow_transition }},
+      autoplaySpeed:{{ section.settings.slideshow_speed }}
+      });   
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "Slideshow",
+    "class": "index-section index-section--flush",
+    "max_blocks": 10,
+    "settings": [
+      {
+        "type": "select",
+        "id": "slideshow_speed",
+        "label": "Change slides every",
+        "options": [
+          { "value": "1000", "label": "1 seconds" },
+          { "value": "2000", "label": "2 seconds" },
+          { "value": "3000", "label": "3 seconds" },
+          { "value": "4000", "label": "4 seconds" },
+          { "value": "5000", "label": "5 seconds" },
+          { "value": "6000", "label": "6 seconds" },
+          { "value": "7000", "label": "7 seconds" },
+          { "value": "8000", "label": "8 seconds" },
+          { "value": "9000", "label": "9 seconds" },
+          { "value": "10000", "label": "10 seconds" }
+        ],
+        "default": "5000"
+      },
+      {
+        "type": "select",
+        "id": "slideshow_transition",
+        "label": "Slideshow transition effect",
+        "options": [
+          {
+            "value": "false",
+            "label": "Slide"
+          },
+          {
+            "value": "true",
+            "label": "Fade"
+          }
+        ],
+        "default": "true"
+      },
+    {
+            "type": "color",
+            "id": "navigation_color",
+            "label": "Navigation color",
+            "default": "#fff",
+          "info": "Default Value: #fff"
+       },
+       {
+        "type": "header",
+        "content": "Banner Top"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_banner_free_shipping",
+        "label": "Display Banner Free Shipping?",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "img_free_shipping",
+        "label": "Image free shipping",
+        "info": "Maximum image dimensions are 30px wide by 20px high."
+      },
+      {
+        "type": "text",
+        "id": "banner_free_shipping",
+        "label": "Banner Free Shipping",
+        "default": "Free shipping on All Orders. No Minimum Purchase."
+      },
+      {
+        "type": "checkbox",
+        "id": "display_banner_top_message",
+        "label": "Display Banner Top Message?",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "banner_top_message",
+        "label": "Banner Top Message",
+        "default": "Summer Sale Up to 70% Off. Shop Now"
+      },
+      {
+        "type": "textarea",
+        "id": "banner_top_content",
+        "label": "Banner Content",
+        "default": "Banner Content"
+      },
+      {
+        "type": "textarea",
+        "id": "banner_video",
+        "label": "Banner Video",
+        "default": "Video"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_banner_sale_image",
+        "label": "Display Banner Sale Image?",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "sale_image",
+        "label": "Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_mob_banner_sale_image",
+        "label": "Display Mobile Banner Sale Image?",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "mob_sale_image",
+        "label": "Image"
+      },
+    
+    {
+        "type": "paragraph",
+        "content": "IMPORTANT: For best results, Upload image : 1880px x 720px recommended. Try to keep your slideshow images the same size."
+      },
+      {
+        "type": "checkbox",
+        "id": "display_banner_bottom_message",
+        "label": "Display Banner Bottom Message Box?",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "message_box1",
+        "label": "Message Box",
+        "default": "Content"
+      },
+      {
+        "type": "url",
+        "id": "link1",
+        "label": "link"
+      },
+      {
+        "type": "image_picker",
+        "id": "box1_image",
+        "label": "Background Image"
+      },
+      {
+        "type": "textarea",
+        "id": "message_box2",
+        "label": "Message Box",
+        "default": "Content"
+      },
+      {
+        "type": "url",
+        "id": "link2",
+        "label": "link"
+      },
+      {
+        "type": "image_picker",
+        "id": "box2_image",
+        "label": "Background Image"
+      },
+      {
+        "type": "textarea",
+        "id": "message_box3",
+        "label": "Message Box",
+        "default": "Content"
+      },
+      {
+        "type": "url",
+        "id": "link3",
+        "label": "link"
+      },
+      {
+        "type": "image_picker",
+        "id": "box3_image",
+        "label": "Background Image"
+      },
+	  {
+        "type": "image_picker",
+        "id": "mob_banner_image",
+        "label": "Mobile Banner Image"
+        },
+        {
+        "type": "url",
+        "id": "mob_link",
+        "label": "Mobile link"
+        }
+    
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+      
+          {
+            "type": "select",
+            "id": "alignment",
+            "label": "Text alignment",
+            "default": "center",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+      {
+            "type": "color",
+            "id": "heading_color",
+            "label": "Heading Color",
+            "default": "#000",
+          "info": "Default Value: #000"
+          },
+      {
+            "type": "text",
+            "id": "heading_size",
+            "label": "Heading Font Size",
+            "default": "40",
+          "info": "Default Value: 40"
+          },
+          {
+            "type": "textarea",
+            "id": "subheading",
+            "label": "Subheading"
+      },
+      {
+            "type": "color",
+            "id": "subheading_color",
+            "label": "SubHeading Color",
+            "default": "#000",
+          "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "subheading_size",
+            "label": "SubHeading Font Size",
+            "default": "12",
+          "info": "Default Value: 12"
+          },
+          {
+            "type": "text",
+            "id": "button",
+            "label": "Slide Button"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Slide link"
+          }
+       
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Slideshow",
+      "category": "Slideshow",
+      "settings": {
+        "slideshow_speed": "5000",
+    "slideshow_transition": "false"
+      },
+      "blocks": [
+        {
+          "type": "image"
+        }
+      ]
+    }]
+  }
+{% endschema %}
+<style>
+ .home-slideshow  .slick-arrow:before{ color: {{ section.settings.navigation_color }}; }
+  .fluid-width-video-wrapper{padding-top:{{ section.settings.video_height }}!important;}
+</style>
+
+{% javascript %}
+function process_slick_event(evt) {
+  var _slick = jQuery( "#" +evt.target.id + " .variable-width");
+  if( _slick.length )
+  {
+    switch ( evt.originalEvent.type ) {
+      case "shopify:section:load" : 
+        console.log('Load ' + _slick.attr("id"));
+        _slick.slick (
+            {
+
+              nextArrow: '<button type="button" class="slideshow-slick-next"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
+              prevArrow: '<button type="button" class="slideshow-slick-prev"><i class="fa fa-angle-left" aria-hidden="true"></i></button>',
+              slidesToScroll: 1,
+              autoplay: _slick.data('slick').autoplay,
+              autoplaySpeed: _slick.data('slick').autoplaySpeed
+            }
+          );
+      break; 
+      case "shopify:section:unload" :
+        console.log('Unload ' + _slick.attr("id"));
+        _slick.slick('unslick');
+      break;
+
+     } 
+  }
+}
+    
+jQuery(document)
+ .on( 'shopify:section:load', process_slick_event )
+ .on( 'shopify:section:unload', process_slick_event )
+;
+
+{% endjavascript %}

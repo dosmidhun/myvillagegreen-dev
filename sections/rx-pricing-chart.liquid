@@ -1,0 +1,40 @@
+    <div class="third-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="pricing_chart">
+            <h2>{{ section.settings.text-box }}</h2>
+          	{{ section.settings.pricing-chart }} 
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+  	
+  
+
+{% schema %}
+  {
+    "name": "Pricing Chart",
+    "settings": [
+      {
+        "id": "text-box",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "pricing-chart",
+        "label": "Pricing Chart"
+      }
+       
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

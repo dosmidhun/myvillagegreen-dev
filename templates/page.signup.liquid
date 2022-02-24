@@ -1,0 +1,13 @@
+{% assign bold_member = false %}
+{% if customer %}
+{% for tag in customer.tags %}
+{% if tag == 'mvg-membership' %}
+{% assign bold_member = true %}
+{% break %}
+{% endif %}
+{% endfor %}
+{% if bold_member %}
+<script>window.location='/pages/membership-dashboard';</script>
+{% endif %}
+{% endif %}
+{% section 'page-signup' %}

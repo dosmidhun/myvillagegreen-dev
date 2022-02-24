@@ -1,0 +1,157 @@
+{% comment %}
+Loop through a defined number of articles with the 'paginate' tag.
+Don't forget to close the tag after your loop.
+{% endcomment %}
+
+{% paginate blog.articles by 10 %}
+
+{% comment %}
+This template is also used for listing out articles of a specific tag.
+You can change layouts or styles by checking if current_tags is true.
+{% endcomment %}
+
+<div class="row">
+{% if current_tags %}
+  {% if settings.enable_multilang %}
+        <h4 class="block-title lang1">{{ blog.title | split: '|' | first | link_to: blog.url }} &raquo; {{ current_tags.first }}</h4>
+        <h4 class="block-title lang2">{{ blog.title | split: '|' | last | link_to: blog.url }} &raquo; {{ current_tags.first }}</h4>
+  {% else %}
+        <h4>{{ blog.title | split: '|' | first | link_to: blog.url }} &raquo; {{ current_tags.first }}</h4>    
+  {% endif %}
+  {% else %}
+  {% if settings.enable_multilang %}
+        <h4 class="block-title lang1">{{ blog.title | split: '|' | first }}</h4>
+        <h4 class="block-title lang2">{{ blog.title | split: '|' | last }}</h4>
+  {%else %}
+        <!--<h4>{{ blog.title | split: '|' | first }}</h4>-->
+  {% endif %}
+{% endif %}
+{% comment %}
+    Loop through each article in your blog. This is limited to what you set for pagination above.
+    For more info on article liquid tags:
+    - http://docs.shopify.com/themes/liquid-variables/article
+{% endcomment %}
+
+
+  {% if settings.display_sidebar_blog_page %}<div class="col-sm-8">{% endif %}
+    <div class="content-blog">    
+      <ul class="list-blog{% if section.settings.layout == "grid" %} blog-grid{% elsif section.settings.layout == "list" %} blog-list{% endif %}">
+        {% for article in blog.articles %}
+        <li class="{% if section.settings.layout == "grid" %}col-sm-6{% else %}item{% endif %}">
+          <h4>
+            <a href="{{ article.url }}">
+              {% if settings.enable_multilang %}
+              <span class="lang1">{{ article.title | split: '|' | first }}</span>
+              <span class="lang2">{{ article.title | split: '|' | last }}</span>
+              {% else %}
+              {{ article.title | split: '|' | first }}
+              {% endif %}
+            </a>
+          </h4>
+
+          <p class="blog_author">
+            {% comment %}
+            Don't be fooled, the ? in comments_enabled? is part of the liquid tag.
+            {% endcomment %}
+            {% if blog.comments_enabled? %}
+            <a href="{{ article.url }}#comments" {% if settings.enable_multilang %}data-translate="blogs.comments.comments_with_count|count:{{article.comments_count}}"{%endif%}>
+              {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+            </a>
+            <span class="separator">/</span>
+            {% endif %}
+
+            {% if section.settings.blog_show_date %}
+            <span class="article__date">Post on
+              {{ article.published_at | time_tag: format: 'month_day_year' }}
+            </span>
+            {% endif %}
+            
+            {% if section.settings.blog_show_author %}
+            <span class="article__author">by {{article.author}}</span>
+            {% endif %}
+          </p> 
+          {% if article.image %}
+          {% assign image_alt = article.title | escape %}
+          <div class="blog_img zi-banner">
+            <a href="{{ article.url }}" class="overlay">
+              <div class="zi-banner-image">
+                {{ article | img_url: 'master' | img_tag: image_alt }}
+              </div>
+            </a>
+          </div>
+          {% endif %}
+          {% comment %}
+          Add a surrounding div with class 'rte' to anything that will come from the rich text editor.
+          Since this is just a listing page, you can either use the excerpt or truncate the full article.
+          {% endcomment %}
+          {% if settings.enable_multilang %}
+          <div class="des lang1">{{ article.excerpt |  split:"[lang2]" | first | split:"|" |first }}</div>
+          <div class="des lang2">{{ article.excerpt | split:"[lang2]" | last | split:"|" |last }}</div>
+          {% else %}
+          <!--<div class="des">{{ article.excerpt | split:"[lang2]" | first | split:"|" |first}}</div>-->
+          <div class="des">{{ article.content | truncatewords: 50 }}...</div>
+          {% endif %}
+          
+          {% comment %}
+          Show off meta information like number of comments and tags.
+          {% endcomment %}
+
+          <p class="button">
+            <a href="{{ article.url }}" {% if settings.enable_multilang %}data-translate="blogs.article.read_more"{%endif%} class="blog_morebtn">{{ 'blogs.article.read_more' | t }}</a>
+          </p>
+        </li>
+
+        {% endfor %}
+      </ul>
+
+      {% if paginate.pages > 1 %}
+      <div class="text-center">
+        {% include 'pagination' %}
+      </div>
+      {% endif %}
+    </div>
+  {% if settings.display_sidebar_blog_page %}
+  </div>
+  {% if settings.display_sidebar_blog_page %}
+
+  {% include 'blog_sidebar' %}
+  {% endif %}
+</div>
+{% endif %}
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Blog pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "list",
+        "options": [
+          {
+            "value": "grid",
+            "label": "Grid"
+          },
+          {
+            "value": "list",
+            "label": "List"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

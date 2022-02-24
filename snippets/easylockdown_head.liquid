@@ -1,0 +1,91 @@
+{% assign easylockdownON = false %}
+{% assign easylockdownHiddenPurchase = false %}
+{% assign easylockdownRedirectURL = '' %}
+{% assign easylockdownPage404Title = '' %}
+{% assign easylockdownPage404Message = '' %}
+{% assign easylockdownActiveID = 0 %}
+{% assign easylockdownActiveHash = '' %}
+{% assign easylockdownPasswordForm = false %}
+{% assign easylockdownPasswordNote = '' %}
+{% assign easylockdownPasswordPlaceholder = '' %}
+{% assign easylockdownHidePrice = false %}
+{% assign easylockdownSuperPage = false %}
+{% if template == blank or template == 'customers/login' or template == 'customers/activate_account' or template == 'customers/reset_password' %}{% assign easylockdownSuperPage = true %}{% endif %}
+
+{% assign easylockdownNow = 'now' | date:'%s' %}
+{% assign easylockdownPlacedOrder = customer.orders.first.created_at | date:'%s' %}
+{% assign easylockdownOldestPlacedOrder = customer.orders.last.created_at | date:'%s' %}
+{% assign easylockdownDateDifference = easylockdownNow | minus: easylockdownPlacedOrder %}
+
+{% assign easylockdownLocaleRootUrl = '' %}
+{% for locale in shop.published_locales %}
+  {% if shop.locale == locale.iso_code %}
+    {% unless locale.primary %}{% assign easylockdownLocaleRootUrl = locale.root_url %}{% endunless %}{% break %}
+  {% endif %}
+{% endfor %}
+
+<script type='text/javascript'>var easylockdownLocationDisabled = true;</script>
+<script type='text/javascript' src='//{{ shop.domain }}/apps/easylockdown/easylockdown-1.0.4.min.js' data-no-instant></script>
+<script type='text/javascript'>if( typeof InstantClick == 'object' ) easylockdown.clearData();</script>
+<style type="text/css">#easylockdown-password-form{padding:30px 0;text-align:center}#easylockdown-wrapper,.easylockdown-form-holder{display:inline-block}#easylockdown-password{vertical-align:top;margin-bottom:16px;padding:8px 15px;line-height:1.2em;outline:0;box-shadow:none}#easylockdown-password-error{display:none;color:#fb8077;text-align:left}#easylockdown-password-error.easylockdown-error{border:1px solid #fb8077}#easylockdown-password-form-button:not(.easylockdown-native-styles){vertical-align:top;display:inline-block!important;height:auto!important;padding:8px 15px;background:#777;border-radius:3px;color:#fff!important;line-height:1.2em;text-decoration:none!important}.easylockdown-instantclick-fix,.easylockdown-item-selector{position:absolute;z-index:-999;display:none;height:0;width:0;font-size:0;line-height:0}.easylockdown-collection-item[data-eld-loc-can],.easylockdown-item-selector+*,.easylockdown-item[data-eld-loc-can]{display:none}</style>
+
+{% if easylockdownInstantClick %}<div class='easylockdown-instantclick-fix' style='display:none;'></div>{% endif %}
+
+{% for t in customer.tags %}
+{% assign tag = t | downcase %}
+{% if tag == 'blocked' %}{% assign easylockdownTagsNotLocked1 = true %}{% endif %}
+{% if tag == 'restricted users' %}{% assign easylockdownTagsNotLocked2 = true %}{% endif %}
+{% endfor %}
+
+{% unless easylockdownON or easylockdownSuperPage or template == 'customers/register' or template contains 'page' and page.id == 50920226947 %}
+{% assign easylockdownLockedContent = false %}
+{% assign easylockdownHiddenContent = false %}
+{% assign easylockdownLockedContent = true %}
+{% if easylockdownLockedContent %}
+{% if customer %}
+{% assign easylockdownON = true %}{% unless easylockdownTagsNotLocked1 %}{% assign easylockdownON = false %}{% endunless %}
+{% if easylockdownON %}
+{% assign easylockdownON = true %}
+{% capture easylockdownPage404Title %}Page not found{% endcapture %}
+{% capture easylockdownPage404Message %}<p>Sorry, we couldn't find this page.</p>{% endcapture %}
+{% capture easylockdownRedirectURL %}{{ easylockdownLocaleRootUrl }}/pages/no-route{% endcapture %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endunless %}
+
+{% unless easylockdownON or easylockdownSuperPage or template == 'customers/register' %}
+{% assign easylockdownLockedContent = false %}
+{% assign easylockdownHiddenContent = false %}
+{% if template contains "collection" or template contains "product" %}{% if product.collections %}{% for c in product.collections %}{% if c.id == 171817992323 or c.id == 171825463427 or c.id == 171816124547 or c.id == 171822743683 or c.id == 171820351619 or c.id == 171817959555 or c.id == 171815665795 or c.id == 171815338115 or c.id == 171815075971 or c.id == 171820286083 or c.id == 217221103765 %}{% assign easylockdownLockedContent = true %}{% break %}{% endif %}{% endfor %}{% endif %}{% endif %}
+{% if template contains "collection" or template contains "product" %}{% if collection %}{% if collection.handle == 'xymogen' or collection.handle == 'designs-for-health' or collection.handle == 'douglas-labs' or collection.handle == 'miller-pharma' or collection.handle == 'next-to-nature-1' or collection.handle == 'tyler-integrative-therapeutics' or collection.handle == 'biotics-research' or collection.handle == 'next-to-nature' or collection.handle == '4-life' or collection.handle == 'apex-energetics' or collection.handle == 'ortho-molecular' %}{% assign easylockdownLockedContent = true %}{% endif %}{% endif %}{% endif %}
+{% if easylockdownLockedContent %}
+{% unless customer %}
+{% assign easylockdownON = true %}
+{% capture easylockdownPage404Title %}Page not found{% endcapture %}
+{% capture easylockdownPage404Message %}<p>Sorry, we couldn't find this page.</p>{% endcapture %}
+{% capture easylockdownRedirectURL %}https://myvillagegreen.com/pages/practitioner-brands{% endcapture %}
+{% else %}
+{% unless easylockdownTagsNotLocked2 %}{% assign easylockdownON = true %}{% endunless %}
+{% if easylockdownON %}
+{% assign easylockdownON = true %}
+{% capture easylockdownPage404Title %}Page not found{% endcapture %}
+{% capture easylockdownPage404Message %}<p>Sorry, we couldn't find this page.</p>{% endcapture %}
+{% capture easylockdownRedirectURL %}https://myvillagegreen.com/pages/practitioner-brands{% endcapture %}
+{% endif %}
+{% endunless %}
+{% endif %}
+{% endunless %}
+
+{% if easylockdownON or easylockdownPasswordProtectedContent %}<meta name="robots" content="noindex,nofollow">{% endif %}
+
+<script type='text/javascript'>
+  if( typeof easylockdown == 'object' ) {
+    easylockdown.localeRootUrl = '{{ easylockdownLocaleRootUrl }}';
+    {% if easylockdownON %}easylockdown.router('{{ easylockdownRedirectURL }}'); {% else %}easylockdown.routerByLocation(); {% endif %}
+
+    easylockdown.onReady(function(e){
+      easylockdown.hideAllLinks();
+    });
+  }
+</script>

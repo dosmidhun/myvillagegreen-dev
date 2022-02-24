@@ -1,0 +1,67 @@
+    <div class="third-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12"><h2>{{ section.settings.text-box }}</h2></div>
+          <div class="col-xs-6">{{ section.settings.right-text }}</div>
+          <div class="col-xs-6">
+            {{ section.settings.left-side-text }}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  	
+  
+  <div class="fourth-section">
+    <div class="container">
+      <div class="row">
+      <div class="col-xs-12">
+        <div class="justfy-content">
+          {{ section.settings.justify-text }} 
+          {{ section.settings.justify-text-link }}
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": [
+      {
+        "id": "text-box",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "right-text",
+        "label": "Right Side Text"
+      },
+      {
+        "type": "textarea",
+        "id": "left-side-text",
+        "label": "Left Side Text"
+      },
+      {
+        "type": "textarea",
+        "id": "justify-text",
+        "label": "Center content Pharmacy"
+      },
+      {
+        "type": "textarea",
+        "id": "justify-text-link",
+        "label": "Center content links Pharmacy"
+      }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

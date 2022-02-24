@@ -1,0 +1,99 @@
+<div class="col-sm-4" id="sidebar">
+  {% include 'widget_article' %}
+  	<form method="get" action="/search" class="search-f blog_search">
+      <input class="searchBox field" type="text" placeholder="Search..." name="s"{% if search.performed %} value="{{ search.terms | escape | downcase }}"{% endif %} required/> 
+      <input type="hidden" name="type" value="article" />
+      <button class="searchSubmit" type="submit" class="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </form>
+  	<div class="block-category">
+      <h2 class="widget-title">Categories</h2>
+      <ul>
+      {% for tag in blogs['post'].all_tags %}
+        {% if tag contains 'Category' %}
+
+        <li><a href="/blogs/post/tagged/{{ tag | handle }}">{{ tag | remove: "Category_" }}</a></li>
+        {% endif %}
+      {% endfor %}
+      </ul>
+   </div>
+  
+  <div class="block-content bloggers">
+    <h2 class="widget-title">Humanized Health - NEW!</h2>
+    <p>Learn about personalized health from top experts! Check out our fascinating new shows every week, available as videos, podcasts and transcripts.:</p>
+    <ul>
+      <li><a style="color:#949611;" target="_blank" href="https://humanizedhealth.com/podcast/how-to-never-die-of-heart-disease/"><strong>How to Never Die of Heart Disease</strong></a></li>
+      <li><a style="color:#949611;" target="_blank" href="https://humanizedhealth.com/podcast/strategies-to-improve-your-brain-health/ "><strong>Strategies to Improve Your Brain Health</strong></a></li>
+    </ul>
+  </div>
+  
+  <div class="block-content bloggers">
+    <h2 class="widget-title">Our Bloggers</h2>
+    <ul>
+    <li>
+    <div class="image"><img alt="Paula Gallagher" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/paula_gallagher.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Paula Gallagher</strong><br>Paula is a highly qualified and experienced nutrition counselor on the staff at Village Green.<br><a href="https://myvillagegreen.com/pages/blogger-profiles/#a">read more..</a></div>
+    </li>
+    <li>
+    <div class="image"><img alt="Margo Gladding" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/margo_gladding.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Margo Gladding</strong><br>Margo's impressive knowledge base is the result of a unique blend of educational and professional experience.<br><a href="https://myvillagegreen.com/pages/blogger-profiles/#b">read more..</a></div>
+    </li>
+    <li>
+    <div class="image"><img alt="Dr. Neal Barnard" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/dr_neal_barnard.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Dr. Neal Barnard </strong><br> <span style="margin-bottom: 35px;">Dr. Barnard leads programs advocating for preventive medicine, good nutrition, and higher ethical standards in research.</span><br> <a href="https://myvillagegreen.com/pages/blogger-profiles/#c">read more..</a></div>
+    </li>
+    <li>
+    <div class="image"><img alt="Joseph Pizzorno" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/joseph_pizzorno.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Dr. Joseph Pizzorno</strong><br> <span style="margin-bottom: 35px;">Dr. Joseph Pizzorno, ND is a pioneer of integrative medicine and a leading authority on science-based natural medicine.</span><br><a href="https://myvillagegreen.com/pages/blogger-profiles/#d">read more..</a></div>
+    </li>
+    <li>
+    <div class="image"><img alt="Debi Silber" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/debi_silber.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Debi Silber</strong><br>Debi is a registered dietitian with a master’s degree in nutrition, a personal trainer, and whole health coach.<br><a href="https://myvillagegreen.com/pages/blogger-profiles/#e">read more..</a></div>
+    </li>
+    <li>
+    <div class="image"><img alt="Teri Cochrane" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/teri_cochrane.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Teri Cochrane</strong><br> Teri is a is a Certified Coach Practitioner with extensive certifications and experience in holistic medicinal practices.<br> <a href="https://myvillagegreen.com/pages/blogger-profiles/#f">read more..</a></div>
+    </li>
+    <li>
+    <div class="image"><img alt="Dr. Rav Ivker" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/rav-ivker.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Dr. Rav Ivker</strong><br>Dr. Rav Ivker is a holistic family physician, health educator, and best-selling author. <br> <a href="https://myvillagegreen.com/pages/blogger-profiles/#0">read more..</a></div>
+    </li>
+    <li>
+    <div class="image"><img alt="Susan Levin" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/susan_levin.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Susan Levin</strong><br> Susan writes about the connection between plant-based diets and a reduced risk of chronic diseases.<br> <a href="https://myvillagegreen.com/pages/blogger-profiles/#g">read more..</a></div>
+    </li>
+    <li>
+    <div class="image"><img alt="Rob Brown" src="https://cdn.shopify.com/s/files/1/0319/0960/9603/files/rob_brown.jpg?v=1611570872"></div>
+    <div class="cnt"><strong>Dr. Rob Brown</strong><br> Dr. Brown's blended perspective of healthcare includes a deeply rooted passion for wellness and spiritual exploration.<br> <a href="https://myvillagegreen.com/pages/blogger-profiles/#h">read more..</a></div>
+    </li>
+    </ul>
+    </div>
+
+<div class="block-contri other-contri">
+  <h2 class="widget-title">Other Contributors</h2>
+	<p>
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#i">Caroline Blazovsky</a><br>
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#j">Heather Gunn</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#l">Jared Rice</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#m">Ellen Kittredge</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#n">Naz Amini</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#o">Carmen Ugas</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#p">Steve Stillwater</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#q">Farzin Farid</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#r">Joe Ailts</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#s">Scott O’Dell</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#t">James Brodsky, MD</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#y">Christine M. Gonzales</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#u">Beth Ritchie</a><br> 
+		<a href="https://myvillagegreen.com/pages/blogger-profiles-past/#v">Jim Fox</a>
+	</p>
+</div> 
+  
+  {% if settings.display_banner_sidebar_blog %}
+  {% include 'collection-sidebar-banner-block' %}
+  {% endif %}
+  
+  {% if settings.display_sidebar_custom_blog %}
+  {% include 'collection-sidebar-custom-cms-block' %}
+  {% endif %}
+  
+</div>

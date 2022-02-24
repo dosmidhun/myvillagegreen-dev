@@ -1,0 +1,163 @@
+    <div class="third-section">
+      <div class="container">
+        <div class="row"> 
+          <div class="col-xs-5">
+            <h2>{{ section.settings.text-box1 }}</h2>
+            {{ section.settings.left-side-text }} 
+          </div>
+          <div class="col-xs-7">
+            <div class=" third_right_cont">
+            <h2>{{ section.settings.text-box2 }}</h2>
+            {{ section.settings.right-text }} 
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  	
+  
+  <div class="fourth-section">
+    <div class="container">
+      <div class="row">
+      <div class="col-xs-12">
+        <div class="get_started_sec">
+          <h2>{{ section.settings.text-box3 }}</h2>
+          {{ section.settings.justify-text }} 
+          {{ section.settings.justify-text-link }}
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+ <div class="third-section expert_sec">
+   <div class="container">
+     <div class="row"> 
+       <div class="col-xs-6">
+         <div class="expert_left_img">
+         <img src="{{ section.settings.expert_left_img | img_url: 'large'}}">
+         </div>
+       </div>
+       <div class="col-xs-6">
+         <div class="third_right_cont">
+           <h2>{{ section.settings.expert_title }}</h2>
+           {{ section.settings.expert_right_cont }} 
+         </div>
+       </div>
+     </div>
+   </div>
+</div>
+
+<div class="third-section interest_sec">
+   <div class="container">
+     <div class="row">
+       <div class="col-sm-12">
+       	{{ section.settings.interest_sec_top }}
+       </div>
+     </div>
+     <div class="row"> 
+       <div class="col-xs-6">
+         <div class="interest_left">
+         {{ section.settings.interest_sec_left }}
+         </div>
+       </div>
+       <div class="col-xs-6">
+         <div class="interest_right">
+            {{ section.settings.interest_sec_right }}
+         </div>
+       </div>
+     </div>
+     <div class="row interest_sec_bottom">
+       <div class="col-sm-12">
+       	{{ section.settings.interest_sec_bottom }}
+       </div>
+     </div>
+   </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Nutrition Wellness Bottom",
+    "settings": [
+      {
+        "id": "text-box1",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+      },
+	  {
+        "id": "text-box2",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "right-text",
+        "label": "Right Side Text"
+      },
+      {
+        "type": "textarea",
+        "id": "left-side-text",
+        "label": "Left Side Text"
+      },
+	  {
+        "id": "text-box3",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "justify-text",
+        "label": "Center content Nutrition"
+      },
+	  {
+        "type": "image_picker",
+        "id": "expert_left_img",
+        "label": "Upload a image"
+      },
+	  {
+        "id": "expert_title",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "expert_right_cont",
+        "label": "Expert Content"
+      },
+	  {
+        "type": "textarea",
+        "id": "interest_sec_top",
+        "label": "Interest Content"
+      },
+	  {
+        "type": "textarea",
+        "id": "interest_sec_left",
+        "label": "Interest Content"
+      },
+	  {
+        "type": "textarea",
+        "id": "interest_sec_right",
+        "label": "Interest Content"
+      },
+	   {
+        "type": "textarea",
+        "id": "interest_sec_bottom",
+        "label": "Interest Content"
+      }
+      
+	  
+      
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

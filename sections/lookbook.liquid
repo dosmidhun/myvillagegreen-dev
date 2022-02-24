@@ -1,0 +1,325 @@
+
+<section class="lookbook">
+  <div class="lookbook-slide">
+    <ul class="slick-lookbook" id="slick_{{ section.id }}"
+        data-slick='{
+                       nextArrow: <button type="button" class="slideshow-slick-next"><i class="fa fa-angle-right" aria-hidden="true"></i></button>,
+                       prevArrow: <button type="button" class="slideshow-slick-prev"><i class="fa fa-angle-left" aria-hidden="true"></i></button>,
+                       slidesToScroll: 1,
+                       autoplay:true,
+                       fade: {{ section.settings.slideshow_transition }},
+                       autoplaySpeed:{{ section.settings.slideshow_speed }}
+                       }'>
+      {% for block in section.blocks %}
+      <li class="wrap-slide slick-list {{block.id}}">
+         {% if block.settings.lb_slideshow != blank %}
+        <img src="{{ block.settings.lb_slideshow | img_url : "master" }}"  data-url="{{ block.settings.lb_image_link }}" class="slide-img" alt="{{ block.settings.title }}"/>
+        {% else %}
+          {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+          {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        <div class="slide-des" style="{% if block.settings.lb_slideshow_align  =='center' %}left:25%;right:25%;{% else %}{{ block.settings.lb_slideshow_align }}:0;{% endif %}">
+          <div class="slide-des-cotainer">
+            <div class="slide-des-content">
+              {% if block.settings.lb_text_sample != blank %}
+              <p class="text-sample" style="
+                                            {% if block.setting.slb_text_sample_size != blank %} 
+                                            font-size: {{ block.settings.lb_text_sample_size }}px;
+                                            {% endif %}
+                                            {% if block.settings.lb_text_sample_color != blank %} 
+                                            color: {{ block.settings.lb_text_sample_color }};{% endif %}">
+                {% if settings.enable_multilang %}
+                <span class="lang1">{{ block.settings.lb_text_sample | split: '|' | first }}</span>
+                <span class="lang2">{{ block.settings.lb_text_sample | split: '|' | last }}</span>
+                {% else %}
+                <span>{{ block.settings.lb_text_sample | split: '|' | first }}</span>              
+                {% endif %}
+              </p>
+              {% endif %}
+
+              {% if block.settings.title != blank %}
+              <h2 class="slide-heading" style="
+                                               {% if block.settings.lb_slide_heading_size != blank %} 
+                                               font-size: {{ block.settings.lb_slide_heading_size }}px;
+                                               {% endif %}
+                                               {% if block.settings.lb_slide_heading_color != blank %} 
+                                               color: {{ block.settings.lb_slide_heading_color }};
+                                               {% endif %}">
+                {% if settings.enable_multilang %}
+                <span class="lang1">{{ block.settings.title | split: '|' | first }}</span>
+                <span class="lang2">{{ block.settings.title | split: '|' | last }}</span>
+                {% else %}
+                <span>{{ block.settings.title | split: '|' | first }}</span>              
+                {% endif %}
+              </h2>
+
+              <p class="line" style="
+                                     {% if block.settings.lb_slide_heading_color != blank %} 
+                                     background-color: {{ block.settings.lb_slide_heading_color }};
+                                     {% endif %}"
+                 >&nbsp;</p>
+              {% endif %}
+
+              {% if block.settings.lb_slide_text != blank %}
+              <p class="slide-text" style="
+                                           {% if block.settings.lb_slide_text_size != blank %} 
+                                           font-size: {{ block.settings.lb_slide_text_size }}px;
+                                           {% endif %}
+                                           {% if block.settings.lb_slide_text_color != blank %} 
+                                           color: {{ block.settings.lb_slide_text_color }};
+                                           {% endif %}"
+                 >
+                {% if settings.enable_multilang %}
+                <span class="lang1">{{ block.settings.lb_slide_text | split: '|' | first }}</span>
+                <span class="lang2">{{ block.settings.lb_slide_text | split: '|' | last }}</span>
+                {% else %}
+                <span>{{ block.settings.lb_slide_text | split: '|' | first }}</span>              
+                {% endif %}
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div><!-- /.Slickslider -->
+
+  <script>
+  jQuery(document).on('ready', function() {
+    jQuery('#slick_{{ section.id }}').slick({
+      nextArrow: '<button type="button" class="slideshow-slick-next"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
+      prevArrow: '<button type="button" class="slideshow-slick-prev"><i class="fa fa-angle-left" aria-hidden="true"></i></button>',
+      slidesToScroll: 1,
+      autoplay:true,
+      fade: {{ section.settings.slideshow_transition }},
+      autoplaySpeed:{{ section.settings.slideshow_speed }}
+      });   
+  })
+</script>
+
+
+
+  {% if settings.display_product_detail_share %}
+  {%include 'social'%}
+  {% endif %}
+
+  {% if section.settings.display_lb_button %}
+  <p class="bottom">
+    <a class="btn">
+      {% if settings.enable_multilang %}
+      <span class="lang1">{{ section.settings.lb_button_text | split: '|' | first }}</span>
+      <span class="lang2">{{ section.settings.lb_button_text | split: '|' | last }}</span>
+      {% else %}
+      <span>{{ section.settings.lb_button_text | split: '|' | first }}</span>  
+      {% endif %}
+    </a>
+  </p>
+  {% endif %}
+</section>
+
+<script>
+  jQuery('.lookbook .bottom .btn').click(function(){
+    var url = jQuery('.lookbook .slick-lookbook li.slick-active img').attr('data-url');
+    if (url.length > 0) {window.location.href = url;}
+  });
+</script>
+{% javascript %}
+function process_slick_event(evt) {
+  var _slick = jQuery( "#" +evt.target.id + " .slick-lookbook");
+  if( _slick.length )
+  {
+    switch ( evt.originalEvent.type ) {
+      case "shopify:section:load" : 
+        console.log('Load ' + _slick.attr("id"));
+        _slick.slick (
+            {
+
+              nextArrow: '<button type="button" class="slideshow-slick-next"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
+              prevArrow: '<button type="button" class="slideshow-slick-prev"><i class="fa fa-angle-left" aria-hidden="true"></i></button>',
+              slidesToScroll: 1,
+              autoplay: _slick.data('slick').autoplay,
+              autoplaySpeed: _slick.data('slick').autoplaySpeed
+            }
+          );
+      break; 
+      case "shopify:section:unload" :
+        console.log('Unload ' + _slick.attr("id"));
+        _slick.slick('unslick');
+      break;
+
+     } 
+  }
+}
+    
+jQuery(document)
+ .on( 'shopify:section:load', process_slick_event )
+ .on( 'shopify:section:unload', process_slick_event )
+;
+
+{% endjavascript %}
+{% schema %}
+  {
+    "name": "Lookbook",
+    "settings": [
+	  {
+        "type": "header",
+        "content": "Lookbook Slideshow"
+      },
+      {
+        "type": "paragraph",
+        "content": "IMPORTANT: For best results, upload images that are at least 1200px wide. Try to keep your lookbook images the same size."
+      },
+	 
+      {
+        "type": "select",
+        "id": "slideshow_speed",
+        "label": "Change slides every",
+        "options": [
+          { "value": "1000", "label": "1 seconds" },
+          { "value": "2000", "label": "2 seconds" },
+          { "value": "3000", "label": "3 seconds" },
+          { "value": "4000", "label": "4 seconds" },
+          { "value": "5000", "label": "5 seconds" },
+          { "value": "6000", "label": "6 seconds" },
+          { "value": "7000", "label": "7 seconds" },
+          { "value": "8000", "label": "8 seconds" },
+          { "value": "9000", "label": "9 seconds" },
+          { "value": "10000", "label": "10 seconds" }
+        ],
+        "default": "5000"
+      },
+      {
+        "type": "select",
+        "id": "slideshow_transition",
+        "label": "Slideshow transition effect",
+        "options": [
+          {
+            "value": "false",
+            "label": "Slide"
+          },
+          {
+            "value": "true",
+            "label": "Fade"
+          }
+        ],
+        "default": "true"
+      },
+	{
+        "type": "checkbox",
+        "id": "display_lb_button",
+        "label": "Enable Button?",
+        "default": true
+      },
+      {
+        "type" : "text",
+        "id" : "lb_button_text",
+        "label" : "Button text",
+        "default" : "Shop LookBook"
+      },
+      {		
+        "type": "url",
+        "id": "lb_button_link",
+        "label": "Button link"
+      }
+	],
+	"blocks" :[
+	  {
+        "type": "image",
+        "name": "Banner",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "lb_slideshow",
+            "label": "Slideshow Image"
+          },
+          {
+            "type": "text",
+            "id": "lb_image_link",
+            "label": "URL for Image click"
+          },
+          {
+            "type": "select",
+            "id": "lb_slideshow_align",
+            "label": "Slideshow text align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "left"
+          },
+          {
+            "type": "text",
+            "id": "lb_text_sample",
+            "label": "Text Sample for Image",
+            "default": "The"
+          },
+          {
+            "type": "color",
+            "id": "lb_text_sample_color",
+            "label": "Text Sample color for Image",
+            "default": "#000",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "lb_text_sample_size",
+            "label": "Text Sample size for Image",
+            "default": "13",
+            "info": "Default Value: 40"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading for Image",
+            "default": "Cosmopolis"
+          },
+          {
+            "type": "color",
+            "id": "lb_slide_heading_color",
+            "label": "Heading color for Image",
+            "default": "#000",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "lb_slide_heading_size",
+            "label": "Heading size for Image",
+            "default": "40",
+            "info": "Default Value: 40"
+          },
+          {
+            "type": "text",
+            "id": "lb_slide_text",
+            "label": "Text for Image",
+            "default": "Aenean pulvinar vulputate enim et tempus"
+          },
+          {
+            "type": "color",
+            "id": "lb_slide_text_color",
+            "label": "Text color for Image",
+            "default": "#000",
+            "info": "Default Value: #000"
+          },
+          {
+            "type": "text",
+            "id": "lb_slide_text_size",
+            "label": "Text size for Image",
+            "default": "14",
+            "info": "Default Value: 14"
+          }
+        ]
+	  }
+	]
+  }
+{% endschema %}

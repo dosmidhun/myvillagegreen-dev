@@ -1,0 +1,13 @@
+<div id="payment-methods">	
+  {% for i in (1..10) %}
+  {% capture payment_title %}payment_title_{{ i }}{% endcapture %}
+  {% if section.settings[payment_title] != '' %}
+    {% capture icon_cc %}icon-cc-{{ i }}{% endcapture %}
+      <span class="payment-method">
+        <a href="/cart" title="{{ section.settings[payment_title] }}">
+          <img src="{{ section.settings[icon_cc] | img_url : '58x36'}}">
+        </a>
+      </span>
+ {% endif %}
+  {% endfor %}
+</div>

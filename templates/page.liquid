@@ -1,0 +1,62 @@
+<!-- Bold: Memberships (page) -->
+{% include 'bold_mem_helper' with 'page' %}
+<!-- end Bold code -->
+{% if page.metafields.accentuate.banner_image != null %}
+<div class="row wrap">
+  	<div class="col-xs-12"> 
+        {% comment %}
+      <header class="page-header">
+        {% if settings.enable_multilang %}
+        <h2 class="lang1">{{ page.title | split: '|' | first }}</h2>
+        <h2 class="lang2">{{ page.title | split: '|' | last }}</h2>
+        {% else %}
+        <h2>{{ page.title | split: '|' | first }}</h2>
+        {% endif %}
+      </header>
+      {% endcomment %}
+      {% comment %}
+        Regular page content goes here.
+      {% endcomment %}
+      <div id="shopify-section-collection-header" class="shopify-section nutrition_pag">
+        <header class="page-header pharmacy">
+          <div class="img_cart">
+            <img src="{{ page.metafields.accentuate.banner_image }}" alt="banner image">
+          </div>
+          <h3> {{ page.title}}</h3>
+    	</header>
+     </div> 
+    </div>
+</div>
+{% else %}
+
+{% endif %}
+<div class="row page_cont_out">
+  	<div class="col-xs-3">
+   		 <div class="widget sidebar-links sidebar-custom inner_sidebar">
+            {% section 'page-sidebar' %}
+      	</div>
+	</div>
+
+  	<div class="col-xs-9"> 
+        {% comment %}
+      <header class="page-header">
+        {% if settings.enable_multilang %}
+        <h2 class="lang1">{{ page.title | split: '|' | first }}</h2>
+        <h2 class="lang2">{{ page.title | split: '|' | last }}</h2>
+        {% else %}
+        <h2>{{ page.title | split: '|' | first }}</h2>
+        {% endif %}
+      </header>
+      {% endcomment %}
+      {% comment %}
+        Regular page content goes here.
+      {% endcomment %}
+
+      {% if settings.enable_multilang %}
+      <div class="rte lang1">{{ page.content | split: '[lang2]' | first }}</div>
+      <div class="rte lang2">{{ page.content | split: '[lang2]' | last }}</div>
+      {% else %}
+      <div class="rte">{{ page.content | split: '[lang2]' | first }}</div>
+      {% endif %}
+      </div>
+</div>

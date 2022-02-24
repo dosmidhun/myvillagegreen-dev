@@ -1,0 +1,1157 @@
+
+{% include 'bold-memberships-salt' %}
+{% if section.settings.enable %}
+<div class="dashboard_outer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="shopify-section dashboard_templt">
+                    <div class="dashboard_inner">
+                        <div id='kca-embed'></div>
+
+                        <div class="row"> 
+                            <div class="col-sm-3"> 
+                                <div class="member_name_left"> 
+                                    <img src="{{ section.settings.member_img | img_url: 'master' }}" />  
+                                </div> 
+                            </div> 
+                            <div class="col-sm-5"> 
+                                <div class="member_clickhere_sec">
+                                    {% if section.settings.health_score_btn != blank %}
+                                        <a href="javascript:void(0)" class="unlock_click" data-toggle="modal" data-target="#health_score">
+                                            {{ section.settings.health_score_btn }} 
+                                        </a>
+                                        <!-- Modal -->
+                                        <div class="modal fade score_sec" id="health_score" role="dialog">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{ section.settings.health_score_popup }}  
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                   {% endif %}
+                                   {% if section.settings.metabolic_score_btn != blank %}
+                                        <a href="javascript:void(0)" class="unlock_click" data-toggle="modal" data-target="#metabolic_score">
+                                            {{ section.settings.metabolic_score_btn }} 
+                                        </a>
+                                         
+                                        <!-- Modal -->
+                                        <div class="modal fade score_sec" id="metabolic_score" role="dialog"> 
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{ section.settings.metabolic_score_popup }} 
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div> 
+                                   {% endif %}
+                                   {% if section.settings.toxin_score_btn != blank %}
+                                        <a href="javascript:void(0)" class="unlock_click" data-toggle="modal" data-target="#toxin_score">
+                                            {{ section.settings.toxin_score_btn }} 
+                                        </a>  
+                                        <!-- Modal -->
+                                        <div class="modal fade score_sec" id="toxin_score" role="dialog">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{ section.settings.toxin_score_popup }}   
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                   {% endif %}
+                                </div> 
+                            </div>
+                            <div class="col-sm-4"> 
+                                <div class="member_account_right">
+                                    <a href="javascript:void(0)" class="unlock_click" data-toggle="modal" data-target="#myaccount"> 
+                                        <div class="member_details">
+                                            {% if customer %}
+                                                {% if customer.metafields.accentuate.profile_image %}
+                                                    {% for image in customer.metafields.accentuate.profile_image %}
+                                                      <img src="{{ image.src }}" alt="{{ image.alt }}"/>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <img src="https://cdn.shopify.com/s/files/1/0317/4635/9433/files/prfl.svg?v=1622117575">
+                                                {% endif %}
+                                                <h3>{{ customer.first_name }} {{ customer.last_name }}</h3>
+                                            {% endif %}
+                                        </div>  
+                                    </a>
+                                    <!-- Modal -->
+                                    <div class="modal fade score_sec popup_inner_title" id="myaccount" role="dialog">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content clearfix">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h3>My Account</h3>
+                                                    <div class="profile_sec">
+                                                        {% if customer.metafields.accentuate.profile_image %}
+                                                            {% for image in customer.metafields.accentuate.profile_image %}
+                                                              <img src="{{ image.src }}" alt="{{ image.alt }}" id="profile_image"/>
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            <img src="https://cdn.shopify.com/s/files/1/0317/4635/9433/files/prfl.svg?v=1622117575" id="profile_image">
+                                                        {% endif %}
+                                                        <form id="metafields_form">  
+                                                          <input type="hidden" name="customer[id]" value="{{ customer.id }}" /> 
+                                                          <input type="text" name="customer[first_name]" value="{{ customer.first_name }}" placeholder="First name" /> 
+                                                          <input type="text" name="customer[last_name]" value="{{ customer.last_name }}" placeholder="Last name" /> 
+                                                          <input type="text" name="customer[email]" value="{{ customer.email }}" placeholder="Email Address" /> 
+                                                          <input type="file" name="metafield[accentuate.profile_image]" accept="image/png, image/jpeg" id="profile_image_upload" onchange="loadFile(event)"/>  
+                                                          <input type="submit" value="Update"/> 
+                                                        </form>
+                                                        <h5>Membership: <span>Monthly</span></h5>
+                                                        <span class="note"><a href="/apps/memberships/accountDetails/?id={{customer.id}}&h={{bold_memberships_hash}}">Manage Memberships</a></span>
+                                                    </div> 
+                                                    <a href="javascript:void(0)" class="order_btn" data-toggle="modal" data-target="#order_history">Order History</a> 
+                                                    <!-- Modal -->
+                                                    <div class="modal fade score_sec" id="order_history" role="dialog">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content clearfix">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="order_top clearfix">
+                                                                        <h3>My Account <span class="order_arrow"></span> <span>Order History</span></h3>
+                                                                        <h6><a href="javascript:void(0)" class="close" data-dismiss="modal" data-target="#order_history"><span class="back_order"></span> Back to My Account</a></h6>
+                                                                    </div>
+                                                                    <h2>ORDER HISTORY</h2>
+                                                                    <div class="order_table">
+                                                                        {% if customer.orders.size != 0 %} 
+                                                                        <table class="full">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Reorder</th>
+                                                                                <th {% if settings.enable_multilang %}data-translate="customer.orders.order_number"{%endif%}>{{ 'customer.orders.order_number' | t }}</th>
+                                                                                <th {% if settings.enable_multilang %}data-translate="customer.orders.date"{%endif%}>{{ 'customer.orders.date' | t }}</th>
+                                                                                <th {% if settings.enable_multilang %}data-translate="customer.orders.payment_status"{%endif%}>{{ 'customer.orders.payment_status' | t }}</th>
+                                                                                <th {% if settings.enable_multilang %}data-translate="customer.orders.fulfillment_status"{%endif%}>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                                                                                <th {% if settings.enable_multilang %}data-translate="customer.orders.total"{%endif%}>{{ 'customer.orders.total' | t }}</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            {% for order in customer.orders %}
+                                                                            <tr>
+                                                                                <td><div data-id="{{order.id}}" class="identixweb_advance_reorder"></div></td>
+                                                                                <td>{{ order.name | link_to: order.customer_url }}</td>
+                                                                                <td>{{ order.created_at | date: format: 'month_day_year' }}</td>
+                                                                                <td>{{ order.financial_status_label }}</td>
+                                                                                <td>{{ order.fulfillment_status_label }}</td>
+                                                                                <td>{{ order.total_price | money }}</td>
+                                                                            </tr>
+                                                                            {% endfor %}
+                                                                        </tbody>
+                                                                        </table> 
+                                                                        {% else %} 
+                                                                        <p {% if settings.enable_multilang %}data-translate="customer.orders.none"{%endif%}>{{ 'customer.orders.none' | t }}</p> 
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="adrs_sec">
+                                                        <div class="addrs_title clearfix">
+                                                            <h4>Address</h4>
+                                                            <div class="addrs_add">
+                                                              <a href="#" class="btn" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;" {% if settings.enable_multilang %}data-translate="customer.addresses.add_new"{% endif %}>+ {{ 'customer.addresses.add_new' | t }}</a>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="membr_adrs">
+                                                            {% comment %}
+
+                                                              This template will be automatically generated for you if the file doesn't exist,
+                                                              but where's the fun in having no control? Define your layout below.
+
+                                                              The 'layout settings.customer_layout' line is inserted at the top of every customer account template.
+                                                              Your theme's settings determine to use the 'default' or 'theme' customer templates.
+                                                              More info:
+                                                                - http://www.tetchi.ca/shopify-theme-from-scratch-part-11/
+
+                                                              Template note:
+                                                                - All IDs on this template are required to make the form(s) submit properly
+                                                                - There are two instances of inline JS below. Best practices advise separating this
+                                                                  into an external JS file
+                                                                - There are separate 'add new' and 'edit' address forms
+
+                                                            {% endcomment %}
+
+                                                            {% layout settings.customer_layout %}
+                                                            <div class="addrs_inner">
+                                                            <div class="grid">
+                                                              <div class="grid-item large--two-thirds push--large--one-sixth">  
+                                                                <div class="addrs_remv"><a href="/account" {% if settings.enable_multilang %}data-translate="customer.account.return"{% endif %} class="btn">- {{ 'customer.account.return' | t }}</a></div>
+
+                                                                {% comment %}
+                                                                  Add address form, hidden by default
+                                                                {% endcomment %}
+                                                                <div id="add_address" style="display: none;">
+                                                                  {% form 'customer_address', customer.new_address %}
+                                                                   
+                                                                  <div class="grid">
+                                                                    <div class="grid-item one-half small--one-whole">
+                                                                      <label for="address_first_name_new" {% if settings.enable_multilang %}data-translate="customer.addresses.first_name"{% endif %}>{{ 'customer.addresses.first_name' | t }}</label>
+                                                                      <input type="text" id="address_first_name_new" class="address_form" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+                                                                    </div>
+                                                                    
+                                                                    <div class="grid-item one-half small--one-whole">
+                                                                      <label for="address_last_name_new" {% if settings.enable_multilang %}data-translate="customer.addresses.last_name"{% endif %}>{{ 'customer.addresses.last_name' | t }}</label>
+                                                                      <input type="text" id="address_last_name_new" class="address_form" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+                                                                    </div>
+                                                                  </div>
+                                                                  
+                                                                  <label for="address_company_new" {% if settings.enable_multilang %}data-translate="customer.addresses.company"{% endif %}>{{ 'customer.addresses.company' | t }}</label>
+                                                                  <input type="text" id="address_company_new" class="address_form" name="address[company]" value="{{form.company}}" autocapitalize="words">
+                                                                  
+                                                                  <label for="address_address1_new" {% if settings.enable_multilang %}data-translate="customer.addresses.address1"{% endif %}>{{ 'customer.addresses.address1' | t }}</label>
+                                                                  <input type="text" id="address_address1_new" class="address_form" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+
+                                                                  <label for="address_address2_new" {% if settings.enable_multilang %}data-translate="customer.addresses.address2"{% endif %}>{{ 'customer.addresses.address2' | t }}</label>
+                                                                  <input type="text" id="address_address2_new" class="address_form" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
+                                                                  
+                                                                  <label for="address_city_new" {% if settings.enable_multilang %}data-translate="customer.addresses.city"{% endif %}>{{ 'customer.addresses.city' | t }}</label>
+                                                                  <input type="text" id="address_city_new" class="address_form" name="address[city]" value="{{form.city}}" autocapitalize="words">
+
+                                                                  <label for="address_country_new" {% if settings.enable_multilang %}data-translate="customer.addresses.country"{% endif %}>{{ 'customer.addresses.country' | t }}</label>
+                                                                  <select id="address_country_new" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+
+                                                                  <div id="address_province_container_new" style="display:none">
+                                                                    <label for="address_province_new" {% if settings.enable_multilang %}data-translate="customer.addresses.province"{% endif %}>{{ 'customer.addresses.province' | t }}</label>
+                                                                    <select id="address_province_new" class="address_form" name="address[province]" data-default="{{form.province}}"></select>
+                                                                  </div>
+                                                                  
+                                                                  <div class="grid">
+                                                                    <div class="grid-item one-half small--one-whole">
+                                                                      <label for="address_zip_new" {% if settings.enable_multilang %}data-translate="customer.addresses.zip"{% endif %}>{{ 'customer.addresses.zip' | t }}</label>
+                                                                      <input type="text" id="address_zip_new" class="address_form" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+                                                                    </div>
+                                                                    
+                                                                    <div class="grid-item one-half small--one-whole">
+                                                                      <label for="address_phone_new" {% if settings.enable_multilang %}data-translate="customer.addresses.phone"{% endif %}>{{ 'customer.addresses.phone' | t }}</label>
+                                                                      <input type="tel" id="address_phone_new" class="address_form" name="address[phone]" value="{{form.phone}}" placeholder="555-555-1234">
+                                                                    </div>
+                                                                  </div>
+                                                                  
+                                                                  <p>
+                                                                    {{ form.set_as_default_checkbox }}
+                                                                    <label for="address_default_address_new" class="inline" {% if settings.enable_multilang %}data-translate="customer.addresses.set_default"{% endif %}>{{ 'customer.addresses.set_default' | t }}</label>
+                                                                  </p>
+                                                                  
+                                                                  <input type="submit" class="btn"  {% if settings.enable_multilang %}data-translate="customer.addresses.add"{% endif %} value="{{ 'customer.addresses.add' | t }}">
+                                                                  &nbsp; &nbsp;<a href="#" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;" {% if settings.enable_multilang %}data-translate="customer.addresses.cancel"{% endif %}>{{ 'customer.addresses.cancel' | t }}</a>
+
+                                                                  {% endform %}
+                                                                  <hr>
+                                                                </div>
+
+                                                                <header class="page-header">
+                                                                  <h6 {% if settings.enable_multilang %}data-translate="customer.addresses.title"{% endif %}>{{ 'customer.addresses.title' | t }}</h6>
+                                                                </header>
+
+                                                                {% comment %}
+                                                                  List all customer addresses with a unique edit form.
+                                                                  Also add pagination in case they have a large number of address (unlikely)
+                                                                {% endcomment %}
+                                                                
+                                                                {% paginate customer.addresses by 5 %}
+                                                                  {% for address in customer.addresses %}
+                                                                  <div class="add_addrs_detail"> 
+                                                                    <h5 id="name-cus">
+                                                                    {{ address.first_name | capitalize }} {{address.last_name | capitalize }}
+                                                                    {% if address == customer.default_address %}
+                                                                      <span {% if settings.enable_multilang %}data-translate="customer.addresses.default"{% endif %}>
+                                                                      ({{ 'customer.addresses.default' | t }})
+                                                                      </span>
+                                                                    {% endif %}
+                                                                    </h5>
+                                                                    <p>
+                                                                      {{ address.company }}<br>
+                                                                      {{ address.street }}<br>
+                                                                      {{ address.city | capitalize }}, {% if address.province_code %}
+                                                                        {{ address.province_code | upcase }} 
+                                                                      {% endif %}
+                                                                      {{ address.zip | upcase }}<br>
+                                                                      {{ address.country }}<br>
+                                                                      {{ address.phone }}
+                                                                    </p>
+                                                                    <p class="button">
+                                                                      {{ 'customer.addresses.edit' | t | edit_customer_address_link: address.id }}
+                                                                      {{ 'customer.addresses.delete' | t | delete_customer_address_link: address.id }}
+                                                                    </p>
+                                                                   </div>
+                                                                   <div id="edit_addrs_outer"> 
+                                                                    <div id="edit_address_{{address.id}}" style="display:none;">
+                                                                      {% form 'customer_address', address %}
+                                                                      <header class="page-header">
+                                                                        <h4 {% if settings.enable_multilang %}data-translate="customer.addresses.edit_address"{% endif %}>{{ 'customer.addresses.edit_address' | t }}</h4>
+                                                                      </header>
+                                                                      
+                                                                      <div class="grid">
+                                                                        <div class="grid-item one-half small--one-whole">
+                                                                          <label for="address_first_name_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.first_name"{% endif %}>{{ 'customer.addresses.first_name' | t }}</label>
+                                                                          <input type="text" id="address_first_name_{{form.id}}" class="address_form" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+                                                                        </div>
+                                                                        
+                                                                        <div class="grid-item one-half small--one-whole">
+                                                                          <label for="address_last_name_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.last_name"{% endif %}>{{ 'customer.addresses.last_name' | t }}</label>
+                                                                          <input type="text" id="address_last_name_{{form.id}}" class="address_form" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+                                                                        </div>
+                                                                      </div>
+                                                                      
+                                                                      <label for="address_company_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.company"{% endif %}>{{ 'customer.addresses.company' | t }}</label>
+                                                                      <input type="text" id="address_company_{{form.id}}" class="address_form" name="address[company]" value="{{form.company}}" autocapitalize="words">
+                                                                      
+                                                                      <label for="address_address1_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.address1"{% endif %}>{{ 'customer.addresses.address1' | t }}</label>
+                                                                      <input type="text" id="address_address1_{{form.id}}" class="address_form" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+                                                                      
+                                                                      <label for="address_address2_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.address2"{% endif %}>{{ 'customer.addresses.address2' | t }}</label>
+                                                                      <input type="text" id="address_address2_{{form.id}}" class="address_form" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
+                                                                      
+                                                                      <label for="address_city_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.city"{% endif %}>{{ 'customer.addresses.city' | t }}</label>
+                                                                      <input type="text" id="address_city_{{form.id}}" class="address_form" name="address[city]" value="{{form.city}}" autocapitalize="words">
+
+                                                                      <label for="address_country_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.country"{% endif %}>{{ 'customer.addresses.country' | t }}</label>
+                                                                      <select id="address_country_{{form.id}}" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+
+                                                                      <div id="address_province_container_{{form.id}}" style="display:none">
+                                                                        <label for="address_province_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.province"{% endif %}>{{ 'customer.addresses.province' | t }}</label>
+                                                                        <select id="address_province_{{form.id}}" class="address_form" name="address[province]" data-default="{{form.province}}"></select>
+                                                                      </div>
+
+                                                                      <div class="grid">
+                                                                        <div class="grid-item one-half small--one-whole">
+                                                                          <label for="address_zip_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.zip"{% endif %}>{{ 'customer.addresses.zip' | t }}</label>
+                                                                          <input type="text" id="address_zip_{{form.id}}" class="address_form" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+                                                                        </div>
+
+                                                                        <div class="grid-item one-half small--one-whole">
+                                                                          <label for="address_phone_{{form.id}}" {% if settings.enable_multilang %}data-translate="customer.addresses.phone"{% endif %}>{{ 'customer.addresses.phone' | t }}</label>
+                                                                          <input type="tel" id="address_phone_{{form.id}}" class="address_form" name="address[phone]" value="{{form.phone}}" placeholder="555-555-1234">
+                                                                        </div>
+                                                                      </div>
+
+                                                                      <p>
+                                                                        {{ form.set_as_default_checkbox }}
+                                                                        <label for="address_default_address_{{form.id}}" class="inline" {% if settings.enable_multilang %}data-translate="customer.addresses.set_default"{% endif %}>{{ 'customer.addresses.set_default' | t }}</label>
+                                                                      </p>
+
+                                                                      <input type="submit" class="btn"  {% if settings.enable_multilang %}data-translate="customer.addresses.update"{% endif %} value="{{ 'customer.addresses.update' | t }}">
+                                                                      &nbsp; &nbsp;<a href="#" onclick="Shopify.CustomerAddress.toggleForm({{form.id}}); return false;" {% if settings.enable_multilang %}data-translate="customer.addresses.cancel"{% endif %}>{{ 'customer.addresses.cancel' | t }}</a>
+
+                                                                      {% endform %}
+                                                                    </div>
+                                                                    </div>
+
+                                                                     
+                                                                  {% endfor %}
+                                                                  {% if settings.enable_multilang %}
+                                                                  <script>
+                                                                    $(".button").find("a:eq(0)").attr("data-translate","customer.addresses.edit");
+                                                                    $(".button").find("a:eq(1)").attr("data-translate","customer.addresses.delete");
+                                                                  </script>
+                                                                  {% endif %}
+
+                                                                  {% if paginate.pages > 1 %}
+                                                                  <div class="text-center">
+                                                                    {% include 'pagination' %}
+                                                                  </div>
+                                                                  {% endif %}
+                                                                {% endpaginate %}
+                                                                 
+                                                              </div>
+                                                            </div>
+                                                            </div>
+
+                                                            
+
+                                                        </div> 
+                                                    </div>
+                                                    
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="member_main"> 
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="membership_left">
+                                    <div class="dashboard_left_top">
+                                        <h1>{{ section.settings.dashboard_title }}</h1>
+                                        <p>{{ section.settings.dashboard_cont }}</p>
+                                    </div> 
+                                    
+                                    <div class="box_layout clearfix">
+                                        <ul>
+                                            
+                                            <li id="box2_out" class="loading">
+                                                
+                                                <div class="box_outer">
+                                                    {{ section.settings.box2_layout }}  
+                                                  
+                                                </div>
+                                              <div class="box_outer_content">
+                                                <p>One Moment while we load your health questionnaire...</p> 
+                                                  
+                                                </div>
+                                            </li>
+                                            <li id="box1_out">
+                                                <div class="box_outer">
+                                                    {{ section.settings.box1_layout }}  
+                                                </div>
+                                            </li>
+                                            <li id="box3_out"> 
+                                                <div class="modal fade score_sec" id="discount_popup" role="dialog" style="display: none;">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header"> 
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body guidance_cont"> 
+                                                                {{ section.settings.box3_layout_popup }}  
+                                                                <h4>Browse all our products or search for something specific:</h4>
+                                                                <div class="discount_btm">
+                                                                    <a href="https://myvillagegreen.com/pages/category-landing" class="browse">Browse all products!</a>
+                                                                    <h5>- OR -</h5>
+                                                                    <div class="search_form">
+                                                                        {% include 'search-bar' %} 
+                                                                    </div> 
+                                                                </div>
+                                                                
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="box_outer">
+                                                    {{ section.settings.box3_layout }}  
+                                                </div>
+                                            </li>
+                                            <li id="box4_out">
+                                                <div class="modal fade score_sec" id="guidance_popup" role="dialog" style="display: none;">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body guidance_cont">
+                                                                {{ section.settings.box4_layout_popup }}  
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="box_outer">
+                                                    {{ section.settings.box4_layout }}  
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                  <h2 class="top_subtitle" style="margin-top:25px;">{{ customer.first_name }}, Your Custom Recommendations</h2>
+                                    <div class="top_reommend_sec">
+                                        <div class="personalizd_sec">
+                                            {% if section.settings.unlock_personalized != blank %}
+                                                <a href="javascript:void(0)" class="unlock_click" data-toggle="modal" data-target="#unlock_personalized"> 
+                                                {{ section.settings.unlock_personalized }}</a>
+                                                <!-- Modal -->
+                                                <div class="modal fade score_sec" id="unlock_personalized" role="dialog">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{ section.settings.unlock_personalized_popup }}  
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                           {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="member_lap_report_sec">
+                                    {% if section.settings.my_lapreport != blank %}
+                                        <a href="javascript:void(0)" class="unlock_click" data-toggle="modal" data-target="#lap_report"> {{ section.settings.my_lapreport }}</a>
+                                   {% endif %}
+                                    <!-- Modal -->
+                                    <div class="modal fade score_sec" id="lap_report" role="dialog">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content clearfix">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="lap_report_outer">
+                                                        <h3>My Lab & DNA Reports</h3>
+                                                      <p class="pdf-link">For more information, read <a target="_blank" download="Understanding_Your_DNA_Report.pdf" href="https://cdn.shopify.com/s/files/1/0317/4635/9433/files/Understanding_Your_DNA_Report.pdf?v=1635599559">Understanding Your DNA Report</a></p>
+                                                        <div class="lap_table">
+                                                            <p>You do not have any DNA or lab reports at this time</p>
+                                                            <p>While you only need to do a DNA analysis once, we recommend doing a Wellness Panel annually.</p>
+                                                        </div>
+                                                        <div class="lab_results"></div>
+                                                        <!-- <div class="lap_left">
+                                                            <p>Be sure to keep your health profile information and details current! We recommend that you periodically update your health questionnaire in order for us to provide you with the most accurate picture of your health and wellness.</p>
+                                                        </div> -->
+                                                        <div class="lap_right">
+                                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#health_qstns_modal"  class="update_health">Update your Health Questionnaire</a>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="membership_right">
+                                    <h2 class="top_subtitle">{{ section.settings.dashboard_sidebar_title }}</h2>
+                                    <div class="sidebar_cont">
+                                        <ul>
+                                            <li class="clearfix">
+                                                <a href="tel:240-335-7365">
+                                                    <div class="icon_img">
+                                                        <img src="{{ section.settings.call_icon | img_url: 'master' }}" /> 
+                                                    </div>
+                                                    <div class="icon_content">
+                                                        {{ section.settings.sidebar_call }}
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                            <li class="loading" id="schedule_popup_now">
+                                                <div class="clearfix">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#schedule_inner">
+                                                <div class="icon_img">
+                                                    <img src="{{ section.settings.schedule_icon | img_url: 'master' }}" /> 
+                                                </div>
+                                                <div class="icon_content">
+                                                    {{ section.settings.sidebar_schedule }}
+                                                </div>
+                                                </a>
+                                                
+                                                <div class="modal fade score_sec" id="schedule_inner" role="dialog" style="display: none;">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body guidance_cont">
+                                                                <h3>We'll Call You - Schedule A Quick 10 Minute Call</h3>
+                                                                <p>Schedule a time that is convenient for you, and a nutrition expert will call to answer your question.</p>
+                                                                <button id="schedule_btn_in">Schedule a call back now!</button>
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade score_sec" id="schedule_call_btn" role="dialog" style="display: none;">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body guidance_cont">
+<!--                                                                 <div class="bta-product-button-widget-container" data-mode="button" data-id="54911" id="call_back_btn"> </div>   -->
+<!--                                                               <div class="bta-product-button-widget-container" data-mode="button" data-id="58382"  id="call_back_btn"></div> -->
+                                                              
+                                                                <div class="bta-product-button-widget-container" data-mode="button" data-id="60284" id="call_back_btn">
+</div>
+
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                                
+                                            </li> 
+                                            
+                                            <li class="clearfix">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#ask_expert">
+                                                <div class="icon_img">
+                                                    <img src="{{ section.settings.ask_icon | img_url: 'master' }}" /> 
+                                                </div>
+                                                <div class="icon_content">
+                                                    {{ section.settings.sidebar_ask }}
+                                                </div>
+                                                </a>
+                                                <div class="modal fade score_sec" id="ask_expert" role="dialog" style="display: none;">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body guidance_cont">
+                                                                <div class="ask_form" id="contactFormWrapper">
+                                                                    <h3>Ask A Nutritionist</h3>
+                                                                    {{ section.settings.ask_popup_content }}
+
+                                                                    <div class="powr-form-builder" id="0ca1470d_1638448936"></div><script src="https://www.powr.io/powr.js?platform=shopify"></script>
+                                                                    
+                                                                    <!-- {% form 'contact' %} 
+                                                                    {% if form.posted_successfully? %}
+                                                                    <p class="note form-success" {% if settings.enable_multilang %}data-translate="contact.form.post_success"{% endif %}>
+                                                                      {{ 'contact.form.post_success' | t }}
+                                                                    </p>
+                                                                    {% endif %}
+                                                                    {{ form_errors | default_errors }}
+                                                                    <input type="text" name="" placeholder="Name">
+                                                                    <input type="email" name="" placeholder="Email">
+                                                                    <textarea placeholder="Questions"></textarea>
+                                                                    <input type="submit" name=""></input>
+                                                                    {% endform %} -->
+                                                                </div>
+                                                                {{ section.settings.sidebar_ask_popup }}  
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#consulation_inner">
+                                                <div class="icon_img">
+                                                    <img src="{{ section.settings.consultation_icon | img_url: 'master' }}" /> 
+                                                </div>
+                                                <div class="icon_content">
+                                                    {{ section.settings.sidebar_consultation }}
+                                                </div>
+                                                </a>
+                                                <div class="modal fade score_sec" id="consulation_inner" role="dialog" style="display: none;">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body guidance_cont"> 
+                                                                {{ section.settings.consultation_content }} 
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            
+                                            <li class="clearfix">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#faq_inner">
+                                                <div class="icon_img">
+                                                    <img src="{{ section.settings.chat_icon | img_url: 'master' }}" /> 
+                                                </div>
+                                                <div class="icon_content">
+                                                    {{ section.settings.sidebar_chat }}
+                                                </div>
+                                                </a>
+                                                <div class="modal fade score_sec" id="faq_inner" role="dialog" style="display: none;">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                                            </div>
+                                                            <div class="modal-body guidance_cont">
+                                                                <h3>FAQ</h3> 
+                                                                {{ pages.faq.content }} 
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<div class="modal fade score_sec" id="top_why_content" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="why_inner" id="why_cont">
+                     
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade score_sec" id="no_iqyou_account" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="no_iqyou_inner" id="no_iqyou_cont">
+                     <h4>Register an account on IQYou</h4>
+                     <a href="https://app.iqyouhealth.com/register" target="_blank">Click here to register</a>
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div>
+<div class="modal fade score_sec" id="health_qstns_modal" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Reminder: Please save your work</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body health_qstns_body">
+                <div class="order_top clearfix">
+                    <h3>Health Questions <span class="order_arrow"></span> <span>My Health</span></h3> 
+                </div>
+                <div class="health_top_cont clearfix">
+                  <p>This questionnaire is designed to provide a whole-body assessment of your health. The more we learn about you and your family history, the better we are able to assess your current health status and provide you with personalized recommendations. Please update this questionnaire as often as necessary. </p>
+                </div>
+                <div class="health_top clearfix">
+                    <div class="health_box active" id="box1" data-step="step1">
+                        <span class="my_health_step">%</span>
+                        <h4>My Health</h4>
+                    </div>
+                    <div class="health_box" id="box2" data-step="step2">
+                        <span class="family_history_step">%</span>
+                        <h4>Family History</h4>
+                    </div>
+                    <div class="health_box" id="box3" data-step="step3">
+                        <span class="food_diet_step">%</span>
+                        <h4>Food & Diet</h4>
+                    </div>
+                    <div class="health_box" id="box4" data-step="step4">
+                        <span class="lifestyle_step">%</span>
+                        <h4>Lifestyle</h4>
+                    </div>
+                    <div class="health_box" id="box5" data-step="step5">
+                        <span class="med"></span>
+                        <h4>My Medications</h4>
+                    </div>
+                    <div class="health_box" id="box6" data-step="step6">
+                        <span class="smart"></span>
+                        <h4>Smart Questions</h4>
+                    </div>
+                </div>
+                <h2>Answer the following questions to the best of your ability.</h2>
+                <div class="questn_list"> 
+                    <div class="my_health step1 loading-blue">
+                        
+                    </div>
+                    <div class="family_history step2 loading-blue">
+                        
+                    </div>
+                    <div class="food_diet step3 loading-blue">
+                        
+                    </div>
+                    <div class="lifestyle step4 loading-blue">
+                        
+                    </div>
+                    <div class="my_medication step5 loading-blue">
+                        
+                    </div>
+                    <div class="smart_questions step6 loading-blue">
+                        
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+ <div class="modal fade score_sec" id="qstn_confirm_modal" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="closeit" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="qstn_confirm_modal_inner">
+                    <p class="description">You have not answered all the questions in this section</p>
+                      <button id="goback-finish">Go Back and Finish this section</button>
+                      <button id="proceed-anyway">Thats ok, I want to proceed anyway</button>
+
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div>
+<div class="modal fade score_sec" id="qstn_family_modal" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="closeit" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="qstn_family_modal_inner">
+                    <p class="description">First-degree relatives are your biological parents, siblings, and children.</p>
+                      <button id="ok">Ok</button>
+                      
+
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div>
+<div class="modal fade score_sec" id="qstn_smart_modal" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="closeit" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="qstn_smart_modal_inner">
+                    <p class="description">Please note, some of the answers to these Smart Questions have been auto populated based on your answers to previous questions in this questionnaire. Please go through each question to confirm that these answers are correct.</p>
+                      <button id="ok">Ok</button>
+                      
+
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div>
+<!-- <div class="modal fade score_sec" id="qstn_desc_modal" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+            <div class="modal-body">
+                <div class="qstn_desc_modal_inner">
+                      
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div> -->
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Membership Dashboard",
+    "class": "index-section-dashboard index-section--flush",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable",
+            "label": "Enable",
+            "default": true
+        }, 
+        {
+            "type": "image_picker",
+            "id": "member_img",
+            "label": "Member Image" 
+        },
+        {
+            "type": "html",
+            "id": "member_detail",
+            "label": "Content",
+            "default": "Content"
+        },
+        {
+            "type": "text",
+            "id": "health_score_btn",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "health_score_popup",
+            "label": "Health Score Popup",
+            "default": "Text"
+        },
+        {
+            "type": "url",
+            "id": "health_score_link",
+            "label": "Button Link",
+            "info": "Optional"
+        }, 
+        {
+            "type": "text",
+            "id": "metabolic_score_btn",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "metabolic_score_popup",
+            "label": "Metabolic Score Popup",
+            "default": "Text"
+        },
+        {
+            "type": "url",
+            "id": "metabolic_score_link",
+            "label": "Button Link",
+            "info": "Optional"
+        }, 
+        {
+            "type": "text",
+            "id": "toxin_score_btn",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "toxin_score_popup",
+            "label": "Toxin Score Popup",
+            "default": "Text"
+        },
+        {
+            "type": "url",
+            "id": "toxin_score_link",
+            "label": "Button Link",
+            "info": "Optional"
+        }, 
+        {
+            "type": "text",
+            "id": "my_lapreport",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "url",
+            "id": "my_lapreport_link",
+            "label": "Button Link",
+            "info": "Optional"
+        },
+        {
+          "type": "header",
+          "content": { 
+            "en": "Member Dashboard"
+          }
+        },
+        {
+            "type": "text",
+            "id": "dashboard_title",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "dashboard_cont",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "text",
+            "id": "top_recommend",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "url",
+            "id": "unlock_personalized_link",
+            "label": "Button Link",
+            "info": "Optional"
+        }, 
+        {
+            "type": "text",
+            "id": "unlock_personalized",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "unlock_personalized_popup",
+            "label": "Personalized Popup",
+            "default": "Text"
+        },
+        {
+            "type": "text",
+            "id": "dashboard_sidebar_title",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "image_picker",
+            "id": "call_icon",
+            "label": "Call Icon" 
+        },
+        {
+            "type": "html",
+            "id": "sidebar_call",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "image_picker",
+            "id": "chat_icon",
+            "label": "Chat Icon" 
+        },
+        {
+            "type": "html",
+            "id": "sidebar_chat",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "sidebar_faq_popup",
+            "label": "Sidebar FAQ popup content",
+            "default": "Text"
+        },
+        {
+            "type": "image_picker",
+            "id": "ask_icon",
+            "label": "Ask Icon" 
+        },
+        {
+            "type": "html",
+            "id": "sidebar_ask",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "ask_popup_content",
+            "label": "Ask Popup Content",
+            "default": "Text"
+        },
+        {
+            "type": "image_picker",
+            "id": "schedule_icon",
+            "label": "Schedule Icon" 
+        },
+        {
+            "type": "html",
+            "id": "sidebar_schedule",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "image_picker",
+            "id": "consultation_icon",
+            "label": "Schedule Icon" 
+        },
+        {
+            "type": "html",
+            "id": "sidebar_consultation",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "consultation_content",
+            "label": "Sidebar Consultation popup content",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "box1_layout",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "box2_layout",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "box3_layout",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "box3_layout_popup",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "box4_layout",
+            "label": "Text",
+            "default": "Text"
+        },
+        {
+            "type": "html",
+            "id": "box4_layout_popup",
+            "label": "Text",
+            "default": "Text"
+        }
+        
+        
+       
+          
+        
+    ],
+    "presets": [
+        {
+            "name": "Membership Dashboard",
+            "category": "Advanced layout"
+        }
+    ]
+  }
+{% endschema %}
+<script src="https://cdn.shopify.com/shopifycloud/shopify/assets/themes_support/shopify_common-8ea6ac3faf357236a97f5de749df4da6e8436ca107bc3a4ee805cbf08bc47392.js"></script>
+<script>
+  
+  
+    var Shopify = Shopify || {};
+  // Initialize observers on address selectors
+  new Shopify.CountryProvinceSelector('address_country_new', 'address_province_new', {
+    hideElement: 'address_province_container_new'
+  });
+
+  // Setup province selector on each customer address
+  {% for address in customer.addresses %}
+    new Shopify.CountryProvinceSelector('address_country_{{address.id}}', 'address_province_{{address.id}}', {
+      hideElement: 'address_province_container_{{address.id}}'}
+    );
+  {% endfor %}
+
+  // Contents of customer_area.js (global asset)
+  Shopify.CustomerAddress = {
+    toggleForm: function(id) {
+      var editEl = document.getElementById('edit_address_'+id);
+      var viewEl = document.getElementById('view_address_'+id);
+      editEl.style.display = editEl.style.display == 'none' ? '' : 'none';
+      viewEl.style.display = viewEl.style.display == 'none' ? '' : 'none';
+      return false;
+    },
+
+    toggleNewForm: function() {
+      var el = document.getElementById('add_address');
+      el.style.display = el.style.display == 'none' ? '' : 'none';
+      return false;
+    },
+
+    destroy: function(id, confirm_msg) {
+      var msg = "{{ 'customer.addresses.delete_message' | t}}";
+      {% if settings.enable_multilang %}
+      if (translator.isLang2())
+        var msg = lang2.customer.addresses.delete_message;      
+      {% endif %}
+      if (confirm(msg)) {
+        Shopify.postLink('/account/addresses/'+id, {'parameters': {'_method': 'delete'}});
+      }
+    }
+  }
+  
+  
+  
+ 
+</script>

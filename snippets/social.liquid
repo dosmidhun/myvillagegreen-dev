@@ -1,0 +1,32 @@
+{% if settings.display_social %}   
+{% comment %}
+Loop through the persistent theme settings and list out each social network link.
+{% endcomment %}
+
+<ul class="social">
+  {% for i in (1..10) %}
+  {% capture social_home_link %}social_home_link_{{ i }}{% endcapture %}
+  {% capture social_home_title %}social_home_title_{{ i }}{% endcapture %}
+  {% capture social_home_img %}social-cc-{{ i }}.png{% endcapture %}
+
+  {% if settings[social_home_link] != blank and settings[social_home_title] != blank %}
+  <li class="{{ settings[social_home_title] }}">
+    <a href="{{ settings[social_home_link] }}" title="{{ settings[social_home_title] }}">{%if settings[social_home_img] != blank %}<img src="{{settings[social_home_img] | img_url}}" alt="{{ settings[social_home_title] }}"/>{%else%}<i class="fa fa-{{ settings[social_home_title] |downcase}}" aria-hidden="true"></i>{%endif%}</a>
+  </li>
+  {% endif %}
+   {% endfor %}
+</ul>
+
+{% endif %}
+<style>
+  .social li{background:#a5afbf;border-radius:50%;}
+  {% for i in (1..10) %}
+  {% capture social_home_title %}social_home_title_{{ i }}{% endcapture %}
+  {% capture social_home_bg %}color_bg_hover_{{ i }}{% endcapture %}
+  {%if settings[social_home_title] == 'Instagram' %}
+  .social .Instagram:hover{background:url({{'ins-icon.png' | asset_url}});}
+  {%else%}
+  .social .{{settings[social_home_title]}}:hover{background:{{settings[social_home_bg]}};}
+  {%endif%}
+  {% endfor %}
+</style>

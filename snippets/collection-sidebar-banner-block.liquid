@@ -1,0 +1,22 @@
+<div class="sidebar-banner zi-banner">
+  <a href="{{ settings.banner_sidebar_link }}">
+    <div class="zi-banner-image">
+      {% if settings.banner-sidebar != blank %}
+      <img src="{{ settings.banner-sidebar | img_url : "master" }}" title="{{ settings.banner_sidebar_link }}" />
+      {% else %}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </div>
+  </a>
+</div>
+<div class="sidebar-banner zi-banner">
+  <a href="{{ settings.banner_sidebar_link_1 }}">
+    <div class="zi-banner-image">
+       {% if settings.banner-sidebar-1 != blank %}
+      <img src="{{ settings.banner-sidebar-1 | img_url : "master" }}" title="{{ settings.banner_sidebar_link }}" />
+      {% else %}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </div>
+  </a>
+</div>

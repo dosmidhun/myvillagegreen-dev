@@ -1,0 +1,191 @@
+{{ 'instafeed.min.js' | asset_url | script_tag }}
+<section class="home-instagram wow fadeIn container" data-wow-delay="{{ settings.time_lazy_load }}ms">
+<div class="row">
+    <div class="widget-title">   
+      {% if section.settings.title != blank %}
+      <h2>
+        <i class="fa fa-instagram"></i>
+        {% if settings.enable_multilang %}
+        <span class="lang1">{{ section.settings.title | split: '|' | first }}</span>
+        <span class="lang2">{{ section.settings.title | split: '|' | last }}</span>
+        {% else %}
+        <span>{{ section.settings.title | split: '|' | first }}</span>
+        {% endif %}
+      </h2>
+      {% endif %}
+      <div class="instagram-des">
+      {% if section.settings.instagram_des != blank %}
+        {% if settings.enable_multilang %}
+        <span class="lang1">{{ section.settings.instagram_des | split: '|' | first }}</span>
+        <span class="lang2">{{ section.settings.instagram_des | split: '|' | last }}</span>
+        {% else %}
+        <span>{{ section.settings.instagram_des | split: '|' | first }}</span>
+        {% endif %}
+      {% endif %}
+      
+    {% if section.settings.display_instagram_button and section.settings.instagram_button_text != blank %}
+      <div class="mobi-btn">
+        {% if settings.enable_multilang %}
+      <a target="_blank" href="{{ section.settings.instagram_button_link }}" title="{{ section.settings.instagram_button_text | split: '|' | first }}" class="button-insta lang1">
+        {{ section.settings.instagram_button_text | split: '|' | first }}
+      </a>
+        
+      <a target="_blank" href="{{ section.settings.instagram_button_link }}" title="{{ section.settings.instagram_button_text | split: '|' | last }}" class="button-insta lang2">
+        {{ section.settings.instagram_button_text | split: '|' | last }}
+      </a>
+      {% else %}
+      <a target="_blank" href="{{ section.settings.instagram_button_link }}" title="{{ section.settings.instagram_button_text | split: '|' | first }}" class="button-insta">
+        {{ section.settings.instagram_button_text | split: '|' | first }}
+      </a> 
+        {% endif %}
+      </div>
+      {% endif %}
+      </div>
+   </div>
+	</div>
+    <div id="instafeed" class="row owl-carousel"></div>
+{% if section.settings.user-id == blank or section.settings.accessToken == blank %}
+{% else %}
+  <script>
+    jQuery(document).ready(function(){
+      var feed = new Instafeed({
+        get: "user",    
+        {% if section.settings.instagram_tag != blank %} tagName: "{{ section.settings.instagram_tag }}", {% endif %}
+        {% if section.settings.locationId != blank %} locationId: "{{ section.settings.instagram_locationId }}", {% endif %}
+        {% if section.settings.user-id != blank %} userId: {{ section.settings.user-id }}, {% endif %}
+        {% if section.settings.accessToken != blank %}accessToken: '{{ section.settings.accessToken }}', {% endif %}
+        resolution: "{{ section.settings.resolution_images }}",
+        clientId: "{{ section.settings.client-id }}",
+        limit: "{{ section.settings.limit }}",
+        after: function() {
+          jQuery("#instafeed a").attr("target","_blank");
+          jQuery("#instafeed").owlCarousel({
+            navigation : true,
+            items: {{ section.settings.images_per_row }},
+            itemsTablet: [768,3],
+            itemsTabletSmall: [650,2],
+        	itemsMobile:[499,2],
+        	slideBy:9
+          });
+        }
+      });
+      feed.run();
+    });
+  </script>
+  {% endif %}
+</section>
+
+{% schema %}
+	{
+		"name": "Instagram",
+ 		"class": "insta-section",
+		"settings": [
+			
+            {
+              "type": "checkbox",
+              "id": "display_instagram_button",
+              "label": "Display Button Instagram?",
+              "default": true
+            },
+			{
+              "type":"color",
+              "id":"bg_color_insta",
+              "label":"Background Color",
+              "default":"#fafafa"
+			},
+			{
+				"type": "text",
+				"id":	"title",
+				"label": "Title",
+				"default": "#Furnitica On Instagram"
+			},
+            {
+              "type": "text",
+              "id": "instagram_des",
+              "label": "Instagram Description",
+              "default": "Phasellus lorem malesuada ligula pulvinar commodo maecenas suscipit auctom."
+            },
+            {
+              "type": "text",
+              "id": "instagram_button_text",
+              "label": "Button Instagram Text",
+              "default": "View Gallery"
+            },
+            {
+              "type": "url",
+              "id": "instagram_button_link",
+              "label": "Button Instagram Link"
+            },
+            {
+        "type": "text",
+        "id": "user-id",
+        "label": "User Id",
+        "default": "1599696966",
+      "info": "Use when Get Image from: 'User'. [Where do I find User ID?](https:\/\/smashballoon.com\/instagram-feed\/find-instagram-user-id/)"
+      },
+      {
+        "type": "text",
+        "id": "accessToken",
+        "label": "Access Token",
+        "default": "1599696966.467ede5.0995bcf2188e4607bd092f5b29edaf99",
+        "info": "Required to use when Get Image from: 'User'.[Where do I find Access Token?](http:\/\/instagram.pixelunion.net/)"
+      },
+            {
+              "type": "text",
+              "id": "limit",
+              "label": "Limit the number of images to show",
+              "default": "10"
+            },
+            {
+              "type": "select",
+              "id": "images_per_row",
+              "label": "Images per row",
+              "options": [
+                {
+                  "value": "3",
+                  "label": "3"
+                },
+                {
+                  "value": "4",
+                  "label": "4"
+                },
+                {
+                  "value": "5",
+                  "label": "5"
+                }
+              ]
+            },
+            {
+              "type": "select",
+              "id": "resolution_images",
+              "label": "Resolution of images",
+              "options": [
+                {
+                  "value": "thumbnail",
+                  "label": "Thumbnail"
+                },
+                {
+                  "value": "low_resolution",
+                  "label": "Low Resolution"
+                },
+                {
+                  "value": "standard_resolution",
+                  "label": "Standard Resolution"
+                }
+              ]
+            }
+		],    
+        "presets": [
+          {
+            "name": "Instagram",
+            "category": "Instagram"
+          }
+        ]
+	}
+{% endschema %}
+<style>
+  .insta-section{background:{{section.settings.bg_color_insta}};padding: 54px 0 80px 0;}
+  .instagram-des{margin:0;width:100%;position:relative;}
+  a.button-insta{position:absolute;right:10px;top:0;line-height: 22px;height: 24px;margin-top:0;font-size: 12px;border-width: 1px; border-style: solid;padding: 0 7px;text-transform: uppercase;font-weight: 500;letter-spacing: 0.05em;}
+  a.button-insta:hover{text-decoration:none;}
+</style>

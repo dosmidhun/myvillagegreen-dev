@@ -1,0 +1,651 @@
+<div class="shopify-section newsletter_block">
+  <div class="container">
+    <div class="row"> 
+      	<div class="col-xs-12 col-sm-12 wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load }}ms">
+            <div class="newslt">
+                {% if section.settings.footer_display_newsletter %}
+                  <h6 class="title">{% include 'multilang' with section.settings.footer_newsletter_title %}</h6>
+                  <span class="sub-tit">{% include 'multilang' with section.settings.footer_newsletter_des %}</span>
+
+
+                  <div class="inner-form-subscribe">
+                      {% include 'newsletter-form' %}
+                  </div>
+
+
+                {% endif %}
+            </div> 
+     	 </div>
+    	</div>
+  	</div>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  
+    {% if section.settings.footer_display_policy %}
+    <div class="footer-top wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load }}ms">
+      <div class="container">
+      		<div class="footer-policy row">
+              
+              <div class="col-xs-3">
+                {% if section.settings.text-po-1 != blank %}
+                <i class="fa {{section.settings.ico-po-1}}" aria-hidden="true"></i>
+                
+                {% include 'multilang' with section.settings.text-po-1 %}
+                
+                {% endif %}
+              </div>
+              <div class="col-xs-3 usd">
+                 {% if section.settings.text-po-2 != blank %}
+                <i class="fa {{section.settings.ico-po-2}}" aria-hidden="true"></i>
+                {% include 'multilang' with section.settings.text-po-2 %}
+                {% endif %}
+              </div>
+              <div class="col-xs-3 star">
+                {% if section.settings.text-po-3 != blank %}
+                <i class="fa {{section.settings.ico-po-3}}" aria-hidden="true"></i>
+                {% include 'multilang' with section.settings.text-po-3 %}
+                {% endif %}
+              </div>
+              <div class="col-xs-3">
+                {% if section.settings.text-po-3 != blank %}
+                <i class="fa {{section.settings.ico-po-4}}" aria-hidden="true"></i>
+                {% include 'multilang' with section.settings.text-po-4 %}
+                {% endif %}
+              </div>
+        	</div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="footer-middle wow fadeInUp"  data-wow-delay="{{ settings.time_lazy_load | times: 2 }}ms"> 
+      <div class="container">
+        <div class="row">
+        <div class="three-col clearfix">
+        {% if section.settings.footer_column_1_title != blank %}
+        <div class="col-xs-3">
+          <h6>{% include 'multilang' with section.settings.footer_column_1_title %}</h6>
+
+          <ul>
+            {% assign footerCol1 = section.settings.footer_column_1_content | handleize %}
+            {% for link in linklists[footerCol1].links %}
+            <li><a href="{{ link.url}}">{% include 'multilang' with link.title %}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        {% if section.settings.footer_column_2_title != blank %}
+        <div class="col-xs-3">
+          <h6>{% include 'multilang' with section.settings.footer_column_2_title %}</h6>
+          <ul>
+            {% assign footerCol2 = section.settings.footer_column_2_content | handleize %}
+            {% for link in linklists[footerCol2].links %}
+            <li><a href="{{ link.url}}">{% include 'multilang' with link.title %}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        {% if section.settings.footer_column_3_title != blank %}
+        <div class="col-xs-3">
+          <h6>{% include 'multilang' with section.settings.footer_column_3_title %}</h6>
+          <ul>
+            {% assign footerCol3 = section.settings.footer_column_3_content | handleize %}
+            {% for link in linklists[footerCol3].links %}
+            <li><a href="{{ link.url}}">{% include 'multilang' with link.title %}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %} 
+        <div class="col-xs-3">
+          
+          {% comment %}
+         {% if section.settings.footer_display_newsletter %}
+          <h6 class="title">{% include 'multilang' with section.settings.footer_newsletter_title %}</h6>
+          <span class="sub-tit">{% include 'multilang' with section.settings.footer_newsletter_des %}</span>
+
+          
+          <div class="inner-form-subscribe">
+			  {% include 'newsletter-form' %}
+          </div>
+		
+        
+        {% endif %}
+        {% endcomment %}
+          {% if settings.display_social_footer %}
+          <h6 class="title">{% include 'multilang' with settings.social_home_headding %}</h6>
+          <div class="ftr_addrs">
+          		{{ section.settings.footer_addrs }}
+          </div> 
+          <div class="social-footer"> 
+           {% include 'social' %}
+          </div>
+        
+
+          {% endif %}
+       
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="footer-bottom  wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load | times: 3 }}ms">
+      <div class="container">
+        {% if section.settings.display_footer_address and section.settings.footer_address_code != blank %}
+      <address class="col-xs-12">{% include 'multilang' with section.settings.footer_address_code %}</address>
+        {% endif %}
+      
+      {% comment %}
+      Loop through available payment methods and show their icons.
+       
+		{% if section.settings.payment_methods_display %}
+        <div class="col-xs-12">{% include 'payment_methods' %}</div>
+        {% endif %}
+      {% endcomment %}
+      <div class="col-xs-12">
+        <ul>
+          <li><img src="{{ section.settings.ftr_img1 | img_url: 'master' }}" alt=" "></li> 
+          <li><a href="https://verify.authorize.net/anetseal/?pid=1b8eb86b-3007-448c-823e-7fe86cc6ffb6&rurl=https://www.myvillagegreen.com/vitamins-supplements/" target="_blank"><img src="{{ section.settings.ftr_img2 | img_url: 'master' }}" alt=" "></a></li>
+          <li><img src="{{ section.settings.ftr_img3 | img_url: 'master' }}" alt=" "></li>
+        </ul>
+          
+<!--         <div class="sitemap_btm">
+        	<a href="https://myvillagegreen.com/sitemap.xml">Sitemap</a>
+        </div> -->
+      </div>
+    </div>
+	</div>
+   
+</footer>
+
+{% include 'message-modal' %}
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Footer Background"
+      },
+      {
+        "type": "radio",
+        "id": "bg_footer_img",
+        "label": "Background image",
+        "options": [
+          {
+            "value": "none",
+            "label": "Solid color (no image)"
+          },
+          {
+            "value": "upload-image",
+            "label": "Uploaded image"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "bg_footer_color",
+        "label": "Background color",
+        "default": "#3a3e46"
+      },
+      {
+        "type": "radio",
+        "id": "bg_footer_position_x",
+        "label": "Horizontal position",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "bg_footer_position_y",
+        "label": "Vertical position",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "bg_footer_repeat",
+        "label": "Repeat",
+        "options": [
+          {
+            "value": "repeat",
+            "label": "Horizontally and vertically"
+          },
+          {
+            "value": "repeat-x",
+            "label": "Horizontally only"
+          },
+          {
+            "value": "repeat-y",
+            "label": "Vertically only"
+          },
+          {
+            "value": "no-repeat",
+            "label": "Don't repeat"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "bg_footer_attachment",
+        "label": "Attachment",
+        "options": [
+          {
+            "value": "scroll",
+            "label": "Scroll"
+          },
+          {
+            "value": "fixed",
+            "label": "Fixed"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "stayinfo-img",
+        "label": "Upload a new image"
+      },
+	  {
+        "type": "image_picker",
+        "id": "bg-footer",
+        "label": "Upload a new image"
+      },
+      {
+        "type": "header",
+        "content": "Footer Text Color"
+      },
+      {
+        "type": "color",
+        "id": "footer_text_color",
+        "label": "Footer Text Color",
+        "default": "#fff",
+        "info": "Default Value: #fff (use for Footer title)"
+      },
+      {
+        "type": "color",
+        "id": "footer_text_3_color",
+        "label": "Footer Text 2 Color",
+        "default": "#dcdcdc",
+        "info": "Default Value: #dcdcdc (use for Footer linklist)"
+      },
+      
+      {
+        "type": "color",
+        "id": "footer_text_color_hover",
+        "label": "Footer Text Color Hover",
+        "default": "#ee6497",
+		"info": "Default Value: #ee6497"
+      },
+      {
+        "type": "header",
+        "content": "Footer Policy"
+      },
+		{
+        "type": "checkbox",
+        "id": "footer_display_policy",
+        "label": "Show Footer Policy?",
+        "default": true
+      },
+	  {
+        "type": "select",
+        "id": "footer_line_style",
+        "label": "Footer Line Style",
+        "options": [
+          {
+            "value": "solid",
+            "label": "Solid"
+          },
+          {
+            "value": "dashed",
+            "label": "Dashed"
+          },
+          {
+            "value": "dotted",
+            "label": "Dotted"
+          }
+        ],
+        "default": "solid",
+        "info": "Default Value: Solid"
+      },
+      {
+        "type": "color",
+        "id": "footer_line_color",
+        "label": "Footer Line Color",
+        "default": "#555b66",
+        "info": "Default Value: #555b66"
+      },
+      {
+         "type": "paragraph",
+		"content": "Please click [Here](http:\/\/fontawesome.io\/icons/') for find Icon [How to copy Icon name](https:\/\/cdn.shopify.com\/s\/files\/1\/1980\/6793\/files\/userguide.png?5611693719303875049)"
+      },
+	  {
+		"type":"text",
+		"id":"text-po-1",
+		"label":"Title"
+	  },
+	  {
+		"type":"text",
+		"id":"ico-po-1",
+		"label":"icon"
+	  },
+	  {
+		"type":"text",
+		"id":"text-po-2",
+		"label":"Title"
+	  },
+	  {
+		"type":"text",
+		"id":"ico-po-2",
+		"label":"icon"
+	  },
+	  {
+		"type":"text",
+		"id":"text-po-3",
+		"label":"Title"
+	  },
+	  {
+		"type":"text",
+		"id":"ico-po-3",
+		"label":"icon"
+	  },
+	  {
+		"type":"text",
+		"id":"text-po-4",
+		"label":"Title"
+	  },
+	  {
+		"type":"text",
+		"id":"ico-po-4",
+		"label":"icon"
+	  },
+      {
+        "type": "header",
+        "content": "Footer Column"
+      },
+      {
+        "type": "text",
+        "id": "footer_column_1_title",
+        "label": "Footer Column 1 Title"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_column_1_content",
+        "label": "Footer Column 1 Content"
+      },
+      {
+        "type": "text",
+        "id": "footer_column_2_title",
+        "label": "Footer Column 2 Title"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_column_2_content",
+        "label": "Footer Column 2 Content"
+      },
+      {
+        "type": "text",
+        "id": "footer_column_3_title",
+        "label": "Footer Column 3 Title"
+      },
+	  {
+        "type": "link_list",
+        "id": "footer_column_3_content",
+        "label": "Footer Column 3 Content"
+      },
+	  
+      {
+        "type": "header",
+        "content": "Footer Address"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_footer_address",
+        "label": "Show Footer Address ?"
+      },
+      {
+        "type": "textarea",
+        "id": "footer_address_code",
+        "label": "Footer Address Code"
+      },
+	  {
+		"type":"color",
+		"id":"background_footer_bottom",
+		"label":"Background color"
+	  },
+      {
+        "type": "header",
+        "content": "Footer Payment"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_methods_display",
+        "label": "Payment Methods Display?"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_1",
+        "label": "Payment Title 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-1",
+        "label": "Upload image 1",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_2",
+        "label": "Payment Title 2"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-2",
+        "label": "Upload image 2",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_3",
+        "label": "Payment Title 3"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-3",
+        "label": "Upload image 3",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_4",
+        "label": "Payment Title 4"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-4",
+        "label": "Upload image 4",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_5",
+        "label": "Payment Title 5"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-5",
+        "label": "Upload image 5",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_6",
+        "label": "Payment Title 6"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-6",
+        "label": "Upload image 6",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_7",
+        "label": "Payment Title 7"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-7",
+        "label": "Upload image 7",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_8",
+        "label": "Payment Title 8"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-8",
+        "label": "Upload image 8",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_9",
+        "label": "Payment Title 9"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-9",
+        "label": "Upload image 9",
+        "info": "58px x 36px recommended"
+      },
+      {
+        "type": "text",
+        "id": "payment_title_10",
+        "label": "Payment Title 10"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon-cc-10",
+        "label": "Upload image 10",
+        "info": "58px x 36px recommended"
+      },
+	  {
+          "type": "html",
+          "id": "footer_addrs",
+          "label": "Text",
+          "default": "text"
+       },
+	   {
+        "type": "image_picker",
+        "id": "ftr_img1",
+        "label": "Upload a new image"
+      },
+      {
+        "type": "image_picker",
+        "id": "ftr_img2",
+        "label": "Upload a new image"
+      },
+      {
+        "type": "image_picker",
+        "id": "ftr_img3",
+        "label": "Upload a new image"
+      },
+	  {
+        "type": "header",
+        "content": "Newsletter"
+      },
+      {
+        "type": "checkbox",
+        "id": "footer_display_newsletter",
+        "label": "Show newsletter?",
+        "default": true
+      },
+      
+      {
+        "type": "text",
+        "id": "footer_newsletter_title",
+        "label": "Newsletter title",
+        "default": "Newsletter Sign Up"
+      },
+      {
+        "type": "text",
+        "id": "footer_newsletter_des",
+        "label": "Newsletter description",
+        "default": "WE PROMISE TO ONLY SEND YOU GOOD THINGS!"
+      }
+    ]
+  }
+{% endschema %}
+<style>
+	/*  Stay Informed /*-------------------------- */
+  .newsletter_block {
+    {% if section.settings.bg_footer_img == 'upload-image' %}
+    {% if section.settings.stayinfo-img != blank %}
+    background: url({{ section.settings.stayinfo-img | img_url:"master" }});	
+    background-position: {{ section.settings.bg_footer_position_x }} {{ section.settings.bg_footer_position_y }};
+    background-repeat: {{ sections.settings.bg_footer_repeat }};
+    background-attachment: {{ section.settings.bg_footer_attachment }};
+    {% else %}
+    background: {{ section.settings.bg_footer_color }};
+    {% endif %}
+    {% else %}
+    background: {{ section.settings.bg_footer_color }};
+    {% endif %}
+  }
+  /*  Footer /*-------------------------- */
+  .site-footer {
+    {% if section.settings.bg_footer_img == 'upload-image' %}
+    {% if section.settings.bg-footer != blank %}
+    background: url({{ section.settings.bg-footer | img_url:"master" }});	
+    background-position: {{ section.settings.bg_footer_position_x }} {{ section.settings.bg_footer_position_y }};
+    background-repeat: {{ sections.settings.bg_footer_repeat }};
+    background-attachment: {{ section.settings.bg_footer_attachment }};
+    {% else %}
+    background: {{ section.settings.bg_footer_color }};
+    {% endif %}
+    {% else %}
+    background: {{ section.settings.bg_footer_color }};
+    {% endif %}
+  }
+/*   .social-footer ul li a:hover{color:{{section.settings.footer_text_color_hover}}!important; } */
+  .footer-middle span,
+  .footer-policy span,
+  .footer-policy .fa,
+  .input-group-footer label,
+  .footer-top h6{ color: {{section.settings.footer_text_color}}; }
+  .footer-bottom address a,
+  .footer-bottom address,
+  .site-footer a span,
+  .footer-middle  .sub-tit span,
+  .footer-middle ul li a {color: {{section.settings.footer_text_3_color}};}
+ 
+  .site-footer a:hover,.site-footer a:hover span{ color: {{section.settings.footer_text_color_hover}} }
+  .footer-policy div{ border-right:{{ section.settings.footer_line_style }} 1px {{ section.settings.footer_line_color }};}
+  .footer-top{border-bottom:{{ section.settings.footer_line_style }} 1px {{ section.settings.footer_line_color }}; }
+  .footer-bottom{background:{{section.settings.background_footer_bottom}}; }
+</style>

@@ -1,0 +1,34 @@
+{% for t in customer.tags %}
+{% assign tag = t | downcase %}
+{% if tag == 'blocked' %}{% assign easylockdownTagsNotLocked1 = true %}{% endif %}
+{% if tag == 'restricted users' %}{% assign easylockdownTagsNotLocked2 = true %}{% endif %}
+{% endfor %}
+
+{% assign easylockdownNow = 'now' | date:'%s' %}
+{% assign easylockdownPlacedOrder = customer.orders.first.created_at | date:'%s' %}
+{% assign easylockdownOldestPlacedOrder = customer.orders.last.created_at | date:'%s' %}
+{% assign easylockdownDateDifference = easylockdownNow | minus: easylockdownPlacedOrder %}
+{% assign easylockdownLocationsCan = '' | split: ',' %}
+{% assign easylockdownLocationsCannot = '' | split: ',' %}
+{% assign easylockdownPasswordItems = '' | split: ',' %}
+
+{% assign easylockdownCollectionException = false %}
+{% unless easylockdownCollectionException %}
+{% if easylockdown_filter_collection.collections %}
+{% assign easylockdownItemOff = false %}
+{% for c in easylockdown_filter_collection.collections %}
+{% if c.id == 171817992323 or c.id == 171825463427 or c.id == 171816124547 or c.id == 171822743683 or c.id == 171820351619 or c.id == 171817959555 or c.id == 171815665795 or c.id == 171815338115 or c.id == 171815075971 or c.id == 171820286083 or c.id == 217221103765 %}
+{% assign easylockdownItemOff = true %}
+{% break %}
+{% endif %}
+{% endfor %}
+{% if easylockdownItemOff %}
+{% unless customer %}
+{% if easylockdownRender %}continue{% endif %}{% continue %}
+{% else %}
+{% unless easylockdownTagsNotLocked2 %}{% if easylockdownRender %}continue{% endif %}{% continue %}{% endunless %}
+{% endunless %}
+{% endif %}
+{% endif %}
+{% endunless %}
+

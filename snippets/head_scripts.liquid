@@ -1,0 +1,157 @@
+{{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
+{{ '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' | stylesheet_tag }}
+{{ 'jquery-cookie.min.js' | asset_url | script_tag }}
+{{ 'selectize.min.js' | asset_url | script_tag }}
+{{ 'jquery.nicescroll.min.js' | asset_url | script_tag }}
+
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+	
+<script>
+  window.ajax_cart = {{settings.ajax_cart}};
+  window.money_format = "{{shop.money_with_currency_format}}";
+  window.shop_currency = "{{ shop.currency }}";
+  window.show_multiple_currencies = {{settings.enable_multiple_currencies}};
+  window.loading_url = "{{ 'loading.gif' | asset_url}}"; 
+  window.product_image_resize = {{settings.product_image_resize}};
+  window.file_url = "{{''|file_url}}";
+  window.asset_url = "{{ 'soldout.png'|asset_url }}";
+  window.image_swap ="true";
+  window.images_size = {
+    is_crop: {{ settings.product_image_crop }},
+    ratio_width : {{ settings.product_image_ratio_width }},
+    ratio_height : {{ settings.product_image_ratio_height }},
+  };
+  window.inventory_text = {
+    in_stock: "{{ 'products.product.in_stock' | t }}",
+    many_in_stock: "{{ 'products.product.many_in_stock' | t }}",
+    out_of_stock: "{{ 'products.product.out_of_stock' | t }}",
+    add_to_cart: "{{ 'products.product.add_to_cart' | t }}",
+    sold_out: "{{ 'products.product.sold_out' | t }}",
+    unavailable: "{{ 'products.product.unavailable' | t }}",
+    sale: "{{ 'products.product.sale' | t }}",
+  };
+  window.side_bar = {
+    show_sidebar: "{{ 'blogs.sidebar.show_sidebar' | t }}",
+    hide_sidebar: "{{ 'blogs.sidebar.hide_sidebar' | t }}"
+  };
+          
+  window.multi_lang = {{settings.enable_multilang}};
+  {% if customer %}
+  {% else %}
+    {% if template contains 'membership-dashboard'%}
+  		
+    {% endif %}
+  {% endif %}
+  {% if customer.metafields.global.iqyou_has_account %}
+    window.cus_id = "{{ customer.metafields.global.iqyou_user_key }}";
+     var storage_local_string=window.localStorage.getItem('cus_row');
+   var storage_local_json = JSON.parse(storage_local_string);
+    if(storage_local_json.rows=="set"){
+       var storage_local = '{"cus_id":"'+window.cus_id+'", "rows":"set", "cus_id_status":"set"}';
+        localStorage.setItem('cus_row', JSON.stringify(storage_local));
+     
+    }
+  else{
+		var storage_local = '{"cus_id":"'+window.cus_id+'", "rows":"not-set", "cus_id_status":"set"}';
+        localStorage.setItem('cus_row', JSON.stringify(storage_local));
+  }
+ 	
+    localStorage.setItem('cus_row', storage_local);
+
+    {% else %}
+     window.cus_id =null;
+    var storage_local = '{"cus_id":"not-set", "rows":"", "cus_id_status":"not-set"}';
+    localStorage.setItem('cus_row', storage_local);
+    
+    
+    
+   
+  {% endif %}
+</script>
+{{ 'custom.js' | asset_url | script_tag }}
+{% if settings.enable_multilang %}
+    {% include 'translator' %}
+{% endif %}
+
+{% if customer %}
+  {% for tag in customer.tags %}
+  {% if tag=='mvg-membership' %}
+  		{% assign bold_member = true %}
+  		 {% break %}
+  {% endif %}
+  {% endfor %}
+  {% if bold_member %}
+  {% else %}
+  	<script>
+  		jQuery(window).on("load", function() {
+          
+          jQuery('#popup_sec .member_btn')[0].click();
+          jQuery("h3.step2_title").show();
+          
+        });
+      
+       var incStr=false;
+    function fetchdata_cust(){
+ jQuery.ajax({
+  url: '/?sections=header',
+  type: 'GET',
+  success: function(data){
+   //Perform operation on return value
+    
+    var strng=data.header;
+    console.log( data.header);
+    incStr = strng.includes("customer-id");
+    if(window.cus_id===null){
+      
+       
+       if(incStr===true){
+        
+       			window.location.reload();
+       }
+      
+    }
+    else if(incStr){
+      
+     jQuery('#box2_out').removeClass('loading');
+    }
+   
+    else{
+    
+    }
+    
+    
+ 
+  },
+  complete:function(data){
+    console.log( 'loopinggggggggggggggggggg');
+    
+    
+    if(!incStr){
+      setTimeout(fetchdata_cust,2000);
+    }
+    
+   
+  }
+ });
+}
+
+jQuery(document).ready(function(){
+   
+
+  if(window.location.href==='https://myvillagegreen.com/pages/signup-landing'){
+
+  }
+  else{
+    setTimeout(fetchdata_cust,2000);
+  }
+ 
+
+});
+
+      
+      
+	</script>
+  {% endif %}
+{% else %}
+{% endif %}
